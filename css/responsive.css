@@ -46,7 +46,7 @@
   .suscribe-input button {
     width: 40%;
   }
-  .team-content.text-center>h4 {
+  .team-content.text-center > h4 {
     font-size: 20px;
   }
   .sus-btn {
@@ -105,7 +105,7 @@
   .single-add-itms {
     width: 50%;
   }
-  .left-sidebar-title>h4 {
+  .left-sidebar-title > h4 {
     font-size: 18px;
   }
   .contact-form {
@@ -119,31 +119,36 @@
 /* small mobile :320px. */
 
 @media (max-width: 767px) {
-
   .header-area {
     height: 60px !important;
     background: #000;
   }
-  .navbar-header a.navbar-brand, .stick .navbar-header a.navbar-brand {
+  .navbar-header a.navbar-brand,
+  .stick .navbar-header a.navbar-brand {
     display: inline-block;
-    height: 60px  !important;
+    height: 60px !important;
     padding: 9px 0;
   }
-  .navbar-default .navbar-toggle, .stick .navbar-default .navbar-toggle {
+  .navbar-default .navbar-toggle,
+  .stick .navbar-default .navbar-toggle {
     padding: 15px 0;
   }
-  .nav.navbar-nav.navbar-right, .stick .nav.navbar-nav.navbar-right {
+  .nav.navbar-nav.navbar-right,
+  .stick .nav.navbar-nav.navbar-right {
     background-color: #252525;
     padding: 0;
     margin-top: 0;
   }
-  .main-menu ul.navbar-nav li, .stick .main-menu ul.navbar-nav li {
+  .main-menu ul.navbar-nav li,
+  .stick .main-menu ul.navbar-nav li {
     display: block;
   }
-  .main-menu ul.navbar-nav li a, .stick .main-menu ul.navbar-nav li a {
+  .main-menu ul.navbar-nav li a,
+  .stick .main-menu ul.navbar-nav li a {
     padding: 10px 2px;
   }
-  .main-menu ul.navbar-nav li.active a::after, .stick .main-menu ul.navbar-nav li.active a::after {
+  .main-menu ul.navbar-nav li.active a::after,
+  .stick .main-menu ul.navbar-nav li.active a::after {
     border: 0px solid #fff;
   }
   .logo {
@@ -207,7 +212,7 @@
   .section-headline h3 {
     font-size: 25px;
   }
-  .well-text>h2 {
+  .well-text > h2 {
     font-size: 18px;
   }
   .well-text p {
@@ -232,7 +237,8 @@
   .pri_table_list {
     margin-bottom: 30px;
   }
-  .single-awesome-project, .portfolio-2 .single-awesome-project {
+  .single-awesome-project,
+  .portfolio-2 .single-awesome-project {
     width: 100%;
     float: none;
   }
@@ -269,6 +275,16 @@
   li.threaded-comments {
     margin-left: 0;
   }
+  .team-top {
+    flex-wrap: wrap; /* Las tarjetas bajan a otra fila en móviles */
+    justify-content: center; /* Centra las tarjetas en móviles */
+  }
+
+  .single-team-member {
+    flex: 1 1 100%; /* Cada tarjeta ocupa el 100% del ancho en móviles */
+    max-width: 100%; /* Sin límite de ancho en móviles */
+    margin-bottom: 20px; /* Espacio entre filas de tarjetas */
+  }
 }
 
 /* Large Mobile :480px. */
@@ -295,5 +311,18 @@
   }
   .tab-menu ul.nav li a {
     padding: 8px 20px;
+  }
+  .team-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Espacio igual entre tarjetas en tablets */
+    gap: 20px;
+  }
+
+  .single-team-member {
+    flex: 1 1 58%; /* Las tarjetas ocupan 45% del ancho en tablets */
+    max-width: 58%; /* Máximo 45% del ancho del contenedor */
+    margin: 0 auto;
   }
 }

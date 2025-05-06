@@ -1,0 +1,280 @@
+/* Contenedor general de servicios */
+.services-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* "Titulo" */
+.services-2 h1 {
+    font-size: 3.3rem;
+    color: #222;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    margin-top: 3%;
+}
+
+/* Sección de Servicios */
+.services-2 {
+    width: 100%;
+    padding: 60px 0;
+    text-align: center;
+    background-color: #f4f4f4;
+    position: relative;
+}
+
+.container-3 {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Contenedor de cada categoría
+.category-1 {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Contenedor de cada categoría
+.category-2 {
+    max-width: 815px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Contenedor de cada categoría
+.category-3 {
+    max-width: 565px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+} */
+
+
+/* Efecto hover para destacar la categoría */
+.category:hover {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos y Categorías */
+.category-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    text-align: center;
+    padding-left: 20px;
+}
+
+/* Pares de Servicios */
+.services-pair {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+/* Servicio Individual */
+.service-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1 1 calc(33% - 20px);
+    max-width: 300px;
+    padding: 30px 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 200px;
+}
+
+.service-2:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo base de los íconos */
+.service-2 i {
+    font-size: 40px;
+    color: #8509f8;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Efecto hover para destacar los íconos */
+.service-2:hover i {
+    transform: scale(1.2);
+    color: #d400ff;
+    text-shadow: 0 4px 10px rgba(255, 0, 234, 0.493);
+}
+
+/* Animación de entrada */
+.service-2 i {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInIcon 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInIcon {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Descripción de los Servicios */
+.service-2 p {
+    color: #777;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.service-2 strong {
+    font-size: 1.6rem;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Logo del Servicio */
+.service-logo {
+    width: 50px;
+    height: auto;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.service-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Animación fade-in */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    .service-2 {
+        flex: 1 1 calc(33.33% - 20px);
+        /* 3 por fila en pantallas medianas */
+    }
+}
+
+@media (max-width: 900px) {
+
+    .services-2 h1 {
+        font-size: 3.2rem;
+    }
+
+    .category-1 {
+        width: 95%;
+    }
+
+    .category-2 {
+        width: 95%;
+    }
+
+    .category-3 {
+        width: 95%;
+    }
+
+    .category-title {
+        font-size: 1.6rem;
+        padding-left: 20px;
+    }
+
+    .services-pair {
+        gap: 15px;
+        font-size: 0.9rem;
+    }
+
+    .service-2 strong {
+        font-size: 1.0rem;
+    }
+
+    .service-2 i {
+        font-size: 35px;
+    }
+}
+
+@media (max-width: 800px) {
+    .service-2 {
+        flex: 1 1 calc(50% - 20px);
+        /* 2 por fila en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 500px) {
+
+    /* Servicio Individual */
+    .service-2 {
+        max-width: 180px;
+        min-width: 100px;
+        padding: 10px 10px;
+    }
+
+    .service-2 {
+        flex: 1 1 calc(50% - 10px);
+        /* 1 por fila en pantallas pequeñas */
+    }
+
+    .service-2 strong {
+        font-size: 1.4rem;
+    }
+
+    .service-2 p {
+        font-size: 1.3rem;
+    }
+
+    .service-2 i {
+        font-size: 30px;
+    }
+
+    .services-2 h1 {
+        font-size: 3.0rem;
+    }
+
+    .services-pair {
+        font-size: 0.8rem;
+    }
+}

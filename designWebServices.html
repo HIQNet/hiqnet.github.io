@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>HiQNet | Webservice y Backend</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+
+    <!-- Favicons -->
+    <link href="img/about/engranaje_minis.png" rel="icon" />
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Librerias CSS -->
+    <link href="lib/nivo-slider/css/nivo-slider.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/owl.carousel.css" rel="stylesheet" />
+    <link href="lib/owlcarousel/owl.transitions.css" rel="stylesheet" />
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="lib/venobox/venobox.css" rel="stylesheet" />
+
+    <!-- Nivo Slider Theme -->
+    <link href="css/nivo-slider-theme.css" rel="stylesheet" />
+
+    <!-- Main Css -->
+    <link href="css/style.css" rel="stylesheet" />
+
+    <!-- Responsive Stylesheet File -->
+    <link href="css/responsive.css" rel="stylesheet" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      /* Estilo de la cuadrícula */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual tamaño */
+        gap: 10px;
+        padding: 10px;
+        justify-content: center;
+      }
+      .grid-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+
+      .grid-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+      }
+
+      .add-actions {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(28, 28, 28, 0.7);
+        opacity: 0;
+        transition: 0.4s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .grid-item:hover .add-actions {
+        opacity: 1;
+      }
+
+      .project-dec h3,
+      .project-dec span {
+        color: white;
+        margin: 10;
+        padding-top: 40px;
+        font-weight: bold;
+      }
+
+      .project-dec h4 {
+        margin-bottom: 10px;
+      }
+
+      .vbox-content img {
+        max-width: 70vw;
+        max-height: 70vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 10px;
+      }
+
+      @media (max-width: 992px) {
+        .grid-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .grid-container {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .vbox-content img {
+          max-width: 95vw;
+          max-height: 95vh;
+        }
+      }
+    </style>
+  </head>
+
+  <body data-spy="scroll" data-target="#navbar-example">
+    <div id="preloader"></div>
+
+    <header>
+      <!-- header-area start -->
+      <div id="sticker" class="header-area">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <!-- Navigation -->
+              <nav class="navbar navbar-default">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <!-- Brand -->
+                  <a
+                    class="navbar-brand page-scroll sticky-logo"
+                    href="index.html"
+                  >
+                    <h1><span></span></h1>
+                    <!-- Uncomment below if you prefer to use an image logo -->
+                    <img
+                      src="img/about/FullLogo.png"
+                      width="160px"
+                      height="50px"
+                      alt=""
+                    />
+                  </a>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- header-area end -->
+    </header>
+    <!-- header end -->
+
+    <!-- Start Bottom Header -->
+    <div class="header-bg page-area">
+      <div class="home-overly"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="slider-content text-center">
+              <div class="header-bottom">
+                <div
+                  class="layer2 wow zoomIn"
+                  data-wow-duration="1s"
+                  data-wow-delay=".4s"
+                >
+                  <h1 class="title2">
+                    DISEÑO DE WEBSERVICE Y DESARROLLO BACKEND
+                  </h1>
+                </div>
+                <div
+                  class="layer3 wow zoomInUp"
+                  data-wow-duration="2s"
+                  data-wow-delay="1s"
+                >
+                  <h2 class="title3">
+                    SISTEMA DE GESTIÓN DE APRENDIZAJE ENFOCADO A LA ENSEÑANZA DE
+                    MATEMÁTICAS EN LÍNEA
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Header -->
+    <div class="blog-page area-padding">
+      <div class="container">
+        <div class="row">
+          <!-- Card principal centrado -->
+          <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+            <div class="single-blog">
+              <!-- Imagen destacada -->
+              <div class="single-blog-img text-center">
+                <a href="#">
+                  <img
+                    src="img/blog/designWebServices.png"
+                    alt="La Terraza"
+                    style="width: 100%; height: auto; border-radius: 10px"
+                  />
+                </a>
+              </div>
+              <div class="blog-meta text-center"></div>
+              <div class="blog-text" style="text-align: justify">
+                <h4 class="text-center">
+                  <strong
+                    >SISTEMA DE GESTIÓN DE APRENDIZAJE ENFOCADO A LA ENSEÑANZA
+                    DE MATEMÁTICAS EN LÍNEA</strong
+                  >
+                </h4>
+
+                <p>
+                  El proyecto que se presenta consiste en el desarrollo de una
+                  aplicación web, enfocada en la creación del Back-End para la
+                  startup NumerIQ.
+                </p>
+                <p>
+                  Esta empresa tiene como misión principal proporcionar una
+                  plataforma accesible y efectiva para tutorías de matemáticas,
+                  con el fin de mejorar la experiencia de aprendizaje de
+                  estudiantes que buscan reforzar sus conocimientos en esta
+                  disciplina.
+                </p>
+                <p>
+                  El desarrollo del Back-End para NumerIQ no es un proyecto
+                  aislado, sino que forma parte de un ecosistema de plataformas
+                  educativas que han emergido en el mercado en los últimos años.
+                </p>
+
+                <p>
+                  Cada vez más, el mercado de plataformas educativas online se
+                  ha expandido de manera significativa, con productos como Khan
+                  Academy, Coursera y Udemy, que han logrado impactar
+                  positivamente a millones de estudiantes alrededor del mundo.
+                </p>
+                <p>
+                  Sin embargo, a pesar de la vasta cantidad de opciones, pocas
+                  plataformas están especializadas exclusivamente en matemáticas
+                  y tutorías personalizadas, lo que ofrece a NumerIQ una ventaja
+                  competitiva.
+                </p>
+
+                <div class="text-left mt-3">
+                  <a
+                    href="https://www.figma.com/design/AwmmX1VbFcE7R22dKCmZi3/DesignWebservices?node-id=0-1&m=dev&t=0QQFAuLR7wt5l0Bx-1"
+                    target="_blank"
+                    style="display: block; margin-bottom: 5px"
+                  >
+                    <i class="fab fa-figma"></i> Diseño Webservice
+                  </a>
+                  <a
+                    href="https://github.com/Grxson/apiNumeriq"
+                    target="_blank"
+                    style="display: block; margin-bottom: 5px"
+                  >
+                    <i class="fab fa-github"></i> Backend - API REST
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Blog Area -->
+    <div class="clearfix"></div>
+
+    <!-- Start Footer bottom Area -->
+    <footer
+      style="
+        background-color: #000;
+        color: #fff;
+        padding: 40px 0;
+        font-family: sans-serif;
+      "
+    >
+      <div class="container" style="max-width: 1200px; margin: 0 auto">
+        <div class="row" style="display: flex; flex-wrap: wrap">
+          <!-- Columna 1: Logo -->
+          <div
+            class="col-md-3"
+            style="flex: 1; min-width: 250px; margin-bottom: 20px"
+          >
+            <div class="footer-logo" style="margin-bottom: 20px">
+              <img
+                src="img/about/FullLogo.png"
+                alt="HiQNet Logo"
+                style="max-width: 350px; height: auto"
+              />
+            </div>
+            <p
+              style="
+                font-size: 1.3rem;
+                line-height: 1.6;
+                margin-bottom: 0;
+                color: #fff;
+              "
+            >
+              HiQNet es una empresa orgullosamente mexicana que brinda
+              mantenimiento a los servicios que ofrece, asegurando un buen
+              funcionamiento y una larga vida útil.
+            </p>
+          </div>
+
+          <!-- Columna 2: Sobre nosotros (desplazada hacia la derecha) -->
+          <div
+            class="col-md-3"
+            style="
+              flex: 1;
+              min-width: 250px;
+              margin-bottom: 20px;
+              margin-left: 20px;
+            "
+          >
+            <h4
+              style="
+                margin-bottom: 15px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #fff;
+              "
+            >
+              Sobre nosotros
+            </h4>
+            <ul style="list-style: none; padding: 0; margin: 0">
+              <li style="margin-bottom: 8px">
+                <a
+                  href="#"
+                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
+                  >Quiénes somos</a
+                >
+              </li>
+              <li style="margin-bottom: 8px">
+                <a
+                  href="#"
+                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
+                  >Nuestro compromiso</a
+                >
+              </li>
+              <li style="margin-bottom: 8px">
+                <a
+                  href="#"
+                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
+                  >Servicios</a
+                >
+              </li>
+              <li style="margin-bottom: 8px">
+                <a
+                  href="#"
+                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
+                  >Blog</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Columna 3: Información y contacto -->
+          <div
+            class="col-md-3"
+            style="flex: 1; min-width: 250px; margin-bottom: 20px"
+          >
+            <h4
+              style="
+                margin-bottom: 15px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #fff;
+              "
+            >
+              Información
+            </h4>
+            <p style="font-size: 1.3rem; line-height: 1.6; color: #fff">
+              Comunícate con nosotros para resolver tus dudas y recibir
+              información clara y concisa.
+            </p>
+            <p style="margin: 10px 0 0; font-size: 1.3rem; color: #fff">
+              <strong>Correo:</strong>
+              <a
+                href="mailto:hiqnet.web@gmail.com"
+                style="text-decoration: none; color: #fff"
+              >
+                hiqnet.web@gmail.com
+              </a>
+            </p>
+          </div>
+
+          <!-- Columna 4: Redes sociales -->
+          <!-- Esta columna está comentada, si la necesitas, descomenta el siguiente bloque -->
+          <!--
+        <div class="col-md-3" style="flex: 1; min-width: 250px; margin-bottom: 20px;">
+          <h4 style="margin-bottom: 15px; font-size: 1.5rem; font-weight: bold; color: #fff;">Redes sociales</h4>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
+            <li style="margin-right: 10px;">
+              <a href="https://www.facebook.com/" style="color: #fff; font-size: 1.3rem;">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+            <li style="margin-right: 10px;">
+              <a href="https://twitter.com/" style="color: #fff; font-size: 1.3rem;">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </li>
+            <li style="margin-right: 10px;">
+              <a href="https://www.reddit.com/" style="color: #fff; font-size: 1.3rem;">
+                <i class="fa fa-reddit"></i>
+              </a>
+            </li>
+            <li style="margin-right: 10px;">
+              <a href="https://www.instagram.com/" style="color: #fff; font-size: 1.3rem;">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        --></div>
+      </div>
+
+      <!-- Footer inferior (copyright) -->
+      <div
+        style="border-top: 1px solid #333; margin-top: 30px; padding: 20px 0"
+      >
+        <div class="container" style="max-width: 1200px; margin: 0 auto">
+          <div class="row" style="text-align: center">
+            <p style="font-size: 1.5rem; margin: 0; color: #fff">
+              &copy; Copyright
+              <strong>HiQNet</strong>. Todos los derechos reservados.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/venobox/venobox.min.js"></script>
+    <script src="lib/knob/jquery.knob.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/parallax/parallax.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script
+      src="lib/nivo-slider/js/jquery.nivo.slider.js"
+      type="text/javascript"
+    ></script>
+    <script src="lib/appear/jquery.appear.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="contactform/contactform.js"></script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
