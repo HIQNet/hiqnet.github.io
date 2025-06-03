@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle de Proyectos | La Terraza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/img/Logo.png" type="image/png" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --gradient-start: #be34f3;
+        --gradient-mid1: #965ef5;
+        --gradient-mid2: #6494f7;
+        --gradient-mid3: #12ecfb;
+        --gradient-end: #2dcffa;
+      }
+
+      @font-face {
+        font-family: "HiQNet";
+        src: url("font/SANTELLO.ttf") format("truetype");
+      }
+      body {
+        font-family: "HiQNet", sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        scroll-behavior: smooth;
+      }
+      .gradient-text {
+        background: linear-gradient(
+          90deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: gradient 3s ease infinite;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end)
+        );
+        background-size: 200% 200%;
+        animation: gradient 6s ease infinite;
+      }
+
+      .gradient-border {
+        position: relative;
+        border-radius: 1rem;
+      }
+
+      .gradient-border::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end)
+        );
+        background-size: 200% 200%;
+        border-radius: 1rem;
+        z-index: -1;
+        opacity: 0.7;
+        animation: gradient 6s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 999;
+        opacity: 0;
+        animation: float 2.5s ease-in-out infinite;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .back-to-top.visible {
+        opacity: 1;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #0f172a;
+          color: #e2e8f0;
+        }
+
+        .dark\:bg-slate-900 {
+          background-color: #0f172a;
+        }
+
+        .dark\:text-slate-100 {
+          color: #e2e8f0;
+        }
+
+        .dark\:bg-slate-800 {
+          background-color: #1e293b;
+        }
+      }
+
+      .project-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+      .gallery-item {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .gallery-item:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+      .tech-badge {
+        transition: all 0.2s ease;
+      }
+      .tech-badge:hover {
+        transform: translateY(-2px);
+      }
+      .modal {
+        transition: opacity 0.3s ease;
+      }
+      .modal-content {
+        max-height: 90vh;
+      }
+    </style>
+  </head>
+  <body class="dark:bg-slate-900 dark:text-slate-100">
+    <!-- Back to Top Button -->
+    <div class="back-to-top gradient-bg text-white shadow-lg" id="back-to-top">
+      <i class="fas fa-arrow-up text-xl"></i>
+    </div>
+    <!-- Navigation -->
+    <nav
+      class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <a href="/index.html">
+                <span class="text-2xl font-bold gradient-text">HiQNet</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Projects Detail Section -->
+    <section class="container mx-auto px-4 py-20">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-white mb-2 uppercase">
+          Punto de Venta "La Terraza"
+        </h1>
+        <p class="text-xl gradient-text">
+          Explora en profundidad cada uno de nuestros desarrollos
+        </p>
+      </div>
+
+      <!-- Project Navigation -->
+      <div class="flex justify-between items-center mb-8">
+        <div class="flex items-center space-x-4">
+          <button
+            class="px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center"
+            onclick="location.href='/index.html#portfolio'"
+          >
+            <i class="fas fa-arrow-left mr-1 sm:mr-2 text-xs sm:text-base"></i>
+            <span>Volver</span>
+          </button>
+
+          <h2 class="text-2xl font-semibold text-white">
+            Proyectos destacados
+          </h2>
+        </div>
+      </div>
+
+      <!-- Project Detail Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12">
+        <!-- Project Header -->
+        <div
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white"
+        >
+          <div
+            class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4"
+          >
+            <div>
+              <h2 class="text-3xl font-bold mb-2">
+                Sistema de Venta para Restaurante "La Terraza"
+              </h2>
+              <p class="text-indigo-100 mb-4">
+                Plataforma completa de gestión de ventas con sistema de canjeo
+                de cupones
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Content -->
+        <div class="bg-gray-900 text-white">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+            <!-- Main Info Column -->
+            <div class="lg:col-span-2">
+              <h3 class="text-2xl font-semibold text-white mb-4">
+                Descripción del Proyecto
+              </h3>
+              <div class="prose max-w-none text-gray-200 mb-8 prose-invert">
+                <p>
+                  Implementación de un sistema digital de gestión para mejorar
+                  el control del menú y las órdenes en un restaurante,
+                  reemplazando procesos manuales que generan errores, retrasos y
+                  una mala experiencia para el cliente.
+                </p>
+
+                <h4 class="text-xl font-semibold mt-6 mb-3">Desafíos</h4>
+                <ul class="list-disc pl-5 space-y-1">
+                  <li>
+                    <strong>Información desactualizada:</strong> Menús en papel
+                    difíciles de actualizar con frecuencia.
+                  </li>
+                  <li>
+                    <strong>Frustración del cliente:</strong> Pedidos de
+                    platillos no disponibles generan confusión y largas filas.
+                  </li>
+                  <li>
+                    <strong>Órdenes en papel:</strong> El proceso manual
+                    incrementa los errores y la pérdida de pedidos.
+                  </li>
+                  <li>
+                    <strong>Flujo de trabajo ineficiente:</strong> Falta de un
+                    sistema que priorice y organice las órdenes en cocina.
+                  </li>
+                </ul>
+
+                <h4 class="text-xl font-semibold mt-6 mb-3">
+                  Solución Implementada
+                </h4>
+                <p>
+                  Se desarrolló un sistema digital que permite actualizar el
+                  menú en tiempo real, eliminando la dependencia de menús en
+                  papel. Además, se implementó una interfaz electrónica para la
+                  toma de órdenes que se comunica directamente con la cocina,
+                  reduciendo errores y pérdidas. El sistema incluye un panel de
+                  control para el personal de cocina, que facilita la
+                  visualización, organización y priorización de los pedidos,
+                  mejorando significativamente la eficiencia operativa del
+                  restaurante.
+                </p>
+
+                <div class="bg-slate-800 p-4 rounded-lg mt-6">
+                  <h4 class="text-lg font-semibold text-blue-300 mb-2">
+                    Resultados Obtenidos
+                  </h4>
+                  <ul class="list-disc pl-5 text-blue-200 space-y-1">
+                    <li>
+                      Reducción de errores en órdenes y tiempos de espera.
+                    </li>
+                    <li>
+                      Mayor satisfacción del cliente al tener siempre un menú
+                      actualizado.
+                    </li>
+                    <li>
+                      Optimización del trabajo en cocina, mejorando tiempos de
+                      entrega.
+                    </li>
+                    <li>
+                      Incremento en eficiencia operativa y capacidad para
+                      atender más clientes.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebar Column -->
+            <div>
+              <!-- Technologies -->
+              <div class="bg-slate-800 rounded-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-white mb-4">
+                  Tecnologías Utilizadas
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >React</span
+                  >
+                  <span
+                    class="bg-red-700 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >Laravel</span
+                  >
+
+                  <span
+                    class="bg-orange-700 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >MySQL</span
+                  >
+                  <span
+                    class="bg-cyan-700 text-white px-3 py-1 rounded-full text-sm font-medium"
+                    >Filament</span
+                  >
+                  <!-- Más tecnologías aquí -->
+                </div>
+              </div>
+
+              <!-- Project Details -->
+              <div class="bg-slate-800 rounded-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-white mb-4">
+                  Detalles del Proyecto
+                </h3>
+                <div class="space-y-4 text-gray-200">
+                  <div>
+                    <p class="text-sm text-gray-400 font-bold">Cliente</p>
+                    <p class="font-medium">La Terraza</p>
+                  </div>
+                  <div>
+                    <p class="text-sm text-gray-400 font-bold">Duración</p>
+                    <p class="font-medium">6 meses</p>
+                  </div>
+
+                  <div>
+                    <p class="text-sm text-gray-400 font-bold">Estado</p>
+                    <p class="font-medium text-green-600">Finalizado</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Related Links -->
+              <!-- <div class="bg-slate-800 rounded-lg p-6">
+                <h3 class="text-xl font-semibold text-white mb-4">
+                  Enlaces Relacionados
+                </h3>
+                <div class="space-y-3">
+                  <a
+                    href="#"
+                    class="flex items-center text-indigo-400 hover:text-indigo-300"
+                  >
+                    <i class="fas fa-file-alt mr-3 text-gray-400"></i>
+                    <span>Documentación técnica</span>
+                  </a>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Gallery -->
+        <div class="border-t border-gray-700 px-8 py-6 bg-gray-900">
+          <h3 class="text-2xl font-semibold text-gray-200 mb-6">
+            Galería del Proyecto
+          </h3>
+          <div
+            class="project-gallery grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/admin/Captura.PNG')"
+            >
+              <img
+                src="/img/LaTerraza/admin/Captura.PNG"
+                alt="Dashboard principal"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Dashboard principal
+                </p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/admin/Captura2.PNG')"
+            >
+              <img
+                src="/img/LaTerraza/admin/Captura2.PNG"
+                alt="Sistema de recomendaciones"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Dashboard principal
+                </p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/admin/Captura3.PNG')"
+            >
+              <img
+                src="/img/LaTerraza/admin/Captura3.PNG"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Dashboard principal
+                </p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/admin/Captura4.PNG')"
+            >
+              <img
+                src="/img/LaTerraza/admin/Captura4.PNG"
+                alt="Panel de administración"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Dashboard principal
+                </p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/cliente/Captura1.png')"
+            >
+              <img
+                src="/img/LaTerraza/cliente/Captura1.png"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">Menú Platillos</p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/cliente/Captura4.png')"
+            >
+              <img
+                src="/img/LaTerraza/cliente/Captura4.png"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">Menú Bebidas</p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/cliente/Captura5.png')"
+            >
+              <img
+                src="/img/LaTerraza/cliente/Captura5.png"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">Menú Otros</p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/cliente/Captura2.png')"
+            >
+              <img
+                src="/img/LaTerraza/cliente/Captura2.png"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Perfil de Usuario
+                </p>
+              </div>
+            </div>
+            <div
+              class="gallery-item rounded-lg overflow-hidden cursor-pointer shadow-lg hover:shadow-indigo-500/50 transition"
+              onclick="openImageModal('/img/LaTerraza/cliente/Captura3.png')"
+            >
+              <img
+                src="/img/LaTerraza/cliente/Captura3.png"
+                alt="Flujo de compra"
+                class="w-full h-48 object-cover"
+              />
+              <div class="bg-gray-800 p-3">
+                <p class="text-sm font-medium text-gray-200">
+                  Detalles Platillo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Between Projects -->
+
+      <div
+        class="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4"
+      >
+        <a
+          href="/pages/about-gestion-medica.html"
+          class="px-4 py-2 text-white rounded-full shadow-lg hover:brightness-110 transition flex items-center gradient-bg"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Proyecto anterior
+        </a>
+        <a
+          href="/pages/about-SWI.html"
+          class="px-4 py-2 text-white rounded-full shadow-lg hover:brightness-110 transition flex items-center gradient-bg"
+        >
+          Siguiente proyecto <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div
+      id="imageModal"
+      class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 opacity-0 pointer-events-none transition"
+    >
+      <div class="relative max-w-5xl w-11/12">
+        <button
+          onclick="closeModal('imageModal')"
+          class="absolute -top-10 right-0 text-white hover:text-gray-300"
+        >
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+        <img
+          id="modalImage"
+          src=""
+          alt=""
+          class="w-full h-auto max-h-screen rounded-lg"
+        />
+        <div class="text-white mt-2 text-center" id="modalImageCaption"></div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left"
+        >
+          <div>
+            <img
+              src="/img/FullLogo.png"
+              alt="HiQNet - Soluciones Tecnológicas"
+              class="w-96 sm:w-112 md:w-126 lg:w-160 xl:w-160 p-2 mx-auto md:mx-0"
+            />
+            <p class="text-slate-400">
+              Impulsando el futuro digital de las empresas con soluciones
+              tecnológicas innovadoras y de calidad.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Servicios</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Hospedaje y Dominio</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Integración de APIs</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >UI/UX Design</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Aplicaciones Web</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Diseño de Páginas</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >E-Commerce</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="#home"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#services"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Servicios</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#about"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Nosotros</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#portfolio"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Portafolio</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#contact"
+                  class="text-slate-400 hover:text-white transition-colors"
+                  >Contacto</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+            <p
+              class="text-slate-400 mb-2 flex items-center gap-2 justify-center md:justify-start"
+            >
+              <i class="fas fa-envelope"></i>
+              hiqnet.web@gmail.com
+            </p>
+            <p
+              class="text-slate-400 flex items-center gap-2 justify-center md:justify-start"
+            >
+              <i class="fas fa-clock"></i>
+              Lunes a Viernes: 9am - 8pm
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+          <p class="text-slate-500 text-sm mb-4 md:mb-0">
+            © 2025 HiQNet. Todos los derechos reservados.
+          </p>
+          <div class="flex space-x-6">
+            <a
+              href="#"
+              class="text-slate-500 hover:text-white transition-colors"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a
+              href="#"
+              class="text-slate-500 hover:text-white transition-colors"
+              ><i class="fab fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="/scripts/about.js"></script>
+  </body>
+</html>

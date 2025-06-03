@@ -1,1159 +1,1061 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>HiQNet</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="" name="keywords" />
-    <meta content="" name="description" />
-    <!-- prueba 2 Aquio -->
-    <!-- Favicons -->
-    <link href="img/about/engranaje_minis.png" rel="icon" />
-    <link href="img/apple-touch-icon.png" rel="apple-touch-icon" />
+<html lang="es">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;0,900;1,200;1,300;1,400;1,600&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap CSS File -->
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HiQNet | Consultoría de Software</title>
+  <link rel="icon" href="./img/Logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --gradient-start: #be34f3;
+      --gradient-mid1: #965ef5;
+      --gradient-mid2: #6494f7;
+      --gradient-mid3: #12ecfb;
+      --gradient-end: #2dcffa;
+    }
 
-    <!-- Librerias CSS -->
+    @font-face {
+      font-family: "HiQNet";
+      src: url("font/SANTELLO.ttf") format("truetype");
+    }
 
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      rel="stylesheet"
-    />
+    body {
+      font-family: "HiQNet", sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
 
-    <link href="lib/nivo-slider/css/nivo-slider.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/owl.carousel.css" rel="stylesheet" />
-    <link href="lib/owlcarousel/owl.transitions.css" rel="stylesheet" />
-    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="lib/animate/animate.min.css" rel="stylesheet" />
-    <link href="lib/venobox/venobox.css" rel="stylesheet" />
+    .gradient-text {
+      background: linear-gradient(90deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200% auto;
+      animation: gradient 3s ease infinite;
+    }
 
-    <!-- Nivo Slider Theme -->
-    <link href="css/nivo-slider-theme.css" rel="stylesheet" />
+    .gradient-bg {
+      background: linear-gradient(135deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end));
+      background-size: 200% 200%;
+      animation: gradient 6s ease infinite;
+    }
 
-    <!-- Main Css -->
-    <link href="css/style.css" rel="stylesheet" />
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+    }
 
-    <!-- Responsive Stylesheet File -->
-    <link href="css/responsive.css" rel="stylesheet" />
+    .gradient-border::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end));
+      background-size: 200% 200%;
+      border-radius: 1rem;
+      z-index: -1;
+      opacity: 0.7;
+      animation: gradient 6s ease infinite;
+    }
 
-    <!-- Service Section Css -->
-    <link href="css/services.css" rel="stylesheet" />
-  </head>
+    .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-  <body data-spy="scroll" data-target="#navbar-example">
-    <div id="preloader"></div>
+  @media (min-width: 640px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 columnas en móviles grandes */
+    }
+  }
 
-    <header>
-      <!-- header-area start -->
-      <div id="sticker" class="header-area">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <!-- Navigation -->
-              <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button
-                    type="button"
-                    class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target=".bs-example-navbar-collapse-1"
-                    aria-expanded="false"
-                  >
-                    <span class="sr-only">HiQNet</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <!-- Brand -->
-                  <a
-                    class="navbar-brand page-scroll sticky-logo"
-                    href="index.html"
-                  >
-                    <h1><span></span></h1>
-                    <!-- Uncomment below if you prefer to use an image logo -->
-                    <img
-                      src="img/about/FullLogo.png"
-                      width="160px"
-                      height="50px"
-                      alt=""
-                    />
-                  </a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div
-                  class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1"
-                  id="navbar-example"
-                >
-                  <ul class="nav navbar-nav navbar-right">
-                    <li class="active">
-                      <a class="page-scroll" href="#home">Inicio</a>
-                    </li>
-                    <li>
-                      <a class="page-scroll" href="#about">Acerca de</a>
-                    </li>
-                    <li>
-                      <a class="page-scroll" href="#services">Servicios</a>
-                    </li>
-                    <li></li>
+  @media (min-width: 1024px) {
+    .cards-grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas grandes */
+    }
+  }
 
-                    <!-- a ver otra pruebaa -->
-                    <!-- xd -->
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
 
-                    <!-- <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">...<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href=# >Sistema de Red Médica</a></li>
-                      <li><a href=# >Pendiente...</a></li>
-                    </ul>
-                  </li> -->
+      50% {
+        background-position: 100% 50%;
+      }
 
-                    <li>
-                      <a class="page-scroll" href="#portfolio">Portafolio</a>
-                    </li>
-                    <li>
-                      <a class="page-scroll" href="#contact">Contacto</a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- navbar-collapse -->
-              </nav>
-              <!-- END: Navigation -->
-            </div>
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg,
+          var(--gradient-start),
+          var(--gradient-mid1),
+          var(--gradient-mid2),
+          var(--gradient-mid3),
+          var(--gradient-end));
+      z-index: 1000;
+      transition: width 0.1s;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes floatLogo {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-50px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    #logoAnimate {
+      animation: floatLogo 3s ease-in-out infinite;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 999;
+      opacity: 0;
+      animation: float 2.5s ease-in-out infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+    }
+
+    .modal {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .modal-enter {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .modal-exit {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .modal-exit-active {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    .testimonial-slide {
+      transition: transform 0.5s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+      }
+
+      .dark\:bg-slate-900 {
+        background-color: #0f172a;
+      }
+
+      .dark\:text-slate-100 {
+        color: #e2e8f0;
+      }
+
+      .dark\:bg-slate-800 {
+        background-color: #1e293b;
+      }
+    }
+  </style>
+</head>
+
+<body class="dark:bg-slate-900 dark:text-slate-100">
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top gradient-bg text-white shadow-lg" id="back-to-top">
+    <i class="fas fa-arrow-up text-xl"></i>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center">
+            <span class="text-2xl font-bold gradient-text">HiQNet</span>
           </div>
         </div>
-      </div>
-      <!-- header-area end -->
-    </header>
-    <!-- header end -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-8">
+            <a href="#home"
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+            <a href="#about"
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Nosotros</a>
+            <a href="#services"
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Servicios</a>
 
-    <!-- Start Slider Area -->
-    <div id="home" class="slider-area">
-      <div class="bend niceties preview-2">
-        <div id="ensign-nivoslider" class="slides">
-          <img
-            src="img/slider/slider1.jpg"
-            alt=""
-            title="#slider-direction-1"
-          />
-          <img
-            src="img/slider/slider2.jpg"
-            alt=""
-            title="#slider-direction-2"
-          />
-          <img
-            src="img/slider/slider3.jpg"
-            alt=""
-            title="#slider-direction-3"
-          />
-        </div>
-
-        <!-- direction 1 -->
-        <div id="slider-direction-1" class="slider-direction slider-one">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="slider-content">
-                  <!-- layer 1 -->
-                  <div
-                    class="layer-1-1 hidden-xs wow slideInDown"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  ></div>
-                  <!-- layer 2 -->
-                  <div
-                    class="layer-1-2 wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".1s"
-                  >
-                    <h1 class="title2">
-                      “Transformamos tus ideas en soluciones digitales.”
-                    </h1>
-                  </div>
-                  <!-- layer 3 -->
-                  <div
-                    class="layer-1-3 hidden-xs wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  >
-                    <a class="ready-btn right-btn page-scroll" href="#services"
-                      >Ver Servicios</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+            <a href="#portfolio"
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Portafolio</a>
+            <a href="#contact"
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium">Contacto</a>
           </div>
         </div>
-
-        <!-- direction 2 -->
-        <div id="slider-direction-2" class="slider-direction slider-two">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="slider-content text-center">
-                  <!-- layer 1 -->
-                  <div
-                    class="layer-1-1 hidden-xs wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  ></div>
-                  <!-- layer 2 -->
-                  <div
-                    class="layer-1-2 wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".1s"
-                  >
-                    <h1 class="title2">
-                      “Innovar no es una opción, es la estrategia. Nosotros te
-                      ayudamos a lograrlo.”
-                    </h1>
-                  </div>
-                  <!-- layer 3 -->
-                  <div
-                    class="layer-1-3 hidden-xs wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  >
-                    <a class="ready-btn right-btn page-scroll" href="#services"
-                      >Ver Servicios</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- direction 3 -->
-        <div id="slider-direction-3" class="slider-direction slider-two">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="slider-content">
-                  <!-- layer 1 -->
-                  <div
-                    class="layer-1-1 hidden-xs wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  >
-                    <h2 class="title1"></h2>
-                  </div>
-                  <!-- layer 2 -->
-                  <div
-                    class="layer-1-2 wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".1s"
-                  >
-                    <h1 class="title2">
-                      “Tu empresa está lista para el siguiente nivel. Nosotros
-                      desarrollamos el camino.”
-                    </h1>
-                  </div>
-                  <!-- layer 3 -->
-                  <div
-                    class="layer-1-3 hidden-xs wow slideInUp"
-                    data-wow-duration="2s"
-                    data-wow-delay=".2s"
-                  >
-                    <a class="ready-btn right-btn page-scroll" href="#services"
-                      >Ver Servicios</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Slider Area -->
-
-    <!-- Start About area -->
-    <div id="about" class="about-area area-padding">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="section-headline text-center">
-              <h2>Acerca de HiQNet</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- single-well start-->
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="well-left">
-              <div class="single-well">
-                <a href="#">
-                  <img
-                    src="img/about/FullLogo.png"
-                    width="700px"
-                    height="200px"
-                    alt=""
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- single-well end-->
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="well-middle">
-              <div class="single-well">
-                <a href="#">
-                  <h4 class="sec-head">¿Quiénes Somos?</h4>
-                </a>
-                <br />
-                <p>
-                  En <strong>HiQNet</strong> somos una empresa orgullosamente
-                  mexicana especializada en
-                  <strong>desarrollo de software a la medida</strong>. Creamos
-                  soluciones tecnológicas innovadoras, seguras y de alto
-                  rendimiento, enfocadas en optimizar los procesos de nuestros
-                  clientes y acelerar su transformación digital.
-                </p>
-                <p>
-                  Nos caracteriza el compromiso con la calidad, la mejora
-                  continua y un enfoque centrado en las necesidades reales de
-                  cada proyecto. Nuestro equipo profesional trabaja de la mano
-                  con cada empresa para garantizar productos escalables,
-                  eficientes y alineados con sus objetivos estratégicos.
-                </p>
-                <ul>
-                  <li>
-                    <i class="fa fa-check"></i> Desarrollo de aplicaciones web y
-                    móviles personalizadas
-                  </li>
-                  <li>
-                    <i class="fa fa-check"></i> Integración de sistemas y
-                    automatización de procesos
-                  </li>
-                  <li>
-                    <i class="fa fa-check"></i> Actualizaciones funcionales y de
-                    seguridad
-                  </li>
-                  <li>
-                    <i class="fa fa-check"></i> Escalabilidad y mejora continua
-                  </li>
-                  <li>
-                    <i class="fa fa-check"></i> Soporte técnico especializado y
-                    cercano
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- End col-->
-          <div class="faq-area area-padding">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="section-headline text-center"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <div class="tab-menu">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li class="active">
-                        <a href="#p-view-1" role="tab" data-toggle="tab"
-                          >Misión</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#p-view-2" role="tab" data-toggle="tab"
-                          >Visión</a
-                        >
-                      </li>
-                      <li>
-                        <a href="#p-view-3" role="tab" data-toggle="tab"
-                          >Valores</a
-                        >
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="p-view-1">
-                      <div class="tab-inner">
-                        <div class="event-content head-team">
-                          <h4>Misión</h4>
-                          <p>
-                            En HiQNet, nuestra misión es diseñar y desarrollar
-                            soluciones de software innovadoras que impulsen la
-                            transformación digital de las empresas. Nos
-                            enfocamos en crear sistemas eficientes,
-                            personalizados y escalables que optimicen los
-                            procesos internos y mejoren la experiencia de sus
-                            usuarios finales.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="p-view-2">
-                      <div class="tab-inner">
-                        <div class="event-content head-team">
-                          <h4>Visión</h4>
-                          <p>
-                            Ser una empresa líder en desarrollo de software a
-                            nivel nacional, reconocida por la calidad,
-                            innovación y compromiso en cada proyecto. Aspiramos
-                            a ser aliados estratégicos de empresas que buscan
-                            evolucionar tecnológicamente y mantenerse
-                            competitivas en un entorno digital.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="p-view-3">
-                      <div class="tab-inner">
-                        <div class="event-content head-team">
-                          <h4>Valores</h4>
-                          <br />
-                          <p>
-                            En HiQNet nos guiamos por los valores que nos
-                            definen como equipo y empresa:
-                          </p>
-                          <ul>
-                            <li>
-                              <i class="fa fa-check"></i>
-                              <strong>Compromiso:</strong> Cumplimos lo que
-                              prometemos y buscamos la excelencia en cada
-                              entrega.
-                            </li>
-                            <li>
-                              <i class="fa fa-check"></i>
-                              <strong>Innovación:</strong> Desarrollamos
-                              soluciones creativas, modernas y útiles.
-                            </li>
-                            <li>
-                              <i class="fa fa-check"></i>
-                              <strong>Trabajo en equipo:</strong> Fomentamos la
-                              colaboración para alcanzar objetivos comunes.
-                            </li>
-                            <li>
-                              <i class="fa fa-check"></i>
-                              <strong>Transparencia:</strong> Comunicación clara
-                              y honesta con nuestros clientes.
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end Row -->
-            </div>
-          </div>
-          <!-- End Faq Area -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button"
+            class="inline-flex items-center justify-center p-2 rounded-md text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
-    <!-- End About area -->
 
-    <!-- End Left services -->
-    <section id="services" class="services-2">
-      <div class="section-headline text-center">
-        <h2>Nuestros servicios</h2>
-      </div>
-      <div class="container-3">
-        <div class="services-wrapper">
-          <div class="category-1">
-            <div class="services-pair">
-              <div class="service-2">
-                <i class="fas fa-globe"></i>
-                <p><strong>Hospedaje y Dominio</strong></p>
-                <p>
-                  Asegura tu presencia en internet con un dominio personalizado
-                  y un hosting confiable.
-                </p>
-              </div>
-              <div class="service-2">
-                <i class="fas fa-code-branch"></i>
-                <p><strong>Integración de APIs</strong></p>
-                <p>
-                  Conectamos tus sistemas mediante APIs REST o SOAP para
-                  automatizar procesos y mejorar la conectividad.
-                </p>
-              </div>
-              <div class="service-2">
-                <i class="fas fa-object-group"></i>
-                <p><strong>Diseño UI/UX</strong></p>
-                <p>
-                  Creamos interfaces atractivas y fáciles de usar que brindan
-                  una mejor experiencia para el usuario.
-                </p>
-              </div>
-              <div class="service-2">
-                <i class="fas fa-laptop-code"></i>
-                <p><strong>Aplicaciones WEB</strong></p>
-                <p>
-                  Administra tus negocios con nuestras aplicaciones diseñadas a
-                  medida.
-                </p>
-              </div>
-              <div class="service-2">
-                <i class="fas fa-code"></i>
-                <p><strong>Diseño de Páginas</strong></p>
-                <p>
-                  Diseñamos páginas web atractivas y funcionales adaptadas a tu
-                  negocio.
-                </p>
-              </div>
-              <div class="service-2">
-                <i class="fas fa-store"></i>
-                <p><strong>E-Commerce</strong></p>
-                <p>Vende tus productos con una tienda online fácil de usar.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Service area -->
-
-    <!-- Start Testimonials -->
-    <div class="testimonials-area">
-      <div class="testi-inner area-padding">
-        <div class="testi-overly"></div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <!-- Start testimonials Start -->
-              <div class="testimonial-content text-center">
-                <a class="quate" href="#"><i class="fa fa-quote-right"></i></a>
-                <!-- start testimonial carousel -->
-                <div class="testimonial-carousel">
-                  <div class="single-testi">
-                    <div class="testi-text">
-                      <p class="frase">
-                        El software es una gran combinación entre arte e
-                        ingeniería.
-                      </p>
-                      <h6>- Bill Gates</h6>
-                    </div>
-                  </div>
-                  <!-- End single item -->
-                  <div class="single-testi">
-                    <div class="testi-text">
-                      <p class="frase">
-                        La Web no está terminada. Siempre será un trabajo en
-                        progreso.
-                      </p>
-                      <h6>- Tim Berners-Lee</h6>
-                    </div>
-                  </div>
-                  <!-- End single item -->
-                  <div class="single-testi">
-                    <div class="testi-text">
-                      <p class="frase">
-                        La mejor forma de predecir el futuro es inventarlo.
-                      </p>
-                      <h6>- Alan Kay</h6>
-                    </div>
-                  </div>
-                  <!-- End single item -->
-                </div>
-              </div>
-              <!-- End testimonials end -->
-            </div>
-            <!-- End Right Feature -->
-          </div>
-        </div>
+    <!-- Mobile menu -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-slate-800 shadow-lg">
+        <a href="#home"
+          class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+        <a href="#services"
+          class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Servicios</a>
+        <a href="#about"
+          class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Nosotros</a>
+        <a href="#portfolio"
+          class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Portafolio</a>
+        <a href="#contact"
+          class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium">Contacto</a>
       </div>
     </div>
-    <!-- End Testimonials -->
+  </nav>
 
-    <!-- Start Blog Area -->
-    <div id="portfolio" class="blog-area">
-      <div class="blog-inner area-padding">
-        <div class="blog-overly"></div>
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <div class="section-headline text-center">
-                <h2>Portafolio</h2>
-              </div>
-            </div>
-          </div>
-          <!-- Responsive grid de tarjetas -->
-          <div class="row">
-            <!-- Tarjeta genérica, repítela para cada proyecto -->
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="blog.html">
-                    <img
-                      src="img/blog/hospital.jpeg"
-                      class="img-fluid"
-                      alt="Proyecto 1"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4><a href="blog.html">Gestión médica</a></h4>
-                  <p>
-                    La gestión actual presenta retrasos por actualizaciones
-                    lentas y comunicación ineficiente mediante correos y hojas
-                    de cálculo.
-                  </p>
-                </div>
-                <span><a href="blog.html" class="ready-btn">Saber Más</a></span>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="blog-details-laterraza.html">
-                    <img
-                      src="img/blog/laterraza.jpg"
-                      class="img-fluid"
-                      alt="Proyecto 2"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4><a href="blog-details-laterraza.html">La Terraza</a></h4>
-                  <p>
-                    Menús en papel y toma manual de órdenes provocan errores y
-                    lentitud, afectando la experiencia del cliente en
-                    restaurantes.
-                  </p>
-                </div>
-                <span
-                  ><a href="blog-details-laterraza.html" class="ready-btn"
-                    >Saber Más</a
-                  ></span
-                >
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="/details-SWI.html">
-                    <img
-                      src="img/blog/SWI-1.png"
-                      class="img-fluid"
-                      alt="Bienes Raíces"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="/details-SWI.html">Social Media Marketing</a>
-                  </h4>
-                  <p>
-                    Se realizó un rediseño completo y optimización del código,
-                    mejorando su apariencia visual, estructura, navegación y
-                    adaptación a dispositivos móviles.
-                  </p>
-                </div>
-                <span
-                  ><a href="/details-SWI.html" class="ready-btn"
-                    >Saber Más</a
-                  ></span
-                >
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="/designWebServices.html">
-                    <img
-                      src="img/blog/designWebServices.png"
-                      class="img-fluid"
-                      alt="Bienes Raíces"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="/designWebServices.html"
-                      >Diseño Webservice y Backend</a
-                    >
-                  </h4>
-                  <p>
-                    Diseño de webservice y desarrollo backend para sistema de
-                    aprendizaje enfocado a la enseñanza de matemáticas en línea.
-                  </p>
-                </div>
-                <span
-                  ><a href="/designWebServices.html" class="ready-btn"
-                    >Saber Más</a
-                  ></span
-                >
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="/details-bienesRaices.html">
-                    <img
-                      src="img/blog/bienesRaices.png"
-                      class="img-fluid"
-                      alt="Bienes Raíces"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="/details-bienesRaices.html">Bienes Raíces</a>
-                  </h4>
-                  <p>
-                    Plataforma para buscar y publicar propiedades fácilmente.
-                    Permite filtrar, subir imágenes y contactar directamente.
-                  </p>
-                </div>
-                <span
-                  ><a href="/details-bienesRaices.html" class="ready-btn"
-                    >Saber Más</a
-                  ></span
-                >
-              </div>
-            </div>
-
-            <!-- Nuevas tarjetas -->
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4 d-flex">
-              <div class="single-blog">
-                <div class="single-blog-img">
-                  <a href="https://github.com/Grxson/qr-generator">
-                    <img
-                      src="img/blog/GeneradorQR.png"
-                      class="img-fluid"
-                      alt="Generador QR"
-                    />
-                  </a>
-                </div>
-                <div class="blog-meta"></div>
-                <div class="blog-text">
-                  <h4>
-                    <a href="https://github.com/Grxson/qr-generator"
-                      >Generador QR</a
-                    >
-                  </h4>
-                  <p>
-                    Plataforma con carrito de compras, pagos en línea y control
-                    de inventario para facilitar ventas digitales.
-                  </p>
-                </div>
-                <span
-                  ><a
-                    href="https://github.com/Grxson/qr-generator"
-                    class="ready-btn"
-                  >
-                    <i class="fab fa-github"></i> Saber Más
-                  </a></span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Blog Area -->
-
-    <!-- Start Suscrive Area -->
-    <div class="suscribe-area">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs=12">
-            <div class="suscribe-text text-center"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Suscrive Area -->
-    <!-- Start contact Area -->
-    <section id="contact" aria-label="Sección de contacto">
-      <style>
-        /* Contenedor principal */
-        #contact {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          padding: 60px 20px;
-          max-width: 1200px;
-          margin: 0 auto;
-          gap: 30px;
-          background-color: #fcfcfc;
-          font-family: Arial, sans-serif;
-          color: #fff;
-        }
-
-        /* Estilo para ambas columnas */
-        #contact .col {
-          flex: 1;
-          max-width: 450px;
-        }
-
-        /* Columna izquierda: imagen y mensaje */
-        #contact .contact-left {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 20px;
-          padding: 10px;
-        }
-
-        #contact .contact-left img {
-          max-width: 200px;
-          height: auto;
-          border-radius: 50%;
-          border: 4px solid #a5c513;
-        }
-
-        /* Aumento de tamaño en el título */
-        #contact .contact-left h1 {
-          margin: 0;
-          font-size: 3rem;
-        }
-
-        /* Aumento del tamaño de los párrafos */
-        #contact .contact-left p {
-          font-size: 1.25rem;
-          line-height: 1.5;
-          margin: 0 20px;
-        }
-
-        /* Columna derecha: formulario de contacto */
-        /* Usamos rgb(161, 43, 230) que equivale a #a12be6 */
-        #contact .contact-right {
-          background-color: #8509f8;
-          border-radius: 8px;
-          padding: 30px;
-        }
-
-        #contact .contact-right form {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-        }
-
-        /* Estilos de inputs y textarea con fuente aumentada */
-        #contact .contact-right input[type="text"],
-        #contact .contact-right input[type="email"],
-        #contact .contact-right textarea {
-          width: 100%;
-          padding: 12px;
-          border: none;
-          border-radius: 4px;
-          font-size: 1.125rem;
-          box-sizing: border-box;
-          background-color: #fff;
-          color: #333;
-        }
-
-        /* Estilos para el botón usando rgb para sus colores */
-        /* rgb(0, 225, 255) equivale a #00e1ff y rgb(0, 162, 255) equivale a #00a2ff */
-        #contact .contact-right button {
-          padding: 12px;
-          background-color: rgb(0, 225, 255);
-          color: #333;
-          border: none;
-          border-radius: 4px;
-          font-size: 1.25rem;
-          font-weight: bold;
-          cursor: pointer;
-          transition: background-color 0.3s, transform 0.2s;
-        }
-
-        #contact .contact-right button:hover,
-        #contact .contact-right button:focus {
-          background-color: rgb(0, 162, 255);
-          transform: translateY(-2px);
-          outline: none;
-        }
-
-        /* Responsividad: organizar las columnas en vertical en pantallas medianas y pequeñas */
-        @media (max-width: 960px) {
-          #contact {
-            flex-direction: column;
-            align-items: stretch;
-          }
-
-          #contact .col {
-            max-width: 100%;
-          }
-        }
-      </style>
-
-      <!-- Columna Izquierda: Imagen y texto informativo -->
-      <div class="col contact-left">
-        <h1>Contactanos!</h1>
-        <p>
-          ¡Hola! Si deseas ponerte en contacto con nosotros, rellena el
-          siguiente formulario o escríbenos a
-          <strong>
-            <a
-              href="mailto:hiqnet.web@gmail.com"
-              style="color: #7513c5; text-decoration: none"
-            >
-              hiqnet.web@gmail.com
-            </a> </strong
-          >.
+  <!-- Hero Section -->
+  <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-12 md:mb-0">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          <span class="gradient-text">Impulsamos</span><br />
+          tu futuro digital
+        </h1>
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-8">
+          Soluciones tecnológicas innovadoras para llevar tu negocio al
+          siguiente nivel. Transformamos ideas en experiencias digitales
+          excepcionales.
         </p>
-        <p>
-          Te responderemos lo más pronto posible
-          <span style="font-size: 1.2em">&#128515;</span>
+        <div class="flex flex-col sm:flex-row gap-4">
+
+          <button onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })"
+            class="border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-medium py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-purple-500 hover:text-white dark:hover:text-white">
+            Solicita Una Cotización
+          </button>
+        </div>
+      </div>
+      <div class="md:w-1/2 flex justify-center">
+        <img id="logoAnimate" src="/Animated LogoV2.gif" class="w-96 md:w-96 lg:w-96 mx-auto" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients Section -->
+  <!-- <section class="py-12 bg-slate-50 dark:bg-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2
+          class="text-center text-2xl font-semibold text-slate-600 dark:text-slate-300 mb-12"
+        >
+          Confían en nosotros
+        </h2>
+        <div
+          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center"
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png"
+            alt="Amazon"
+            class="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_logo.svg/2560px-Microsoft_logo.svg.png"
+            alt="Microsoft"
+            class="h-8 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png"
+            alt="Google"
+            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Samsung_Logo.svg/2560px-Samsung_Logo.svg.png"
+            alt="Samsung"
+            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/505px-Apple_logo_black.svg.png"
+            alt="Apple"
+            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2560px_Logo_NIKE.svg.png"
+            alt="Nike"
+            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+        </div>
+      </div>
+    </section> -->
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-slate-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            ¿Quiénes <span class="gradient-text">Somos?</span>
+          </h2>
+          <p class="text-lg text-slate-600 dark:text-slate-300 mb-6 text-justify">
+            Fundada en 2023, HiQNet nació de la visión de un grupo de
+            ingenieros apasionados por crear soluciones tecnológicas que
+            realmente marquen la diferencia.
+          </p>
+          <p class="text-lg text-slate-600 dark:text-slate-300 mb-6 text-justify">
+            Nos caracteriza el compromiso con la calidad, la mejora continua y
+            un enfoque centrado en las necesidades reales de cada proyecto.
+            Nuestro equipo trabaja de la mano con cada empresa para garantizar
+            productos escalables, eficientes y alineados con sus objetivos
+            estratégicos.
+          </p>
+          <p class="text-lg text-slate-600 dark:text-slate-300 text-justify">
+            Nuestra filosofía se basa en entender profundamente los desafíos
+            de nuestros clientes para ofrecer soluciones personalizadas que
+            generen valor real y sostenible.
+          </p>
+        </div>
+        <div class="lg:w-1/2">
+          <div class="relative">
+            <div class="gradient-bg w-full h-80 lg:h-96 rounded-2xl shadow-xl overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                alt="HiQNet Team" class="w-full h-full object-cover opacity-90" />
+            </div>
+            <!-- <div
+                class="absolute -bottom-6 -left-6 bg-white dark:bg-slate-700 p-6 rounded-xl shadow-lg w-2/3"
+              >
+                <div class="flex items-center mb-2">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center mr-4"
+                  >
+                    <i class="fas fa-trophy text-white text-xl"></i>
+                  </div>
+                  <h3 class="text-lg font-bold">Premio a la Innovación 2022</h3>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-300">
+                  Reconocidos por nuestra solución de inteligencia artificial
+                  para el sector financiero.
+                </p>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <div class="text-center mb-16">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight text-slate-900 dark:text-white">
+      Nuestra <span class="gradient-text">Esencia</span>
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+      Descubre lo que nos mueve y define.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 order-1 sm:order-none">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 gradient-bg rounded-full flex items-center justify-center mb-5 mx-auto">
+        <i class="fas fa-bullseye text-white text-xl sm:text-2xl"></i>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold text-center mb-3 text-slate-900 dark:text-white">Misión</h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base text-justify leading-relaxed">
+        En HiQNet, nuestra misión es diseñar y desarrollar soluciones de software innovadoras que impulsen la transformación digital de las empresas. Creamos sistemas eficientes, personalizados y escalables que optimicen procesos y mejoren la experiencia de los usuarios.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 order-2 sm:order-none">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 gradient-bg rounded-full flex items-center justify-center mb-5 mx-auto">
+        <i class="fas fa-eye text-white text-xl sm:text-2xl"></i>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold text-center mb-3 text-slate-900 dark:text-white">Visión</h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base text-justify leading-relaxed">
+        Ser una empresa líder en desarrollo de software a nivel nacional, reconocida por calidad, innovación y compromiso. Aspiramos a ser aliados estratégicos de empresas que buscan evolucionar tecnológicamente.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 order-3 sm:order-none sm:col-span-2 lg:col-span-1 mx-auto w-full">
+      <div class="w-14 h-14 sm:w-16 sm:h-16 gradient-bg rounded-full flex items-center justify-center mb-5 mx-auto">
+        <i class="fas fa-heart text-white text-xl sm:text-2xl"></i>
+      </div>
+      <h3 class="text-lg sm:text-xl font-bold text-center mb-5 text-slate-900 dark:text-white">Valores</h3>
+      <ul class="space-y-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base text-justify">
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check text-green-500 mt-1"></i>
+          <span><strong>Innovación:</strong> Soluciones creativas, modernas y útiles.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check text-green-500 mt-1"></i>
+          <span><strong>Transparencia:</strong> Comunicación clara y honesta.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check text-green-500 mt-1"></i>
+          <span><strong>Compromiso:</strong> Excelencia y cumplimiento.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check text-green-500 mt-1"></i>
+          <span><strong>Calidad:</strong> Resultados sólidos y eficientes.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i class="fas fa-check text-green-500 mt-1"></i>
+          <span><strong>Trabajo en equipo:</strong> Colaboración para lograr objetivos.</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <div class="text-center mb-20">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+      Nuestros
+      <span class="gradient-text">Servicios</span>
+    </h2>
+    <p class="text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+      Soluciones digitales a medida para llevar tu negocio al siguiente nivel.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-globe text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        Hospedaje y Dominio
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Asegura tu presencia en internet con un dominio personalizado y un
+        hosting confiable.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-code-branch text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        Integración de APIs
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Conectamos tus sistemas mediante APIs REST o SOAP para automatizar
+        procesos y mejorar la conectividad.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-object-group text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        UI/UX Design
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Creamos interfaces atractivas y fáciles de usar que brindan una mejor
+        experiencia para el usuario.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-laptop-code text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        Aplicaciones Web
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Administra tus negocios con nuestras aplicaciones diseñadas a medida.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-code text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        Diseño de Páginas
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Diseñamos páginas web atractivas y funcionales adaptadas a tu negocio.
+      </p>
+    </div>
+
+    <div
+      class="flex flex-col items-center text-center backdrop-blur-xl border border-white/10 bg-white/80 dark:bg-slate-800/70 rounded-2xl py-6 px-4 md:p-8 shadow-xl hover:scale-105 hover:shadow-2xl transition duration-300 ease-in-out"
+    >
+      <div
+        class="gradient-bg w-16 h-16 bg-gradient-to-br from-[#BE34F3] to-[#2DCFFA] rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto **mt-4**"
+      >
+        <i class="fas fa-store text-white text-2xl"></i>
+      </div>
+      <h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-white">
+        E-Commerce
+      </h3>
+      <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base">
+        Vende tus productos con una tienda online fácil de usar.
+      </p>
+    </div>
+  </div>
+</section>
+
+  <!-- Experience Section -->
+  <section class="py-20 gradient-bg text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+      <div class="py-8">
+        <div class="text-5xl font-bold mb-2 counter" data-target="2">2</div>
+        <div class="text-xl">Años de Experiencia</div>
+      </div>
+
+      <div class="py-8">
+        <div class="text-5xl font-bold mb-2 counter" data-target="12">12</div>
+        <div class="text-xl">Proyectos Completados</div>
+      </div>
+
+      <div class="py-8 col-span-2 md:col-span-1 mx-auto md:mx-0">
+        <div class="text-5xl font-bold mb-2 counter" data-target="8">8</div>
+        <div class="text-xl">Empresas Atendidas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Nuestro <span class="gradient-text">Portafolio</span>
+      </h2>
+      <p class="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+        Algunos de los proyectos que hemos desarrollado para nuestros clientes
+        en diversos sectores.
+      </p>
+    </div>
+    <a href="/pages/about-gestion-medica.html">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+          data-project="1">
+          <div class="h-48 overflow-hidden">
+            <img src="./img/blog/hospital.webp" alt="Project 1"
+              class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Sistema de Gestión Médica</h3>
+            <p class="text-slate-600 dark:text-slate-300 mb-4">
+              Plataforma integral para la gestión médicos y hospitales, para
+              mejorar la atención al paciente y optimizar los recursos.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">React</span>
+              <span class="bg-red-700 text-white px-3 py-1 rounded-full text-sm font-medium">Java</span>
+              <span class="bg-orange-700 text-white px-3 py-1 rounded-full text-sm font-medium">MySQL</span>
+            </div>
+          </div>
+        </div>
+    </a>
+    <a href="/pages/about-laTerraza.html">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="./img/LaTerraza/laterraza.webp" alt="La Terraza"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">La Terraza</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4">
+            Solución de gestión de cafetería con menú digital, canjeo de
+            puntos y sistema de cupones.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">React</span>
+            <span class="bg-red-700 text-white px-3 py-1 rounded-full text-sm font-medium">Laravel</span>
+            <span class="bg-orange-700 text-white px-3 py-1 rounded-full text-sm font-medium">MySQL</span>
+            <span class="bg-cyan-700 text-white px-3 py-1 rounded-full text-sm font-medium">Filament</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <a href="/pages/about-SWI.html">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="3">
+        <div class="h-48 overflow-hidden">
+          <img src="./img/SWI/SWI-1.png" alt="Social Media Marketing"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Social Media Marketing</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4">
+            Estrategias de marketing digital para aumentar la presencia online
+            mejorando la estructura, la apariencia visual...
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">React</span>
+            <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-medium">JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- Project 4 -->
+    <a href="/pages/about-webService.html">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="./img/blog/designWebServices.webp" alt="La Terraza"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Diseño Webservice y Backend</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4">
+            Diseño de webservice y desarrollo backend para sistema de
+            aprendizaje enfocado a la enseñanza de matemáticas en linea.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">React</span>
+            <span class="bg-red-700 text-white px-3 py-1 rounded-full text-sm font-medium">Laravel</span>
+            <span class="bg-orange-700 text-white px-3 py-1 rounded-full text-sm font-medium">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- Project 5 -->
+    <a href="/pages/about-bienesRaices.html">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="./img/BienesRaices/bienesRaices.webp" alt="Bienes Raices"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Bienes Raices</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4">
+            Plataforma para buscar y publicar propiedades fácilmente. Permite
+            filtrar, subir imágenes y contactar directamente a los
+            propietarios.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-yellow-700 text-white px-3 py-1 rounded-full text-sm font-medium">Pug</span>
+
+            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">Node.js</span>
+            <span class="bg-gray-900 text-white px-3 py-1 rounded-full text-sm font-medium">Express.js</span>
+            <span class="bg-orange-700 text-white px-3 py-1 rounded-full text-sm font-medium">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- Project 6 -->
+    <a href="https://github.com/Grxson/qr-generator">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="./img/blog/GeneradorQR.webp" alt="Generador QR"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Generador QR</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4">
+            Herramienta para generar códigos QR personalizados.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium">Python</span>
+            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">HTML</span>
+            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">CSS</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    </div>
+
+    <!-- <div class="text-center mt-12">
+        <button
+          class="border-2 border-purple-500 text-purple-600 dark:text-purple-400 font-medium py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-purple-500 hover:text-white dark:hover:text-white"
+        >
+          Ver más proyectos
+        </button>
+      </div> -->
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-20 bg-slate-50 dark:bg-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          Frases <span class="gradient-text">Célebres</span>
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          Inspiración de los grandes pensadores de la tecnología que nos guían
+          en nuestro trabajo diario.
         </p>
       </div>
 
-      <!-- Columna Derecha: Formulario de contacto -->
-      <div class="col contact-right">
-        <form action="#" method="POST" aria-label="Formulario de contacto">
-          <label for="nombre" class="sr-only">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            placeholder="Nombre"
-            required
-            aria-required="true"
-          />
+      <div class="relative max-w-4xl mx-auto">
+        <div class="testimonial-slider overflow-hidden">
+          <div class="flex transition-transform duration-500" id="testimonial-track">
+            <!-- Testimonial 1 -->
+            <div class="w-full flex-shrink-0 px-4 text-center">
+              <div class="bg-white dark:bg-slate-700 p-8 rounded-xl shadow-lg">
+                <div class="text-2xl text-slate-700 dark:text-slate-200 italic mb-6">
+                  "El software es una gran combinación entre arte e
+                  ingeniería."
+                </div>
+                <div class="flex justify-center items-center">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                    BG
+                  </div>
+                  <div>
+                    <div class="font-bold">Bill Gates</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">
+                      Cofundador de Microsoft
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <label for="email" class="sr-only">Correo electrónico</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            required
-            aria-required="true"
-          />
+            <!-- Testimonial 2 -->
+            <div class="w-full flex-shrink-0 px-4 text-center">
+              <div class="bg-white dark:bg-slate-700 p-8 rounded-xl shadow-lg">
+                <div class="text-2xl text-slate-700 dark:text-slate-200 italic mb-6">
+                  "La máquina analítica no tiene pretensiones de originar
+                  nada. Puede hacer cualquier cosa que sepamos ordenarle que
+                  realice."
+                </div>
+                <div class="flex justify-center items-center">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                    AL
+                  </div>
+                  <div>
+                    <div class="font-bold">Ada Lovelace</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">
+                      Primera programadora
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <label for="mensaje" class="sr-only">Mensaje</label>
-          <textarea
-            id="mensaje"
-            name="mensaje"
-            rows="6"
-            placeholder="Deja tu mensaje"
-            required
-            aria-required="true"
-          ></textarea>
+            <!-- Testimonial 3 -->
+            <div class="w-full flex-shrink-0 px-4 text-center">
+              <div class="bg-white dark:bg-slate-700 p-8 rounded-xl shadow-lg">
+                <div class="text-2xl text-slate-700 dark:text-slate-200 italic mb-6">
+                  "Hablar es barato. Muéstrame el código."
+                </div>
+                <div class="flex justify-center items-center">
+                  <div
+                    class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white font-bold mr-4">
+                    LT
+                  </div>
+                  <div>
+                    <div class="font-bold">Linus Torvalds</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">
+                      Creador de Linux
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <button type="submit" aria-label="Enviar mensaje">Enviar</button>
+        <!-- Dots Navigation (Optional) -->
+        <div class="flex justify-center mt-8 gap-2" id="testimonial-dots">
+          <button class="w-3 h-3 rounded-full bg-purple-300 dark:bg-purple-700 dot active" data-index="0"></button>
+          <button class="w-3 h-3 rounded-full bg-purple-300 dark:bg-purple-700 dot" data-index="1"></button>
+          <button class="w-3 h-3 rounded-full bg-purple-300 dark:bg-purple-700 dot" data-index="2"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="lg:w-1/2">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          <span class="gradient-text">Contáctanos</span>
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">
+          ¿Listo para comenzar tu próximo proyecto? Completa el formulario y
+          nos pondremos en contacto contigo en menos de 24 horas.
+        </p>
+        <div class="space-y-6 mb-8">
+          <div class="flex items-start">
+            <div
+              class="w-12 h-12 gradient-bg rounded-full flex items-center justify-center text-white mr-4 flex-shrink-0">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Correo</h3>
+              <p class="text-slate-600 dark:text-slate-300">
+                hiqnet.web@gmail.com
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="font-bold text-lg mb-4">Síguenos</h3>
+          <div class="flex gap-4">
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-1/2">
+        <form class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-lg">
+          <div class="mb-6">
+            <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Nombre
+              completo</label>
+            <input type="text" id="name"
+              class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+              placeholder="Tu nombre" />
+          </div>
+
+          <div class="mb-6">
+            <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Correo
+              electrónico</label>
+            <input type="email" id="email"
+              class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+              placeholder="tu@email.com" />
+          </div>
+
+          <div class="mb-6">
+            <label for="service" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Servicio de
+              interés</label>
+            <select id="service"
+              class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white">
+              <option value="">- Selecciona un servicio -</option>
+              <option value="development">Hospedaje y Dominio</option>
+              <option value="cloud">Integración de APIs</option>
+              <option value="design">UI/UX Design</option>
+              <option value="qa">Aplicaciones Web</option>
+              <option value="integration">Diseño de Páginas</option>
+              <option value="analytics">E-Commerce</option>
+            </select>
+          </div>
+
+          <div class="mb-6">
+            <label for="message"
+              class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Mensaje</label>
+            <textarea id="message" rows="5"
+              class="w-full px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-slate-700 dark:text-white"
+              placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+          </div>
+
+          <button type="submit"
+            class="w-full gradient-bg text-white font-medium py-3 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-lg">
+            Enviar mensaje
+          </button>
         </form>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Estilo para ocultar etiquetas visualmente pero que sean leídas por lectores de pantalla -->
-    <style>
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-    </style>
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
+        <div>
+          <img src="/img/FullLogo.png" alt="HiQNet - Soluciones Tecnológicas" class="w-96 sm:w-112 md:w-126 lg:w-160 xl:w-160 p-2 mx-auto md:mx-0">
+          <p class="text-slate-400">
+            Impulsando el futuro digital de las empresas con soluciones
+            tecnológicas innovadoras y de calidad.
+          </p>
+        </div>
 
-    <!-- End Contact Area -->
-
-    <!-- Start Footer bottom Area -->
-    <footer
-      style="
-        background-color: #000;
-        color: #fff;
-        padding: 40px 0;
-        font-family: sans-serif;
-      "
-    >
-      <div class="container" style="max-width: 1200px; margin: 0 auto">
-        <div class="row" style="display: flex; flex-wrap: wrap">
-          <!-- Columna 1: Logo -->
-          <div
-            class="col-md-3"
-            style="flex: 1; min-width: 250px; margin-bottom: 20px"
-          >
-            <div class="footer-logo" style="margin-bottom: 20px">
-              <img
-                src="img/about/FullLogo.png"
-                alt="HiQNet Logo"
-                style="max-width: 350px; height: auto"
-              />
-            </div>
-            <p
-              style="
-                font-size: 1.3rem;
-                line-height: 1.6;
-                margin-bottom: 0;
-                color: #fff;
-              "
-            >
-              HiQNet es una empresa orgullosamente mexicana que brinda
-              mantenimiento a los servicios que ofrece, asegurando un buen
-              funcionamiento y una larga vida útil.
-            </p>
-          </div>
-
-          <!-- Columna 2: Sobre nosotros (desplazada hacia la derecha) -->
-          <div
-            class="col-md-3"
-            style="
-              flex: 1;
-              min-width: 250px;
-              margin-bottom: 20px;
-              margin-left: 20px;
-            "
-          >
-            <h4
-              style="
-                margin-bottom: 15px;
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: #fff;
-              "
-            >
-              Sobre nosotros
-            </h4>
-            <ul style="list-style: none; padding: 0; margin: 0">
-              <li style="margin-bottom: 8px">
-                <a
-                  href="#"
-                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
-                  >Quiénes somos</a
-                >
-              </li>
-              <li style="margin-bottom: 8px">
-                <a
-                  href="#"
-                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
-                  >Nuestro compromiso</a
-                >
-              </li>
-              <li style="margin-bottom: 8px">
-                <a
-                  href="#"
-                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
-                  >Servicios</a
-                >
-              </li>
-              <li style="margin-bottom: 8px">
-                <a
-                  href="#"
-                  style="text-decoration: none; color: #fff; font-size: 1.3rem"
-                  >Blog</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- Columna 3: Información y contacto -->
-          <div
-            class="col-md-3"
-            style="flex: 1; min-width: 250px; margin-bottom: 20px"
-          >
-            <h4
-              style="
-                margin-bottom: 15px;
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: #fff;
-              "
-            >
-              Información
-            </h4>
-            <p style="font-size: 1.3rem; line-height: 1.6; color: #fff">
-              Comunícate con nosotros para resolver tus dudas y recibir
-              información clara y concisa.
-            </p>
-            <p style="margin: 10px 0 0; font-size: 1.3rem; color: #fff">
-              <strong>Correo:</strong>
-              <a
-                href="mailto:hiqnet.web@gmail.com"
-                style="text-decoration: none; color: #fff"
-              >
-                hiqnet.web@gmail.com
-              </a>
-            </p>
-          </div>
-
-          <!-- Columna 4: Redes sociales -->
-          <!-- Esta columna está comentada, si la necesitas, descomenta el siguiente bloque -->
-          <!--
-        <div class="col-md-3" style="flex: 1; min-width: 250px; margin-bottom: 20px;">
-          <h4 style="margin-bottom: 15px; font-size: 1.5rem; font-weight: bold; color: #fff;">Redes sociales</h4>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex;">
-            <li style="margin-right: 10px;">
-              <a href="https://www.facebook.com/" style="color: #fff; font-size: 1.3rem;">
-                <i class="fa fa-facebook"></i>
-              </a>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Servicios</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">Hospedaje y Dominio</a>
             </li>
-            <li style="margin-right: 10px;">
-              <a href="https://twitter.com/" style="color: #fff; font-size: 1.3rem;">
-                <i class="fa fa-twitter"></i>
-              </a>
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">Integración de APIs</a>
             </li>
-            <li style="margin-right: 10px;">
-              <a href="https://www.reddit.com/" style="color: #fff; font-size: 1.3rem;">
-                <i class="fa fa-reddit"></i>
-              </a>
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">UI/UX Design</a>
             </li>
-            <li style="margin-right: 10px;">
-              <a href="https://www.instagram.com/" style="color: #fff; font-size: 1.3rem;">
-                <i class="fa fa-instagram"></i>
-              </a>
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">Aplicaciones Web</a>
+            </li>
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">Diseño de Páginas</a>
+            </li>
+            <li>
+              <a href="#" class="text-slate-400 hover:text-white transition-colors">E-Commerce</a>
             </li>
           </ul>
         </div>
-        --></div>
-      </div>
 
-      <!-- Footer inferior (copyright) -->
-      <div
-        style="border-top: 1px solid #333; margin-top: 30px; padding: 20px 0"
-      >
-        <div class="container" style="max-width: 1200px; margin: 0 auto">
-          <div class="row" style="text-align: center">
-            <p style="font-size: 1.5rem; margin: 0; color: #fff">
-              &copy; Copyright
-              <strong>HiQNet</strong>. Todos los derechos reservados.
-            </p>
-          </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#home" class="text-slate-400 hover:text-white transition-colors">Inicio</a>
+            </li>
+            <li>
+              <a href="#services" class="text-slate-400 hover:text-white transition-colors">Servicios</a>
+            </li>
+            <li>
+              <a href="#about" class="text-slate-400 hover:text-white transition-colors">Nosotros</a>
+            </li>
+            <li>
+              <a href="#portfolio" class="text-slate-400 hover:text-white transition-colors">Portafolio</a>
+            </li>
+            <li>
+              <a href="#contact" class="text-slate-400 hover:text-white transition-colors">Contacto</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+          <p class="text-slate-400 mb-2 flex items-center gap-2 justify-center md:justify-start">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:hiqnet.web&#64;gmail.com">hiqnet.web<span>&#64;</span>gmail.com</a>
+          </p>
+
+          <p class="text-slate-400 flex items-center gap-2 justify-center md:justify-start">
+            <i class="fas fa-clock"></i>
+            Lunes a Viernes: 9am - 8pm
+          </p>
         </div>
       </div>
-    </footer>
 
-    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+      <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-slate-500 text-sm mb-4 md:mb-0">
+          © 2025 HiQNet. Todos los derechos reservados.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-slate-500 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-    <!-- JavaScript Libraries -->
-    <script src="lib/jquery/jquery.min.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/venobox/venobox.min.js"></script>
-    <script src="lib/knob/jquery.knob.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/parallax/parallax.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script
-      src="lib/nivo-slider/js/jquery.nivo.slider.js"
-      type="text/javascript"
-    ></script>
-    <script src="lib/appear/jquery.appear.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
 
-    <!-- Contact Form JavaScript File -->
-    <script src="contactform/contactform.js"></script>
 
-    <script src="js/main.js"></script>
-  </body>
+  <script src="/scripts/index.js"></script>
+</body>
+
 </html>
