@@ -27,8 +27,31 @@ const mobileMenuButton = document.getElementById("mobile-menu-button");
 const mobileMenu = document.getElementById("mobile-menu");
 
 mobileMenuButton.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
+  if (mobileMenu.classList.contains("hidden")) {
+    mobileMenu.classList.remove("hidden");
+    // Forzar recálculo del layout para que la animación se aplique correctamente
+    void mobileMenu.offsetWidth;
+    mobileMenu.classList.remove("scale-y-0");
+    mobileMenu.classList.add("scale-y-100");
+  } else {
+    mobileMenu.classList.remove("scale-y-100");
+    mobileMenu.classList.add("scale-y-0");
+
+    // Espera a que termine la animación para ocultar completamente
+    setTimeout(() => {
+      mobileMenu.classList.add("hidden");
+    }, 300); // debe coincidir con duration-300
+  }
 });
+
+
+document.addEventListener("click", (event) => {
+  const isClickInside = mobileMenu.contains(event.target) || mobileMenuButton.contains(event.target);
+  if (!isClickInside && !mobileMenu.classList.contains("hidden")) {
+    mobileMenu.classList.add("hidden");
+  }
+});
+
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
