@@ -233,6 +233,20 @@
         background-color: #1e293b;
       }
     }
+    @keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
+.carousel-track {
+  width: max-content;
+}
   </style>
 </head>
 
@@ -325,50 +339,65 @@
     </div>
   </section>
 
-  <!-- Clients Section -->
-  <!-- <section class="py-12 bg-slate-50 dark:bg-slate-800">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2
-          class="text-center text-2xl font-semibold text-slate-600 dark:text-slate-300 mb-12"
-        >
-          Confían en nosotros
-        </h2>
-        <div
-          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center"
-        >
+<!-- Clients Section -->
+<section class="py-12 bg-slate-50 dark:bg-slate-800 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center text-3xl font-semibold text-slate-600 dark:text-slate-300 mb-12">
+      Confían en <span class="gradient-text">HiQNet</span>
+    </h2>
+
+    <!-- Carrusel -->
+    <div class="relative w-full overflow-hidden">
+      <div class="carousel-track flex items-center gap-24 animate-scroll">
+        <!-- Logos repetidos -->
+        <div class="flex items-center gap-24 shrink-0">
+          <div class="flex items-center space-x-3 h-12 opacity-70 hover:opacity-100 transition-opacity">
+            <i class="fas fa-water text-4xl text-blue-200"></i>
+            <span class="text-3xl font-bold">ColdFront</span>
+          </div>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png"
-            alt="Amazon"
-            class="h-12 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            src="/img/clientes/vlock-logo.webp"
+            alt="Vlock Constructora"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_logo.svg/2560px-Microsoft_logo.svg.png"
-            alt="Microsoft"
-            class="h-8 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            src="/img/clientes/La-terraza-White-Logo.webp"
+            alt="La Terraza"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png"
-            alt="Google"
-            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
-          />
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Samsung_Logo.svg/2560px-Samsung_Logo.svg.png"
+            src="/img/clientes/swi.webp"
             alt="Samsung"
-            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
+          />
+        </div>
+
+        <!-- Duplicado exacto para bucle perfecto -->
+        <div class="flex items-center gap-24 shrink-0">
+          <div class="flex items-center space-x-3 h-12 opacity-70 hover:opacity-100 transition-opacity">
+            <i class="fas fa-water text-4xl text-blue-200"></i>
+            <span class="text-3xl font-bold">ColdFront</span>
+          </div>
+          <img
+            src="/img/clientes/vlock-logo.webp"
+            alt="Vlock Constructora"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/505px-Apple_logo_black.svg.png"
-            alt="Apple"
-            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            src="/img/clientes/La-terraza-White-Logo.webp"
+            alt="La Terraza"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2560px_Logo_NIKE.svg.png"
-            alt="Nike"
-            class="h-10 object-contain opacity-70 hover:opacity-100 transition-opacity"
+            src="/img/clientes/SOCIALMEDIA.webp"
+            alt="Samsung"
+            class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
           />
         </div>
       </div>
-    </section> -->
+    </div>
+  </div>
+</section>
 
   <!-- About Section -->
   <section id="about" class="py-20 bg-slate-50 dark:bg-slate-800">
@@ -646,7 +675,7 @@
           </div>
           <div class="p-6">
             <h3 class="text-xl font-bold mb-2">Sistema de Gestión Médica</h3>
-            <p class="text-slate-600 dark:text-slate-300 mb-4">
+            <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
               Plataforma integral para la gestión médicos y hospitales, para
               mejorar la atención al paciente y optimizar los recursos.
             </p>
@@ -668,7 +697,7 @@
         </div>
         <div class="p-6">
           <h3 class="text-xl font-bold mb-2">La Terraza</h3>
-          <p class="text-slate-600 dark:text-slate-300 mb-4">
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
             Solución de gestión de cafetería con menú digital, canjeo de
             puntos y sistema de cupones.
           </p>
@@ -692,7 +721,7 @@
         </div>
         <div class="p-6">
           <h3 class="text-xl font-bold mb-2">Social Media Marketing</h3>
-          <p class="text-slate-600 dark:text-slate-300 mb-4">
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
             Estrategias de marketing digital para aumentar la presencia online
             mejorando la estructura, la apariencia visual...
           </p>
@@ -714,9 +743,11 @@
         </div>
         <div class="p-6">
           <h3 class="text-xl font-bold mb-2">Diseño Webservice y Backend</h3>
-          <p class="text-slate-600 dark:text-slate-300 mb-4">
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
             Diseño de webservice y desarrollo backend para sistema de
             aprendizaje enfocado a la enseñanza de matemáticas en linea.
+            <br>
+            <br>
           </p>
           <div class="flex flex-wrap gap-2">
             <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">React</span>
@@ -737,7 +768,7 @@
         </div>
         <div class="p-6">
           <h3 class="text-xl font-bold mb-2">Bienes Raices</h3>
-          <p class="text-slate-600 dark:text-slate-300 mb-4">
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
             Plataforma para buscar y publicar propiedades fácilmente. Permite
             filtrar, subir imágenes y contactar directamente a los
             propietarios.
@@ -753,7 +784,51 @@
       </div>
     </a>
     <!-- Project 6 -->
-    <a href="https://github.com/Grxson/qr-generator">
+     <a href="https://polarizadoscoldfront.com/">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="/img/polarizadosCold.webp" alt="Polarizados Cold Front"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Polarizados Cold Front</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
+            Sitio web para la empresa de Polarizados Cold Front, que ofrece
+            servicios de polarizado de alta calidad para residencias, edificios y automóviles.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">HTML</span>
+            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">CSS</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- Project 7 -->
+     <a href="#">
+      <div
+        class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
+        data-project="2">
+        <div class="h-48 overflow-hidden">
+          <img src="/img/vlockConstructora.webp" alt="Vlock Constructora"
+            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Vlock Constructora</h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
+            Sitio web para la empresa de construcción Vlock, que ofrece
+            servicios de construcción y remodelación de alta calidad.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">HTML</span>
+            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">CSS</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- Project 8 -->
+     <a href="https://github.com/Grxson/qr-generator">
       <div
         class="portfolio-card bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer"
         data-project="2">
@@ -763,8 +838,10 @@
         </div>
         <div class="p-6">
           <h3 class="text-xl font-bold mb-2">Generador QR</h3>
-          <p class="text-slate-600 dark:text-slate-300 mb-4">
+          <p class="text-slate-600 dark:text-slate-300 mb-4 text-justify">
             Herramienta para generar códigos QR personalizados.
+            <br>
+            <br>
           </p>
           <div class="flex flex-wrap gap-2">
             <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-medium">Python</span>
