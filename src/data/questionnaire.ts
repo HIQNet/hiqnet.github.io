@@ -4,10 +4,10 @@
  * agregar o quitar pasos no requiere tocar la lógica del panel.
  */
 
-export type ProjectType = "web" | "sistema" | "automatizacion";
-export type Objective = "presencia" | "ventas" | "gestion";
-export type Integrations = "ninguna" | "pocas" | "muchas";
-export type Timeline = "normal" | "rapido" | "urgente";
+export type ProjectType = "web" | "sistema" | "automatizacion" | "otro";
+export type Objective = "presencia" | "ventas" | "gestion" | "otro";
+export type Integrations = "ninguna" | "pocas" | "muchas" | "otro";
+export type Timeline = "normal" | "rapido" | "urgente" | "otro";
 
 /** Respuestas completas del cuestionario. */
 export interface QuoteAnswers {
@@ -16,6 +16,13 @@ export interface QuoteAnswers {
   features: string[];
   integrations: Integrations;
   timeline: Timeline;
+  custom?: {
+    projectType?: string;
+    objective?: string;
+    features?: string[];
+    integrations?: string;
+    timeline?: string;
+  };
 }
 
 export interface QuoteOption {

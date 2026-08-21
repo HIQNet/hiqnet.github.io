@@ -315,6 +315,8 @@ h3,
   background-color: #0c111d;
   background-image: radial-gradient(rgb(148 163 184 / 0.06) 1px, transparent 1px);
   background-size: 18px 18px;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
 }
 
 .chat-bubble {

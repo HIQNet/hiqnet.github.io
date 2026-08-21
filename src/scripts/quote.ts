@@ -26,10 +26,15 @@ function requireElement<T extends HTMLElement>(id: string): T {
 interface QuoteState {
   stepIndex: number;
   projectType?: ProjectType;
+  customProjectType?: string;
   objective?: Objective;
+  customObjective?: string;
   features: Set<string>;
+  customFeatures: Set<string>;
   integrations?: Integrations;
+  customIntegrations?: string;
   timeline?: Timeline;
+  customTimeline?: string;
   name: string;
   contact: string;
 }
@@ -53,7 +58,13 @@ const whatsappLink = requireElement<HTMLAnchorElement>("quote-whatsapp");
 const emailLink = requireElement<HTMLAnchorElement>("quote-email");
 const persistentCta = document.getElementById("persistent-cta");
 
-const state: QuoteState = { stepIndex: 0, features: new Set(), name: "", contact: "" };
+const state: QuoteState = {
+  stepIndex: 0,
+  features: new Set(),
+  customFeatures: new Set(),
+  name: "",
+  contact: "",
+};
 let lastFocused: HTMLElement | null = null;
 
 /** Historial de la conversación y marcadores por paso (para "atrás"). */
@@ -91,17 +102,29 @@ function bubbleHtml(message: ChatMessage): string {
     </div>`;
 }
 
+function scrollChat(behavior: ScrollBehavior = "smooth") {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const resolvedBehavior = reducedMotion ? "auto" : behavior;
+
+  // Espera al siguiente frame para que el alto nuevo del historial ya esté calculado.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      chat.scrollTo({ top: chat.scrollHeight, behavior: resolvedBehavior });
+    });
+  });
+}
+
 function renderChat(smooth = false) {
   chat.classList.add("rebuilding");
   chat.innerHTML = messages.map(bubbleHtml).join("");
   chat.classList.remove("rebuilding");
-  chat.scrollTo({ top: chat.scrollHeight, behavior: smooth ? "smooth" : "auto" });
+  scrollChat(smooth ? "smooth" : "auto");
 }
 
 /** Agrega una burbuja sin reconstruir el historial y fija la vista abajo. */
 function appendMessage(message: ChatMessage) {
   chat.insertAdjacentHTML("beforeend", bubbleHtml(message));
-  chat.scrollTo({ top: chat.scrollHeight, behavior: "auto" });
+  scrollChat("smooth");
 }
 
 function pushBot(html: string) {
@@ -133,9 +156,10 @@ function showTyping(): Promise<void> {
         <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
       </div>`;
     chat.appendChild(typing);
-    chat.scrollTo({ top: chat.scrollHeight, behavior: "auto" });
+    scrollChat("smooth");
     window.setTimeout(() => {
       typing.remove();
+      scrollChat("smooth");
       resolve();
     }, TYPING_MS);
   });
@@ -155,26 +179,53 @@ function collectAnswers(): QuoteAnswers | null {
   return {
     projectType: state.projectType,
     objective: state.objective,
-    features: [...state.features],
+    features: [...state.features, ...state.customFeatures],
     integrations: state.integrations,
     timeline: state.timeline,
+    custom: {
+      projectType: state.customProjectType,
+      objective: state.customObjective,
+      features: [...state.customFeatures],
+      integrations: state.customIntegrations,
+      timeline: state.customTimeline,
+    },
   };
 }
 
-function isStepAnswered(): boolean {
-  const step = currentStep();
-  if (!step) return true;
-  switch (step.id) {
+function answerLabel(value: string | undefined, customValue?: string): string {
+  if (value === "otro") return customValue || "Otra opción";
+  return labelFor.get(value ?? "") ?? value ?? "";
+}
+
+function escapeAttribute(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function customAnswerFor(stepId: string): string {
+  switch (stepId) {
     case "projectType":
-      return Boolean(state.projectType);
+      return state.customProjectType ?? "";
     case "objective":
-      return Boolean(state.objective);
-    case "features":
-      return state.features.size > 0;
+      return state.customObjective ?? "";
     case "integrations":
-      return Boolean(state.integrations);
+      return state.customIntegrations ?? "";
     case "timeline":
-      return Boolean(state.timeline);
+      return state.customTimeline ?? "";
+    default:
+      return "";
+  }
+}
+
+function customPlaceholder(stepId: string): string {
+  switch (stepId) {
+    case "projectType":
+      return "Ej. una plataforma de reservas...";
+    case "objective":
+      return "Ej. conectar sucursales y proveedores...";
+    case "integrations":
+      return "Ej. conectar mi ERP y WhatsApp...";
+    default:
+      return "Cuéntanos qué necesitas...";
   }
 }
 
@@ -223,10 +274,108 @@ function renderInputArea() {
       <div class="scroll-slim grid gap-2 max-h-56 overflow-y-auto pr-1">${buttonsHtml}</div>
       <button type="button" id="quote-confirm"
         class="mt-3 w-full gradient-bg text-white font-medium py-2.5 rounded-xl cursor-pointer disabled:opacity-40 disabled:pointer-events-none transition"
-        disabled>Confirmar</button>`;
+        disabled>Confirmar</button>
+      <div class="mt-3 pt-3 border-t border-slate-700/50">
+        <p class="text-xs text-slate-400 mb-2">¿Falta alguna funcionalidad? Agrégala a tu idea.</p>
+        <div class="grid grid-cols-[1fr_auto] gap-2">
+          <input id="quote-custom-feature" type="text" maxlength="120" placeholder="Ej. agenda de citas"
+            class="min-w-0 bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400" />
+          <button type="button" id="quote-add-feature" class="px-3 rounded-xl border border-cyan-400/50 text-cyan-200 hover:bg-cyan-400/10 transition-colors" aria-label="Agregar funcionalidad">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="quote-custom-features" class="flex flex-wrap gap-1.5 mt-2"></div>
+      </div>`;
+    renderCustomFeatures();
+    updateFeaturesConfirm();
   } else {
-    inputArea.innerHTML = `<div class="scroll-slim grid gap-2 max-h-64 overflow-y-auto pr-1">${buttonsHtml}</div>`;
+    inputArea.innerHTML = `
+      <div class="scroll-slim grid gap-2 max-h-64 overflow-y-auto pr-1">${buttonsHtml}</div>
+      <div class="mt-3 pt-3 border-t border-slate-700/50">
+        <p class="text-xs text-slate-400 mb-2">¿No encuentras una opción? Descríbela y la tomamos en cuenta.</p>
+        <div class="grid grid-cols-[1fr_auto] gap-2">
+          <input id="quote-custom-answer" type="text" maxlength="160" value="${escapeAttribute(customAnswerFor(step.id))}" placeholder="${customPlaceholder(step.id)}"
+            class="min-w-0 bg-slate-800/70 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400" />
+          <button type="button" id="quote-custom-submit" class="px-3 rounded-xl gradient-bg text-white hover:brightness-110 transition" aria-label="Usar respuesta escrita">
+            <i class="fas fa-arrow-up" aria-hidden="true"></i>
+          </button>
+        </div>
+        <p id="quote-custom-error" class="hidden text-xs text-rose-300 mt-1.5">Escribe un poco más para poder cotizarlo.</p>
+      </div>`;
   }
+}
+
+function renderCustomFeatures() {
+  const container = document.getElementById("quote-custom-features");
+  if (!container) return;
+  container.innerHTML = [...state.customFeatures]
+    .map(
+      (feature) => `
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/30 px-2.5 py-1 text-xs text-cyan-100">
+          ${feature.replace(/&/g, "&amp;").replace(/</g, "&lt;")}
+          <button type="button" class="quote-remove-feature text-cyan-300 hover:text-white" data-feature="${escapeAttribute(feature)}" aria-label="Quitar ${escapeAttribute(feature)}">
+            <i class="fas fa-xmark" aria-hidden="true"></i>
+          </button>
+        </span>`
+    )
+    .join("");
+}
+
+function updateFeaturesConfirm() {
+  const confirm = document.getElementById("quote-confirm") as HTMLButtonElement | null;
+  if (!confirm) return;
+  const count = state.features.size + state.customFeatures.size;
+  confirm.disabled = count === 0;
+  confirm.textContent = count === 0 ? "Confirmar" : `Confirmar (${count})`;
+}
+
+function addCustomFeature() {
+  const input = document.getElementById("quote-custom-feature") as HTMLInputElement | null;
+  const value = input?.value.trim() ?? "";
+  if (!value) {
+    input?.focus();
+    return;
+  }
+  state.customFeatures.add(value);
+  if (input) input.value = "";
+  renderCustomFeatures();
+  updateFeaturesConfirm();
+  input?.focus();
+}
+
+function submitCustomAnswer() {
+  const step = currentStep();
+  const input = document.getElementById("quote-custom-answer") as HTMLInputElement | null;
+  if (!step || !input) return;
+  const value = input.value.trim();
+  if (!value) {
+    document.getElementById("quote-custom-error")?.classList.remove("hidden");
+    input.focus();
+    return;
+  }
+
+  switch (step.id) {
+    case "projectType":
+      state.projectType = "otro";
+      state.customProjectType = value;
+      break;
+    case "objective":
+      state.objective = "otro";
+      state.customObjective = value;
+      break;
+    case "integrations":
+      state.integrations = "otro";
+      state.customIntegrations = value;
+      break;
+    case "timeline":
+      state.timeline = "otro";
+      state.customTimeline = value;
+      break;
+  }
+
+  pushUser(value);
+  inputArea.innerHTML = "";
+  void advance();
 }
 
 async function enterStep(index: number): Promise<void> {
@@ -240,6 +389,7 @@ async function enterStep(index: number): Promise<void> {
     renderInputArea();
   }
   updateProgress();
+  scrollChat("smooth");
 }
 
 function back() {
@@ -249,20 +399,22 @@ function back() {
   messages.length = stepStarts[target];
   actions.classList.add("hidden");
   inputArea.classList.remove("hidden");
-  renderChat();
+  renderChat(true);
   void enterStep(target);
 }
 
 // --- Resumen y envío ---
 
 function summaryRowsHtml(): string {
-  const featureLabels = [...state.features].map((f) => labelFor.get(f) ?? f).join(", ");
+  const featureLabels = [...state.features, ...state.customFeatures]
+    .map((f) => labelFor.get(f) ?? f)
+    .join(", ");
   const rows: Array<[string, string]> = [
-    ["Tipo", labelFor.get(state.projectType ?? "") ?? ""],
-    ["Objetivo", labelFor.get(state.objective ?? "") ?? ""],
+    ["Tipo", answerLabel(state.projectType, state.customProjectType)],
+    ["Objetivo", answerLabel(state.objective, state.customObjective)],
     ["Funcionalidades", featureLabels],
-    ["Integraciones", labelFor.get(state.integrations ?? "") ?? ""],
-    ["Plazo", labelFor.get(state.timeline ?? "") ?? ""],
+    ["Integraciones", answerLabel(state.integrations, state.customIntegrations)],
+    ["Plazo", answerLabel(state.timeline, state.customTimeline)],
   ];
   return rows
     .map(
@@ -330,11 +482,11 @@ function buildMessage(): string {
   if (!answers) return "";
   const lines = [
     "Hola HiQNet, quiero cotizar un proyecto:",
-    `- Tipo: ${labelFor.get(state.projectType ?? "")}`,
-    `- Objetivo: ${labelFor.get(state.objective ?? "")}`,
-    `- Funcionalidades: ${[...state.features].map((f) => labelFor.get(f) ?? f).join(", ")}`,
-    `- Integraciones: ${labelFor.get(state.integrations ?? "")}`,
-    `- Plazo deseado: ${labelFor.get(state.timeline ?? "")}`,
+    `- Tipo: ${answerLabel(state.projectType, state.customProjectType)}`,
+    `- Objetivo: ${answerLabel(state.objective, state.customObjective)}`,
+    `- Funcionalidades: ${[...state.features, ...state.customFeatures].map((f) => labelFor.get(f) ?? f).join(", ")}`,
+    `- Integraciones: ${answerLabel(state.integrations, state.customIntegrations)}`,
+    `- Plazo deseado: ${answerLabel(state.timeline, state.customTimeline)}`,
   ];
   if (state.name) lines.push(`- Nombre: ${state.name}`);
   if (state.contact) lines.push(`- Contacto: ${state.contact}`);
@@ -356,10 +508,15 @@ function isOpen(): boolean {
 function resetState() {
   state.stepIndex = 0;
   state.projectType = undefined;
+  state.customProjectType = undefined;
   state.objective = undefined;
+  state.customObjective = undefined;
   state.features.clear();
+  state.customFeatures.clear();
   state.integrations = undefined;
+  state.customIntegrations = undefined;
   state.timeline = undefined;
+  state.customTimeline = undefined;
   state.name = "";
   state.contact = "";
   messages.length = 0;
@@ -410,9 +567,32 @@ function close() {
 // --- Eventos ---
 
 inputArea.addEventListener("click", (event) => {
+  const addFeatureButton = (event.target as HTMLElement).closest("#quote-add-feature");
+  if (addFeatureButton) {
+    addCustomFeature();
+    return;
+  }
+
+  const removeFeatureButton = (event.target as HTMLElement).closest<HTMLElement>(".quote-remove-feature");
+  if (removeFeatureButton) {
+    const feature = removeFeatureButton.dataset.feature;
+    if (feature) state.customFeatures.delete(feature);
+    renderCustomFeatures();
+    updateFeaturesConfirm();
+    return;
+  }
+
+  const customSubmit = (event.target as HTMLElement).closest("#quote-custom-submit");
+  if (customSubmit) {
+    submitCustomAnswer();
+    return;
+  }
+
   const confirmButton = (event.target as HTMLElement).closest("#quote-confirm");
   if (confirmButton) {
-    const labels = [...state.features].map((f) => labelFor.get(f) ?? f).join(", ");
+    const labels = [...state.features, ...state.customFeatures]
+      .map((f) => labelFor.get(f) ?? f)
+      .join(", ");
     pushUser(labels);
     inputArea.innerHTML = "";
     void advance();
@@ -438,9 +618,7 @@ inputArea.addEventListener("click", (event) => {
     option.classList.toggle("bg-cyan-400/10", state.features.has(value));
     const confirm = document.getElementById("quote-confirm") as HTMLButtonElement | null;
     if (confirm) {
-      confirm.disabled = state.features.size === 0;
-      confirm.textContent =
-        state.features.size === 0 ? "Confirmar" : `Confirmar (${state.features.size})`;
+      updateFeaturesConfirm();
     }
     return;
   }
@@ -449,20 +627,36 @@ inputArea.addEventListener("click", (event) => {
   switch (step.id) {
     case "projectType":
       state.projectType = option.dataset.value as ProjectType;
+      state.customProjectType = undefined;
       break;
     case "objective":
       state.objective = option.dataset.value as Objective;
+      state.customObjective = undefined;
       break;
     case "integrations":
       state.integrations = option.dataset.value as Integrations;
+      state.customIntegrations = undefined;
       break;
     case "timeline":
       state.timeline = option.dataset.value as Timeline;
+      state.customTimeline = undefined;
       break;
   }
   pushUser(labelFor.get(option.dataset.value ?? "") ?? "");
   inputArea.innerHTML = "";
   void advance();
+});
+
+inputArea.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || event.shiftKey) return;
+  const target = event.target as HTMLElement;
+  if (target.id === "quote-custom-answer") {
+    event.preventDefault();
+    submitCustomAnswer();
+  } else if (target.id === "quote-custom-feature") {
+    event.preventDefault();
+    addCustomFeature();
+  }
 });
 
 backButton.addEventListener("click", back);

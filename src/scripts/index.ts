@@ -81,23 +81,18 @@ if (dots.length > 0) {
   }, 5000);
 }
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (!prefersReducedMotion) {
-  ScrollReveal().reveal("h1, h2, h3, h4, h5, h6", { delay: 50, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
-  ScrollReveal().reveal(".gradient-border, .gradient-bg", { delay: 80, distance: "10px", duration: 300, origin: "bottom", interval: 50 });
-  ScrollReveal().reveal("p, li", { delay: 100, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
-}
-
 // --- Filtros de servicios por objetivo ---
 
 const serviceFilters = [...document.querySelectorAll<HTMLButtonElement>(".service-filter")];
 const serviceCards = [...document.querySelectorAll<HTMLElement>(".service-card")];
+const serviceFilterGroup = document.getElementById("service-filters");
 
 function applyServiceFilter(objective: string) {
   for (const card of serviceCards) {
-    const matches = objective === "all" || (card.dataset.objectives ?? "").split(" ").includes(objective);
+    const objectives = (card.dataset.objectives ?? "").split(/\s+/).filter(Boolean);
+    const matches = objective === "all" || objectives.includes(objective);
     card.classList.toggle("hidden", !matches);
+    card.setAttribute("aria-hidden", String(!matches));
   }
   for (const filter of serviceFilters) {
     const active = filter.dataset.objective === objective;
@@ -110,8 +105,26 @@ function applyServiceFilter(objective: string) {
   }
 }
 
-for (const filter of serviceFilters) {
-  filter.addEventListener("click", () => applyServiceFilter(filter.dataset.objective ?? "all"));
+serviceFilterGroup?.addEventListener("click", (event) => {
+  const filter = (event.target as HTMLElement).closest<HTMLButtonElement>(".service-filter");
+  if (!filter || !serviceFilterGroup.contains(filter)) return;
+  applyServiceFilter(filter.dataset.objective ?? "all");
+});
+
+applyServiceFilter("all");
+
+// Las animaciones no deben poder bloquear la interactividad principal.
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!prefersReducedMotion) {
+  try {
+    const reveal = ScrollReveal();
+    reveal.reveal("h1, h2, h3, h4, h5, h6", { delay: 50, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
+    reveal.reveal(".gradient-border, .gradient-bg", { delay: 80, distance: "10px", duration: 300, origin: "bottom", interval: 50 });
+    reveal.reveal("p, li", { delay: 100, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
+  } catch {
+    // Un fallo de una animaci&oacute;n no debe impedir filtros, men&uacute; o slider.
+  }
 }
 
 const video = document.getElementById("logoVideo") as HTMLVideoElement | null;
