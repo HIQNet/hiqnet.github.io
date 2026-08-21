@@ -1,0 +1,424 @@
+@import "tailwindcss";
+
+/* Modo oscuro permanente: se activa con la clase .dark en <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Paleta grafito */
+  --bg-base: #0a0e17;
+  --bg-surface: #101624;
+  --bg-elevated: #161e30;
+  --border-subtle: rgb(148 163 184 / 0.12);
+
+  /* Gradiente de marca */
+  --gradient-start: #be34f3;
+  --gradient-mid1: #965ef5;
+  --gradient-mid2: #6494f7;
+  --gradient-mid3: #12ecfb;
+  --gradient-end: #2dcffa;
+}
+
+@font-face {
+  font-family: "HiQNet";
+  src: url("/font/SANTELLO.ttf") format("truetype");
+  font-display: block;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: #e2e8f0;
+  font-family: "Montserrat", sans-serif;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: "HiQNet", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Superficies translúcidas ---------- */
+
+.glass {
+  background: color-mix(in srgb, var(--bg-surface) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ---------- Marca ---------- */
+
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--gradient-start),
+    var(--gradient-mid1),
+    var(--gradient-mid2),
+    var(--gradient-mid3),
+    var(--gradient-end)
+  );
+  background-clip: text;
+  background-size: 200% auto;
+  color: transparent;
+  animation: gradient 3s ease infinite;
+}
+
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start),
+    var(--gradient-mid1),
+    var(--gradient-mid2),
+    var(--gradient-mid3),
+    var(--gradient-end)
+  );
+  background-size: 200% 200%;
+  animation: gradient 6s ease infinite;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  position: absolute;
+  z-index: -1;
+  inset: -2px;
+  border-radius: 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start),
+    var(--gradient-mid1),
+    var(--gradient-mid2),
+    var(--gradient-mid3),
+    var(--gradient-end)
+  );
+  background-size: 200% 200%;
+  content: "";
+  opacity: 0.7;
+  animation: gradient 6s ease infinite;
+}
+
+@keyframes gradient {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes float-logo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50px);
+  }
+}
+
+#logoAnimate {
+  animation: float-logo 3s ease-in-out infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 25s linear infinite;
+}
+
+.carousel-track {
+  width: max-content;
+}
+
+/* ---------- Indicadores fijos ---------- */
+
+.back-to-top {
+  position: fixed;
+  right: 2rem;
+  bottom: 7rem;
+  z-index: 55;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: float 2.5s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 4px;
+  width: 0;
+  background: linear-gradient(
+    90deg,
+    var(--gradient-start),
+    var(--gradient-mid1),
+    var(--gradient-mid2),
+    var(--gradient-mid3),
+    var(--gradient-end)
+  );
+  transition: width 0.1s;
+}
+
+/* ---------- Páginas de proyecto ---------- */
+
+.project-page p,
+.project-page li,
+.project-page ul {
+  font-family: "Montserrat", sans-serif;
+}
+
+.project-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+}
+
+.tech-badge {
+  transition: all 0.2s ease;
+}
+
+.tech-badge:hover {
+  transform: translateY(-2px);
+}
+
+.modal {
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  max-height: 90vh;
+}
+
+/* ---------- Panel de cotización ---------- */
+
+/*
+ * Presentación dual:
+ * - Móvil: barra lateral a pantalla completa que entra desde la derecha.
+ * - Escritorio (md+): ventana de chat centrada tipo modal.
+ */
+
+.quote-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 28rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.quote-panel.open {
+  transform: translateX(0);
+}
+
+@media (min-width: 768px) {
+  .quote-panel {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    width: min(460px, 94vw);
+    max-width: none;
+    height: min(680px, 90vh);
+    border-radius: 1.5rem;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.25s ease;
+  }
+
+  .quote-panel.open {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.quote-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.quote-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Estética de conversación */
+
+.chat-bg {
+  background-color: #0c111d;
+  background-image: radial-gradient(rgb(148 163 184 / 0.06) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.chat-bubble {
+  animation: msg-in 0.22s ease-out;
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.chat-time {
+  float: right;
+  margin-top: 0.4rem;
+  margin-left: 0.5rem;
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+
+.typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94a3b8;
+  animation: typing 1s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Scroll discreto, acorde al tema oscuro */
+
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: #2c3a52 transparent;
+}
+
+.scroll-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-slim::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #2c3a52;
+}
+
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: #3b4d6b;
+}
+
+/* Suprime la animación de entrada al reconstruir el historial (botón atrás) */
+.rebuilding .chat-bubble {
+  animation: none;
+}
+
+.quote-option[aria-pressed="true"] {
+  border-color: var(--gradient-mid3);
+  background: color-mix(in srgb, var(--gradient-mid2) 16%, transparent);
+}
+
+/* ---------- Accesibilidad: movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,59 @@
+---
+import { objectiveLabels, services } from "../data/home";
+
+const objectives = Object.keys(objectiveLabels) as Array<
+  keyof typeof objectiveLabels
+>;
+---
+
+<section id="services" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+      Nuestros <span class="gradient-text">Servicios</span>
+    </h2>
+    <p class="text-lg text-slate-400 max-w-2xl mx-auto">
+      Filtra por lo que quieres lograr, no por tecnología.
+    </p>
+  </div>
+
+  <!-- Filtros por objetivo -->
+  <div class="flex flex-wrap justify-center gap-3 mb-12" id="service-filters" role="group" aria-label="Filtrar servicios por objetivo">
+    <button
+      type="button"
+      class="service-filter px-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 cursor-pointer border-cyan-400/60 bg-cyan-400/10 text-cyan-300"
+      data-objective="all"
+      aria-pressed="true"
+    >
+      Todos
+    </button>
+    {
+      objectives.map((objective) => (
+        <button
+          type="button"
+          class="service-filter px-5 py-2 rounded-full text-sm font-medium border transition-all duration-300 cursor-pointer border-slate-700 text-slate-300 hover:border-slate-500"
+          data-objective={objective}
+          aria-pressed="false"
+        >
+          {objectiveLabels[objective]}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center" id="services-grid">
+    {
+      services.map((service) => (
+        <article
+          class="service-card glass rounded-2xl py-8 px-6 shadow-xl hover:scale-[1.02] hover:border-cyan-400/30 transition duration-300 ease-in-out"
+          data-objectives={service.objectives.join(" ")}
+        >
+          <div class="gradient-bg w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-lg mx-auto">
+            <i class={`${service.icon} text-white text-2xl`} />
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-white">{service.title}</h3>
+          <p class="text-slate-400 text-sm md:text-base">{service.description}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

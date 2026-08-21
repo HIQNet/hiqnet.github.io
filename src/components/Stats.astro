@@ -1,0 +1,20 @@
+---
+import { stats } from "../data/home";
+---
+
+<section class="py-20 gradient-bg text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+      {
+        stats.map((stat, index) => (
+          <div class="py-8" class:list={[index === stats.length - 1 && "col-span-2 md:col-span-1 mx-auto md:mx-0"]}>
+            <div class="text-5xl font-bold mb-2 counter" data-target={stat.value}>
+              {stat.value}
+            </div>
+            <div class="text-xl">{stat.label}</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

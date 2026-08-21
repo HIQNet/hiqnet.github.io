@@ -1,0 +1,77 @@
+---
+import { site } from "../data/site";
+---
+
+<div id="quote-overlay" class="quote-overlay fixed inset-0 bg-black/60 z-[59]" aria-hidden="true"></div>
+
+<aside
+  id="quote-panel"
+  class="quote-panel glass-strong"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="quote-title"
+  aria-hidden="true"
+>
+  <!-- Encabezado tipo chat -->
+  <header class="flex items-center gap-3 px-4 py-3 border-b border-slate-700/50">
+    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+      <i class="fas fa-comment-dollar text-white" aria-hidden="true"></i>
+    </div>
+    <div class="flex-1 min-w-0">
+      <h2 id="quote-title" class="text-base font-semibold text-white leading-tight">HiQNet · Cotización</h2>
+      <p class="text-xs text-emerald-400 flex items-center gap-1.5">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>En línea
+      </p>
+    </div>
+    <button
+      type="button"
+      id="quote-back"
+      class="w-9 h-9 rounded-full text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors cursor-pointer disabled:opacity-30 disabled:pointer-events-none"
+      aria-label="Pregunta anterior"
+      disabled
+    >
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <button
+      type="button"
+      id="quote-close"
+      class="w-9 h-9 rounded-full text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors cursor-pointer"
+      aria-label="Cerrar cotizador"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </header>
+
+  <!-- Progreso -->
+  <div class="h-1 bg-slate-700/50">
+    <div id="quote-progress-bar" class="h-full gradient-bg transition-all duration-300" style="width: 20%"></div>
+  </div>
+  <span id="quote-step-label" class="sr-only">Paso 1 de 5</span>
+  <span id="quote-progress-label" class="sr-only">20%</span>
+
+  <!-- Conversación -->
+  <div id="quote-chat" class="chat-bg scroll-slim flex-1 overflow-y-auto px-4 py-4 space-y-3" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Zona de respuesta: opciones rápidas o formulario de contacto -->
+  <div id="quote-input-area" class="px-4 pb-4 pt-2 bg-[#101624]"></div>
+
+  <!-- Acciones finales (resumen) -->
+  <div id="quote-actions" class="hidden px-4 pb-4 pt-1 grid gap-2 border-t border-slate-700/40">
+    <a
+      id="quote-whatsapp"
+      href={`https://wa.me/${site.whatsapp}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white font-medium py-2.5 rounded-xl transition-colors text-sm"
+    >
+      <i class="fab fa-whatsapp text-lg"></i>Enviar por WhatsApp
+    </a>
+    <a
+      id="quote-email"
+      href={`mailto:${site.email}`}
+      class="flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white font-medium py-2.5 rounded-xl transition-colors text-sm"
+    >
+      <i class="fas fa-envelope"></i>Enviar por correo
+    </a>
+  </div>
+</aside>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  React: "bg-blue-600",
+  Java: "bg-red-700",
+  JavaScript: "bg-yellow-500",
+  Laravel: "bg-red-700",
+  MySQL: "bg-orange-700",
+  Filament: "bg-cyan-700",
+  Pug: "bg-yellow-700",
+  "Node.js": "bg-green-600",
+  "Express.js": "bg-gray-900",
+  Python: "bg-indigo-600",
+  HTML: "bg-red-600",
+  CSS: "bg-orange-500",
+};
+
+const color = colorMap[name] ?? "bg-slate-600";
+---
+
+<span class={`${color} tech-badge text-white px-3 py-1 rounded-full text-sm font-medium`}>{name}</span>

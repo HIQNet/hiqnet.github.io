@@ -1,0 +1,37 @@
+---
+import { clients } from "../data/home";
+---
+
+<section class="py-12 bg-slate-50 dark:bg-slate-800 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-center text-3xl font-semibold text-slate-600 dark:text-slate-300 mb-12">
+      Confían en <span class="gradient-text">HiQNet</span>
+    </h2>
+
+    <!-- Carrusel: la pista se duplica para lograr un bucle perfecto -->
+    <div class="relative w-full overflow-hidden">
+      <div class="carousel-track flex items-center gap-24 animate-scroll">
+        {
+          [0, 1].map(() => (
+            <div class="flex items-center gap-24 shrink-0">
+              {clients.map((client) =>
+                client.logo ? (
+                  <img
+                    src={client.logo}
+                    alt={client.name}
+                    class="h-28 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                ) : (
+                  <div class="flex items-center space-x-3 h-12 opacity-70 hover:opacity-100 transition-opacity">
+                    <i class={`${client.icon} text-4xl text-blue-200`} />
+                    <span class="text-3xl font-bold">{client.name}</span>
+                  </div>
+                )
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

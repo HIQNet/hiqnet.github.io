@@ -1,0 +1,78 @@
+---
+import { navLinks, site } from "../data/site";
+
+const isHome =
+  Astro.url.pathname === "/" || Astro.url.pathname.endsWith("/index.html");
+const hrefFor = (hash: string) => (isHome ? hash : `/index.html${hash}`);
+---
+
+<nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 flex items-center">
+          <a href={isHome ? "#home" : "/index.html"}>
+            <span class="text-2xl font-bold gradient-text">{site.name}</span>
+          </a>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-6">
+        <div class="ml-10 flex items-baseline space-x-8">
+          {
+            navLinks.map((link) => (
+              <a
+                href={hrefFor(link.hash)}
+                class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+        <button
+          type="button"
+          data-quote-open
+          class="gradient-bg text-white text-sm font-medium px-4 py-2 rounded-full shadow hover:brightness-110 transition cursor-pointer"
+          aria-haspopup="dialog"
+        >
+          Cotizar
+        </button>
+      </div>
+      <div class="md:hidden">
+        <button
+          id="mobile-menu-button"
+          class="inline-flex items-center justify-center p-2 rounded-md text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none"
+          aria-label="Abrir menú"
+        >
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden hidden transform transition-transform duration-300 ease-in-out scale-y-0 origin-top">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-slate-800 shadow-lg">
+        {
+          navLinks.map((link) => (
+            <a
+              href={hrefFor(link.hash)}
+              class="text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 block px-3 py-2 rounded-md text-base font-medium"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <button
+          type="button"
+          data-quote-open
+          class="gradient-bg text-white text-sm font-medium px-4 py-2 rounded-full shadow mx-3 mt-2 cursor-pointer"
+          aria-haspopup="dialog"
+        >
+          Cotizar proyecto
+        </button>
+    </div>
+  </div>
+</nav>

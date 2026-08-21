@@ -1,0 +1,171 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import ProjectGallery from "../../components/ProjectGallery.astro";
+import TechBadge from "../../components/TechBadge.astro";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).sort(
+    (a, b) => a.data.order - b.data.order
+  );
+
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      prev: projects[index - 1] ?? null,
+      next: projects[index + 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  prev: CollectionEntry<"projects"> | null;
+  next: CollectionEntry<"projects"> | null;
+}
+
+const { project, prev, next } = Astro.props;
+const d = project.data;
+---
+
+<ProjectLayout title={`${d.cardTitle} | HiQNet`} description={d.cardDescription}>
+  <section class="container mx-auto px-4 py-20">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-white mb-2 uppercase">{d.name}</h1>
+      <p class="text-xl gradient-text">Explora en profundidad cada uno de nuestros desarrollos</p>
+    </div>
+
+    <!-- Project Navigation -->
+    <div class="flex justify-between items-center mb-8">
+      <div class="flex items-center space-x-4">
+        <a
+          href="/index.html#portfolio"
+          class="px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition flex items-center"
+        >
+          <i class="fas fa-arrow-left mr-1 sm:mr-2 text-xs sm:text-base"></i>
+          <span>Volver</span>
+        </a>
+        <h2 class="text-2xl font-semibold text-white">Proyectos destacados</h2>
+      </div>
+    </div>
+
+    <!-- Project Detail Card -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-12">
+      <!-- Project Header -->
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+          <div>
+            <h2 class="text-3xl font-bold mb-2">{d.title}</h2>
+            <p class="text-indigo-100">{d.subtitle}</p>
+          </div>
+          {
+            d.links.length > 0 && (
+              <div class="flex space-x-3">
+                {d.links.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-indigo-900 transition flex items-center"
+                  >
+                    <i class={`${link.icon} mr-2`} /> {link.label}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Project Content -->
+      <div class="bg-gray-900 text-white">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 p-8">
+          <!-- Main Info Column -->
+          <div class="lg:col-span-2">
+            <h3 class="text-2xl font-semibold text-white mb-4">Descripción del Proyecto</h3>
+            <div class="prose max-w-none text-gray-200 mb-8 prose-invert">
+              <p set:html={d.intro} />
+
+              <h4 class="text-xl font-semibold mt-6 mb-3">Desafíos</h4>
+              <ul class="list-disc pl-5 space-y-1">
+                {d.challenges.map((challenge) => <li>{challenge}</li>)}
+              </ul>
+
+              <h4 class="text-xl font-semibold mt-6 mb-3">Solución Implementada</h4>
+              <p>{d.solution}</p>
+
+              <div class="bg-slate-800 p-4 rounded-lg mt-6">
+                <h4 class="text-lg font-semibold text-blue-300 mb-2">Resultados Obtenidos</h4>
+                <ul class="list-disc pl-5 text-blue-200 space-y-1">
+                  {d.results.map((result) => <li>{result}</li>)}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar Column -->
+          <div>
+            <!-- Technologies -->
+            <div class="bg-slate-800 rounded-lg p-6 mb-8">
+              <h3 class="text-xl font-semibold text-white mb-4">Tecnologías Utilizadas</h3>
+              <div class="flex flex-wrap gap-2">
+                {d.tech.map((name) => <TechBadge name={name} />)}
+              </div>
+            </div>
+
+            <!-- Project Details -->
+            <div class="bg-slate-800 rounded-lg p-6 mb-8">
+              <h3 class="text-xl font-semibold text-white mb-4">Detalles del Proyecto</h3>
+              <div class="space-y-4 text-gray-200">
+                <div>
+                  <p class="text-sm text-gray-400 font-bold">Cliente</p>
+                  <p class="font-medium">{d.client}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-400 font-bold">Duración</p>
+                  <p class="font-medium">{d.duration}</p>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-400 font-bold">Estado</p>
+                  <p class="font-medium text-green-600">{d.status}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {
+        d.gallery.length > 0 && <ProjectGallery images={d.gallery} />
+      }
+    </div>
+
+    <!-- Navigation Between Projects -->
+    <div class="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
+      {
+        prev ? (
+          <a
+            href={`/pages/${prev.id}.html`}
+            class="px-4 py-2 text-white rounded-full shadow-lg hover:brightness-110 transition flex items-center gradient-bg"
+          >
+            <i class="fas fa-arrow-left mr-2" /> Proyecto anterior
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next && (
+          <a
+            href={`/pages/${next.id}.html`}
+            class="px-4 py-2 text-white rounded-full shadow-lg hover:brightness-110 transition flex items-center gradient-bg"
+          >
+            Siguiente proyecto <i class="fas fa-arrow-right ml-2" />
+          </a>
+        )
+      }
+    </div>
+  </section>
+</ProjectLayout>
