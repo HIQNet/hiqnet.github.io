@@ -1,6 +1,8 @@
 allowBuilds:
   esbuild: true
-  scrollreveal: true
 onlyBuiltDependencies:
   - esbuild
-  - scrollreveal
+overrides:
+  devalue: ^5.9.1
+  js-yaml: ^4.3.2
+  undici: ^8.10.2

@@ -3,7 +3,7 @@ name: Instituto de Servicios Médicos Mexicanos
 cardTitle: Sistema de Gestión Médica
 title: Sistema de Gestión Médica
 subtitle: Plataforma completa de gestión médica con sistema de recomendaciones
-cardDescription: Plataforma integral para la gestión médicos y hospitales, para mejorar la atención al paciente y optimizar los recursos.
+cardDescription: Plataforma para centralizar la gestión de médicos, hospitales y servicios de una red médica.
 cover: /img/blog/hospital.webp
 intro: >-
   Se busca desarrollar un sistema para el control y gestión de la red médica

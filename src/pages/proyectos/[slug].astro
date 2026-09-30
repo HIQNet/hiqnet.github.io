@@ -1,0 +1,219 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import PersistentCta from "../../components/PersistentCta.astro";
+import { whatsappUrl } from "../../data/site";
+
+export async function getStaticPaths() {
+    const projects = (await getCollection("projects")).sort(
+        (a, b) => a.data.order - b.data.order,
+    );
+    return projects.map((project, index) => ({
+        params: { slug: project.id },
+        props: {
+            project,
+            previous: projects[index - 1] ?? null,
+            next: projects[index + 1] ?? null,
+        },
+    }));
+}
+
+interface Props {
+    project: CollectionEntry<"projects">;
+    previous: CollectionEntry<"projects"> | null;
+    next: CollectionEntry<"projects"> | null;
+}
+
+const { project, previous, next } = Astro.props;
+const data = project.data;
+---
+
+<BaseLayout
+    title={`${data.cardTitle} | HiQNet`}
+    description={data.cardDescription}
+    canonicalPath={`/proyectos/${project.id}.html`}
+    image={data.cover}
+>
+    <div class="site-shell">
+        <Navbar />
+        <main id="contenido">
+            <section class="border-b border-line py-14 sm:py-20">
+                <div class="container-page">
+                    <a
+                        href="/index.html#proyectos"
+                        class="inline-flex items-center gap-2 text-sm font-bold text-brand-cyan hover:text-white"
+                    >
+                        ← Volver a proyectos
+                    </a>
+                    <p class="eyebrow mt-8">Caso de éxito · {data.client}</p>
+                    <h1 class="mt-4 max-w-4xl text-4xl font-bold tracking-[-0.04em] text-white sm:text-5xl">
+                        {data.title}
+                    </h1>
+                    <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">
+                        {data.subtitle}
+                    </p>
+                </div>
+            </section>
+
+            <section class="py-12 sm:py-20">
+                <div class="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+                    <div>
+                        <div class="reveal overflow-hidden rounded-panel border border-line">
+                            <img
+                                src={data.cover}
+                                width="1600"
+                                height="956"
+                                alt={`Captura principal del proyecto ${data.cardTitle}`}
+                                class="w-full"
+                            />
+                        </div>
+                        <div class="mt-10 space-y-9">
+                            <section class="reveal">
+                                <h2 class="text-2xl font-bold text-white">
+                                    El problema
+                                </h2>
+                                <ul class="mt-4 grid gap-3">
+                                    {data.challenges.map((challenge) => (
+                                        <li class="border-l-2 border-brand-violet pl-4 text-base leading-7 text-muted">
+                                            {challenge}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                            <section class="reveal">
+                                <h2 class="text-2xl font-bold text-white">
+                                    La solución
+                                </h2>
+                                <p class="mt-4 leading-8 text-muted">
+                                    {data.solution}
+                                </p>
+                            </section>
+                            <section class="reveal rounded-panel border border-brand-cyan/25 bg-brand-cyan/5 p-6">
+                                <h2 class="text-2xl font-bold text-white">
+                                    Resultado buscado
+                                </h2>
+                                <ul class="mt-4 grid gap-3">
+                                    {data.results.map((result) => (
+                                        <li class="flex gap-3 text-sm leading-6 text-copy">
+                                            <span
+                                                class="text-brand-cyan"
+                                                aria-hidden="true"
+                                            >
+                                                ✓
+                                            </span>
+                                            {result}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                    <aside class="reveal h-fit rounded-panel border border-line bg-surface p-6 lg:sticky lg:top-24">
+                        <h2 class="text-lg font-bold text-white">
+                            Ficha del proyecto
+                        </h2>
+                        <dl class="mt-6 grid gap-5 text-sm">
+                            <div>
+                                <dt class="font-semibold text-muted">
+                                    Cliente
+                                </dt>
+                                <dd class="mt-1 text-white">{data.client}</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-muted">Estado</dt>
+                                <dd class="mt-1 text-white">{data.status}</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold text-muted">
+                                    Tecnologías
+                                </dt>
+                                <dd class="mt-2 flex flex-wrap gap-2">
+                                    {data.tech.map((tech) => (
+                                        <span class="rounded-md border border-line px-2 py-1 text-xs text-copy">
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </dd>
+                            </div>
+                        </dl>
+                        <a
+                            href={whatsappUrl(
+                                `Hola, vi el caso de ${data.cardTitle} y quiero platicar sobre un proyecto.`,
+                            )}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="button-primary mt-8 w-full"
+                        >
+                            Cuéntanos tu proyecto{" "}
+                            <span class="button-arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    </aside>
+                </div>
+            </section>
+
+            {data.gallery.length > 0 && (
+                <section class="border-t border-line bg-surface/45 py-12 sm:py-16">
+                    <div class="container-page">
+                        <h2 class="reveal text-2xl font-bold text-white">
+                            Pantallas del proyecto
+                        </h2>
+                        <div class="mt-7 grid gap-4 sm:grid-cols-2">
+                            {data.gallery.map((image, index) => (
+                                <figure
+                                    class="reveal overflow-hidden rounded-lg border border-line bg-ink"
+                                    data-delay={String((index % 3) + 1)}
+                                >
+                                    <img
+                                        src={image.src}
+                                        width="1360"
+                                        height="643"
+                                        loading="lazy"
+                                        decoding="async"
+                                        alt={image.alt}
+                                        class="aspect-[16/9] w-full object-cover"
+                                    />
+                                    <figcaption class="p-3 text-sm text-muted">
+                                        {image.caption}
+                                    </figcaption>
+                                </figure>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+            <nav
+                class="container-page flex flex-wrap justify-between gap-4 py-10"
+                aria-label="Navegación entre proyectos"
+            >
+                {previous ? (
+                    <a
+                        class="button-secondary"
+                        href={`/proyectos/${previous.id}.html`}
+                    >
+                        ← Caso anterior
+                    </a>
+                ) : (
+                    <span />
+                )}
+                {next && (
+                    <a
+                        class="button-secondary"
+                        href={`/proyectos/${next.id}.html`}
+                    >
+                        Siguiente caso{" "}
+                        <span class="button-arrow" aria-hidden="true">
+                            →
+                        </span>
+                    </a>
+                )}
+            </nav>
+        </main>
+        <Footer />
+        <PersistentCta />
+    </div>
+    <script src="../../scripts/index.ts"></script>
+</BaseLayout>

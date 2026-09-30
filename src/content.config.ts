@@ -22,7 +22,7 @@ const projects = defineCollection({
     cardDescription: z.string(),
     /** Imagen de portada para la tarjeta */
     cover: z.string(),
-    /** Párrafo(s) introductorios. Puede contener HTML inline (enlaces). */
+    /** Resumen contextual del proyecto, siempre renderizado como texto. */
     intro: z.string(),
     challenges: z.array(z.string()),
     solution: z.string(),

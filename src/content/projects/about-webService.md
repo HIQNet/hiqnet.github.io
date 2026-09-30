@@ -3,11 +3,11 @@ name: Diseño de Webservice y Desarrollo Backend
 cardTitle: Diseño Webservice y Backend
 title: Sistema de Gestión de Aprendizaje enfocado a la Enseñanza de Matemáticas en Línea
 subtitle: Diseño de webservice y desarrollo backend para sistema de aprendizaje enfocado a la enseñanza de matemáticas
-cardDescription: Diseño de webservice y desarrollo backend para sistema de aprendizaje enfocado a la enseñanza de matemáticas en linea.
+cardDescription: Diseño de webservice y desarrollo backend para sistema de aprendizaje enfocado a la enseñanza de matemáticas en línea.
 cover: /img/blog/designWebServices.webp
 intro: >-
   El proyecto consiste en el desarrollo del Back-End de una aplicación web
-  para la startup <strong>NumerIQ</strong>, una plataforma educativa centrada
+  para la startup NumerIQ, una plataforma educativa centrada
   en brindar tutorías personalizadas de matemáticas para estudiantes que buscan
   reforzar sus conocimientos en esta materia.
 challenges:

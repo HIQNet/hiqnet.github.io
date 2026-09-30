@@ -1,0 +1,115 @@
+---
+import { whatsappUrl } from "../../data/site";
+import WhatsAppIcon from "../common/WhatsAppIcon.astro";
+---
+
+<section id="inicio" class="hero-section border-b border-line">
+    <div class="hero-grid container-page">
+        <div class="hero-content">
+            <p class="hero-kicker eyebrow">Software para PyMEs</p>
+            <h1 class="hero-title mt-5">
+                <span class="hero-title__line">
+                    Software que hace más simple
+                </span>
+                <span class="hero-title__line hero-title__line--accent">
+                    operar tu negocio.
+                </span>
+            </h1>
+            <p class="hero-intro mt-6 max-w-2xl text-lg leading-8 text-muted">
+                Ayudamos a PyMEs a transformar procesos manuales y herramientas
+                desconectadas en software diseñado alrededor de su operación.
+            </p>
+            <div class="hero-actions mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                    class="button-primary"
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-event="click_cta_hero"
+                >
+                    <WhatsAppIcon size={18} />
+                    Cuéntanos tu proyecto{" "}
+                    <span class="button-arrow" aria-hidden="true">
+                        →
+                    </span>
+                </a>
+                <a class="button-secondary" href="#proyectos">
+                    Ver casos de éxito{" "}
+                    <span class="button-arrow" aria-hidden="true">
+                        →
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-brand" data-motion="brand" aria-hidden="true">
+            <div class="hero-brand__grid"></div>
+            <svg
+                class="hero-brand__diagram"
+                viewBox="0 0 600 560"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+            >
+                <g class="hero-orbit">
+                    <path pathLength="1" d="M203 198C255 145 345 145 397 198" />
+                    <path pathLength="1" d="M416 214C454 267 450 338 397 382" />
+                    <path pathLength="1" d="M203 382C150 330 146 262 184 215" />
+                </g>
+                <g class="hero-connection hero-connection--web">
+                    <path pathLength="1" d="M152 129C176 147 183 178 207 194" />
+                    <circle cx="152" cy="129" r="3" />
+                </g>
+                <g class="hero-connection hero-connection--api">
+                    <path pathLength="1" d="M448 147C427 163 417 180 393 199" />
+                    <circle cx="448" cy="147" r="3" />
+                </g>
+                <g class="hero-connection hero-connection--data">
+                    <path pathLength="1" d="M445 400C424 386 411 373 395 360" />
+                    <circle cx="445" cy="400" r="3" />
+                </g>
+                <g class="hero-connection hero-connection--system">
+                    <path pathLength="1" d="M164 406C181 392 195 378 209 365" />
+                    <circle cx="164" cy="406" r="3" />
+                </g>
+                <g class="hero-diagram-node hero-diagram-node--web">
+                    <rect x="54" y="108" width="98" height="42" rx="21" />
+                    <text x="103" y="134">
+                        WEB
+                    </text>
+                </g>
+                <g class="hero-diagram-node hero-diagram-node--api">
+                    <rect x="448" y="126" width="82" height="42" rx="21" />
+                    <text x="489" y="152">
+                        API
+                    </text>
+                </g>
+                <g class="hero-diagram-node hero-diagram-node--data">
+                    <rect x="445" y="379" width="94" height="42" rx="21" />
+                    <text x="492" y="405">
+                        DATOS
+                    </text>
+                </g>
+                <g class="hero-diagram-node hero-diagram-node--system">
+                    <rect x="65" y="385" width="99" height="42" rx="21" />
+                    <text x="114.5" y="411">
+                        SISTEMA
+                    </text>
+                </g>
+            </svg>
+            <div class="hero-brand__mark">
+                <img
+                    src="/media/brand/hiqnet-mark-poster.webp"
+                    data-brand-animation="/media/brand/hiqnet-mark.avif"
+                    data-brand-poster="/media/brand/hiqnet-mark-poster.webp"
+                    width="540"
+                    height="540"
+                    alt=""
+                    decoding="async"
+                />
+            </div>
+            <p class="hero-brand__caption">
+                <span></span> Una operación conectada
+            </p>
+        </div>
+    </div>
+</section>

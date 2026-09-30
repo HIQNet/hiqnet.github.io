@@ -1,131 +1,148 @@
-import ScrollReveal from "scrollreveal";
+const menuButton = document.querySelector<HTMLButtonElement>("#menu-toggle");
+const menu = document.querySelector<HTMLElement>("#mobile-menu");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-const mobileMenuButton = document.getElementById("mobile-menu-button");
-const mobileMenu = document.getElementById("mobile-menu");
+const closeMenu = (restoreFocus = false) => {
+  if (!menuButton || !menu || menu.hidden) return;
+  menu.hidden = true;
+  menuButton.setAttribute("aria-expanded", "false");
+  menuButton.querySelector(".sr-only")!.textContent = "Abrir menú";
+  if (restoreFocus) menuButton.focus();
+};
 
-function closeMobileMenu() {
-  if (!mobileMenu || mobileMenu.classList.contains("hidden")) return;
-  mobileMenu.classList.remove("scale-y-100");
-  mobileMenu.classList.add("scale-y-0");
-  window.setTimeout(() => mobileMenu.classList.add("hidden"), 300);
-}
+const toggleMenu = () => {
+  if (!menuButton || !menu) return;
+  const isOpen = menu.hidden;
+  menu.hidden = !isOpen;
+  menuButton.setAttribute("aria-expanded", String(isOpen));
+  menuButton.querySelector(".sr-only")!.textContent = isOpen ? "Cerrar menú" : "Abrir menú";
+  if (!isOpen) menuButton.focus();
+};
 
-mobileMenuButton?.addEventListener("click", () => {
-  if (!mobileMenu) return;
-  if (mobileMenu.classList.contains("hidden")) {
-    mobileMenu.classList.remove("hidden");
-    void mobileMenu.offsetWidth;
-    mobileMenu.classList.remove("scale-y-0");
-    mobileMenu.classList.add("scale-y-100");
-    return;
-  }
-  closeMobileMenu();
+menuButton?.addEventListener("click", toggleMenu);
+menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeMenu()));
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeMenu(true);
 });
-
 document.addEventListener("click", (event) => {
-  if (mobileMenu && mobileMenuButton && !mobileMenu.contains(event.target as Node) && !mobileMenuButton.contains(event.target as Node)) {
-    closeMobileMenu();
-  }
+  if (!menuButton || !menu || menu.hidden) return;
+  const target = event.target as Node;
+  if (!menu.contains(target) && !menuButton.contains(target)) closeMenu();
 });
 
-document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", (event) => {
-    const targetId = anchor.getAttribute("href");
-    const targetElement = targetId ? document.querySelector(targetId) : null;
-    if (!targetElement) return;
-    event.preventDefault();
-    window.scrollTo({ top: targetElement.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" });
-    closeMobileMenu();
+const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+const stageProgress = (progress: number, start: number, end: number) => clamp((progress - start) / (end - start));
+
+const brandAnimation = document.querySelector<HTMLImageElement>("[data-brand-animation]");
+const brandPoster = brandAnimation?.dataset.brandPoster || brandAnimation?.currentSrc || brandAnimation?.src;
+
+if (brandAnimation && brandPoster) {
+  const setBrandSource = () => {
+    const source = prefersReducedMotion.matches
+      ? brandPoster
+      : brandAnimation.dataset.brandAnimation;
+    if (source && brandAnimation.getAttribute("src") !== source) brandAnimation.src = source;
+  };
+  brandAnimation.addEventListener("error", () => { brandAnimation.src = brandPoster; }, { once: true });
+  setBrandSource();
+  prefersReducedMotion.addEventListener("change", setBrandSource);
+}
+
+if (!prefersReducedMotion.matches) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll<HTMLElement>(".reveal, .card-reveal, .editorial-reveal, [data-motion]").forEach((element) => revealObserver.observe(element));
+
+  const storySection = document.querySelector<HTMLElement>("[data-story-section]");
+  const storyVisual = document.querySelector<HTMLElement>("[data-story-visual]");
+  const storySteps = Array.from(document.querySelectorAll<HTMLElement>("[data-story-step]"));
+  const storyStepsElement = document.querySelector<HTMLElement>("[data-story-steps]");
+  const desktopStory = window.matchMedia("(min-width: 64rem)");
+
+  if (storySection && storyVisual && storyStepsElement && storySteps.length > 0) {
+    const setActiveStep = (stage: number) => {
+      storyVisual.dataset.storyStage = String(stage);
+      storySteps.forEach((step, index) => step.classList.toggle("is-current", index === stage - 1));
+    };
+    let teardownStory = () => {};
+
+    const setUpStory = () => {
+      teardownStory();
+      storyVisual.style.removeProperty("--story-progress");
+      storyVisual.style.removeProperty("--story-source");
+      storyVisual.style.removeProperty("--story-connection");
+      storyVisual.style.removeProperty("--story-flow");
+      storyVisual.style.removeProperty("--story-system");
+      storyVisual.style.removeProperty("--story-core-scale");
+      storyVisual.style.removeProperty("--story-source-scale");
+      storyVisual.style.removeProperty("--story-flow-scale");
+      storyStepsElement.style.removeProperty("--story-progress-percent");
+
+      if (!desktopStory.matches) {
+        const stepObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            setActiveStep(Number((entry.target as HTMLElement).dataset.storyStep ?? "1"));
+          });
+        }, { rootMargin: "-30% 0px -45% 0px", threshold: 0 });
+        storySteps.forEach((step) => stepObserver.observe(step));
+        teardownStory = () => stepObserver.disconnect();
+        return;
+      }
+
+      let frameRequested = false;
+      const updateStory = () => {
+        frameRequested = false;
+        const bounds = storySection.getBoundingClientRect();
+        const availableDistance = Math.max(bounds.height - window.innerHeight * 0.45, 1);
+        const progress = clamp((window.innerHeight * 0.55 - bounds.top) / availableDistance);
+        const connection = stageProgress(progress, 0.18, 0.48);
+        const flow = stageProgress(progress, 0.45, 0.73);
+        const system = stageProgress(progress, 0.68, 0.92);
+        const source = 1 - progress * 0.12;
+        const stage = Math.min(4, Math.floor(progress * 4) + 1);
+
+        storyVisual.style.setProperty("--story-progress", String(progress));
+        storyVisual.style.setProperty("--story-source", String(source));
+        storyVisual.style.setProperty("--story-connection", String(connection));
+        storyVisual.style.setProperty("--story-flow", String(flow));
+        storyVisual.style.setProperty("--story-system", String(system));
+        storyVisual.style.setProperty("--story-core-scale", String(0.88 + connection * 0.12));
+        storyVisual.style.setProperty("--story-source-scale", String(0.96 + source * 0.04));
+        storyVisual.style.setProperty("--story-flow-scale", String(0.94 + flow * 0.06));
+        storyStepsElement.style.setProperty("--story-progress-percent", `${progress * 100}%`);
+        setActiveStep(stage);
+      };
+      const scheduleStoryUpdate = () => {
+        if (!frameRequested) {
+          frameRequested = true;
+          window.requestAnimationFrame(updateStory);
+        }
+      };
+      const resizeObserver = new ResizeObserver(scheduleStoryUpdate);
+      resizeObserver.observe(storySection);
+      window.addEventListener("scroll", scheduleStoryUpdate, { passive: true });
+      window.addEventListener("resize", scheduleStoryUpdate, { passive: true });
+      scheduleStoryUpdate();
+      teardownStory = () => {
+        resizeObserver.disconnect();
+        window.removeEventListener("scroll", scheduleStoryUpdate);
+        window.removeEventListener("resize", scheduleStoryUpdate);
+      };
+    };
+
+    desktopStory.addEventListener("change", setUpStory);
+    setUpStory();
+  }
+}
+
+document.querySelectorAll<HTMLElement>("[data-event]").forEach((element) => {
+  element.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("hiqnet:conversion", { detail: { name: element.dataset.event } }));
   });
 });
-
-const scrollProgress = document.getElementById("scroll-progress");
-const backToTop = document.getElementById("back-to-top");
-
-window.addEventListener("scroll", () => {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  if (scrollProgress) scrollProgress.style.width = `${(scrollTop / scrollHeight) * 100}%`;
-  backToTop?.classList.toggle("visible", scrollTop > 300);
-});
-
-backToTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-
-const testimonialTrack = document.getElementById("testimonial-track");
-let currentSlide = 0;
-const dots = [...document.querySelectorAll<HTMLElement>(".dot")];
-
-function updateSlider() {
-  if (testimonialTrack) testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-  dots.forEach((dot, index) => {
-    const active = index === currentSlide;
-    dot.classList.toggle("active", active);
-    dot.classList.toggle("bg-purple-500", active);
-    dot.classList.toggle("dark:bg-purple-500", active);
-    dot.classList.toggle("bg-purple-300", !active);
-    dot.classList.toggle("dark:bg-purple-700", !active);
-  });
-}
-
-dots.forEach((dot) => {
-  dot.addEventListener("click", () => {
-    currentSlide = Number.parseInt(dot.dataset.index ?? "0", 10);
-    updateSlider();
-  });
-});
-
-if (dots.length > 0) {
-  window.setInterval(() => {
-    currentSlide = (currentSlide + 1) % dots.length;
-    updateSlider();
-  }, 5000);
-}
-
-// --- Filtros de servicios por objetivo ---
-
-const serviceFilters = [...document.querySelectorAll<HTMLButtonElement>(".service-filter")];
-const serviceCards = [...document.querySelectorAll<HTMLElement>(".service-card")];
-const serviceFilterGroup = document.getElementById("service-filters");
-
-function applyServiceFilter(objective: string) {
-  for (const card of serviceCards) {
-    const objectives = (card.dataset.objectives ?? "").split(/\s+/).filter(Boolean);
-    const matches = objective === "all" || objectives.includes(objective);
-    card.classList.toggle("hidden", !matches);
-    card.setAttribute("aria-hidden", String(!matches));
-  }
-  for (const filter of serviceFilters) {
-    const active = filter.dataset.objective === objective;
-    filter.setAttribute("aria-pressed", String(active));
-    filter.classList.toggle("border-cyan-400/60", active);
-    filter.classList.toggle("bg-cyan-400/10", active);
-    filter.classList.toggle("text-cyan-300", active);
-    filter.classList.toggle("border-slate-700", !active);
-    filter.classList.toggle("text-slate-300", !active);
-  }
-}
-
-serviceFilterGroup?.addEventListener("click", (event) => {
-  const filter = (event.target as HTMLElement).closest<HTMLButtonElement>(".service-filter");
-  if (!filter || !serviceFilterGroup.contains(filter)) return;
-  applyServiceFilter(filter.dataset.objective ?? "all");
-});
-
-applyServiceFilter("all");
-
-// Las animaciones no deben poder bloquear la interactividad principal.
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (!prefersReducedMotion) {
-  try {
-    const reveal = ScrollReveal();
-    reveal.reveal("h1, h2, h3, h4, h5, h6", { delay: 50, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
-    reveal.reveal(".gradient-border, .gradient-bg", { delay: 80, distance: "10px", duration: 300, origin: "bottom", interval: 50 });
-    reveal.reveal("p, li", { delay: 100, distance: "8px", duration: 300, origin: "bottom", interval: 50 });
-  } catch {
-    // Un fallo de una animaci&oacute;n no debe impedir filtros, men&uacute; o slider.
-  }
-}
-
-const video = document.getElementById("logoVideo") as HTMLVideoElement | null;
-if (video) video.playbackRate = 1;

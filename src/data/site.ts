@@ -1,31 +1,35 @@
 export const site = {
   name: "HiQNet",
-  title: "HiQNet | Consultoría de Software",
+  title: "HiQNet | Software y automatización para empresas",
   description:
-    "Consultoría y desarrollo de software: aplicaciones web, APIs, UI/UX, e-commerce y hospedaje.",
+    "Desarrollamos software, automatizaciones y sitios web para PyMEs que quieren operar con procesos más simples y claros.",
+  url: "https://hiqnet.github.io",
   email: "hiqnet.web@gmail.com",
-  /** Número WhatsApp en formato internacional sin "+" ni espacios. */
   whatsapp: "523325689263",
+  whatsappMessage:
+    "Hola, encontré HiQNet desde su sitio web y me gustaría platicarles sobre un proyecto.",
+  foundedYear: 2023,
   socials: {
     facebook: "https://www.facebook.com/profile.php?id=61577480559100",
     instagram: "https://www.instagram.com/hiqnet_solutions/",
   },
-  schedule: "Lunes a Viernes: 9am - 8pm",
 } as const;
 
 export const navLinks = [
-  { label: "Inicio", hash: "#home" },
-  { label: "Nosotros", hash: "#about" },
-  { label: "Servicios", hash: "#services" },
-  { label: "Portafolio", hash: "#portfolio" },
-  { label: "Contacto", hash: "#contact" },
+  { label: "Inicio", href: "#inicio" },
+  { label: "Soluciones", href: "#soluciones" },
+  { label: "Proyectos", href: "#proyectos" },
+  { label: "Nosotros", href: "#nosotros" },
+  { label: "Contacto", href: "#contacto" },
 ] as const;
 
-/** Enlaces del footer que apuntan a secciones del home */
-export const footerSectionLinks = [
-  { label: "Inicio", hash: "#home" },
-  { label: "Servicios", hash: "#services" },
-  { label: "Nosotros", hash: "#about" },
-  { label: "Portafolio", hash: "#portfolio" },
-  { label: "Contacto", hash: "#contact" },
+export const serviceLinks = [
+  { label: "HiQNet Web", href: "#soluciones" },
+  { label: "HiQNet Automate", href: "#soluciones" },
+  { label: "HiQNet Business", href: "#soluciones" },
 ] as const;
+
+export const whatsappUrl = (message: string = site.whatsappMessage) =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+
+export const yearsOperating = Math.max(1, new Date().getFullYear() - site.foundedYear);

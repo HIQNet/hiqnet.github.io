@@ -2,36 +2,29 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import ScrollIndicators from "../components/ScrollIndicators.astro";
-import Hero from "../components/Hero.astro";
-import ClientsCarousel from "../components/ClientsCarousel.astro";
-import AboutSection from "../components/AboutSection.astro";
-import ProcessSection from "../components/ProcessSection.astro";
-import Essence from "../components/Essence.astro";
-import Services from "../components/Services.astro";
-import Stats from "../components/Stats.astro";
-import Portfolio from "../components/Portfolio.astro";
-import Testimonials from "../components/Testimonials.astro";
-import Contact from "../components/Contact.astro";
+import PersistentCta from "../components/PersistentCta.astro";
+import Hero from "../components/home/Hero.astro";
+import BusinessSections from "../components/home/BusinessSections.astro";
+import TransformationStory from "../components/home/TransformationStory.astro";
+import Solutions from "../components/home/Solutions.astro";
+import Portfolio from "../components/home/Portfolio.astro";
+import Contact from "../components/home/Contact.astro";
 import { site } from "../data/site";
 ---
 
 <BaseLayout title={site.title} description={site.description}>
-  <ScrollIndicators />
-  <Navbar />
-
-  <Hero />
-  <ClientsCarousel />
-  <AboutSection />
-  <ProcessSection />
-  <Essence />
-  <Services />
-  <Stats />
-  <Portfolio />
-  <Testimonials />
-  <Contact />
-
-  <Footer />
-
-  <script src="../scripts/index.ts"></script>
+    <div class="site-shell">
+        <Navbar />
+        <main id="contenido">
+            <Hero />
+            <BusinessSections />
+            <TransformationStory />
+            <Solutions />
+            <Portfolio />
+            <Contact />
+        </main>
+        <Footer />
+        <PersistentCta />
+    </div>
+    <script src="../scripts/index.ts"></script>
 </BaseLayout>

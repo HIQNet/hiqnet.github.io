@@ -1,14 +1,18 @@
 ---
-// Botón flotante persistente que abre el panel de cotización en cualquier página.
+import { whatsappUrl } from "../data/site";
+import WhatsAppIcon from "./common/WhatsAppIcon.astro";
 ---
 
-<button
-  type="button"
-  id="persistent-cta"
-  data-quote-open
-  class="fixed bottom-6 right-8 z-[55] gradient-bg text-white font-medium pl-5 pr-6 py-3 rounded-full shadow-xl hover:brightness-110 hover:scale-105 transition-all duration-300 cursor-pointer flex items-center gap-2"
-  aria-haspopup="dialog"
+<a
+    href={whatsappUrl()}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-event="click_whatsapp_floating"
+    class="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 inline-flex min-h-12 items-center gap-2 rounded-full border border-brand-cyan/50 bg-surface px-4 text-sm font-bold text-white shadow-panel transition hover:-translate-y-0.5 hover:bg-surface-raised"
+    aria-label="Abrir conversación con HiQNet en WhatsApp"
 >
-  <i class="fas fa-comment-dollar"></i>
-  <span class="hidden sm:inline">Cotizar proyecto</span>
-</button>
+    <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-cyan text-ink">
+        <WhatsAppIcon size={16} />
+    </span>
+    <span class="hidden sm:inline">WhatsApp</span>
+</a>

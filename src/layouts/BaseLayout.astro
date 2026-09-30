@@ -1,41 +1,73 @@
 ---
 import "../styles/global.css";
-import QuotePanel from "../components/QuotePanel.astro";
-import PersistentCta from "../components/PersistentCta.astro";
+import { site } from "../data/site";
 
 interface Props {
-  title: string;
-  description?: string;
-  bodyClass?: string;
+    title?: string;
+    description?: string;
+    canonicalPath?: string;
+    image?: string;
+    noIndex?: boolean;
 }
 
-const { title, description = "", bodyClass = "" } = Astro.props;
+const {
+    title = site.title,
+    description = site.description,
+    canonicalPath = "/",
+    image = "/img/FullLogo.webp",
+    noIndex = false,
+} = Astro.props;
+const canonical = new URL(canonicalPath, site.url).toString();
+const imageUrl = new URL(image, site.url).toString();
+const organization = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    foundingDate: String(site.foundedYear),
+    sameAs: [site.socials.facebook, site.socials.instagram],
+    description: site.description,
+};
 ---
 
 <!doctype html>
-<html lang="es" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <link rel="icon" href="/img/Logo.png" type="image/png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <title>{title}</title>
-  </head>
-  <body class={bodyClass}>
-    <slot />
-
-    <PersistentCta />
-    <QuotePanel />
-    <script src="../scripts/quote.ts"></script>
-  </body>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script is:inline>
+            document.documentElement.classList.add("js");
+        </script>
+        <meta name="description" content={description} />
+        {noIndex && <meta name="robots" content="noindex, nofollow" />}
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" href="/img/Logo.png" type="image/png" />
+        <meta property="og:locale" content="es_MX" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={site.name} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={imageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={imageUrl} />
+        <script
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(organization)}
+        ></script>
+        <title>{title}</title>
+    </head>
+    <body>
+        <a
+            class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand-cyan focus:px-4 focus:py-2 focus:text-ink"
+            href="#contenido"
+        >
+            Saltar al contenido
+        </a>
+        <slot />
+    </body>
 </html>

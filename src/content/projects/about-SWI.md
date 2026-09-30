@@ -1,16 +1,14 @@
 ---
 name: Servicios Web Icono
-cardTitle: Social Media Marketing
-title: Rediseño integral de sitio web corporativo.
-subtitle: Rediseño completo y optimización del código, mejorando su apariencia visual, estructura, navegación y adaptación a dispositivos móviles.
-cardDescription: Estrategias de marketing digital para aumentar la presencia online mejorando la estructura, la apariencia visual...
+cardTitle: Servicios Web Icono
+title: Rediseño integral de sitio web corporativo
+subtitle: Rediseño y mejora de la estructura, navegación y adaptación a dispositivos móviles.
+cardDescription: Rediseño de presencia digital para presentar servicios con una estructura más clara y actualizada.
 cover: /img/SWI/SWI-1.png
 intro: >-
-  Se llevó a cabo un rediseño completo del sitio web <a
-  href="https://www.servicioswebicono.com" target="_blank"
-  class="text-blue-600 underline hover:text-blue-800">www.servicioswebicono.com</a>
-  con el objetivo de mejorar la experiencia del usuario y la presencia digital
-  de la empresa.
+  Se llevó a cabo un rediseño completo del sitio web de Servicios Web Icono con
+  el objetivo de mejorar la experiencia de navegación y la presencia digital de
+  la empresa.
 challenges:
   - Sitio web con diseño desactualizado y poco atractivo.
   - Navegación poco intuitiva para los usuarios.
@@ -25,38 +23,33 @@ solution: >-
   "Contáctanos" con contenido más claro y actualizado.
 results:
   - Mejor experiencia de usuario en todos los dispositivos.
-  - Incremento en la duración promedio de las visitas al sitio.
-  - Optimización del trabajo en cocina, mejorando tiempos de entrega.
+  - Navegación y acceso más claros a los servicios del negocio.
   - Acceso más fácil a los servicios ofrecidos.
   - Imagen corporativa más profesional y actualizada.
 tech:
   - React
   - JavaScript
 client: Servicios Web Icono
-duration: 1 meses
+duration: 1 mes
 status: Finalizado
-links:
-  - href: https://swi.great-site.net/
-    label: Visita
-    icon: fas fa-external-link-alt
 gallery:
   - src: /img/SWI/SWI-2.png
-    alt: Dashboard principal
+    alt: Sección Nosotros del sitio de Servicios Web Icono
     caption: Apartado de Nosotros
   - src: /img/SWI/SWI-3.png
-    alt: Sistema de recomendaciones
+    alt: Sección Servicios del sitio de Servicios Web Icono
     caption: Apartado de Servicios
   - src: /img/SWI/SWI-4.png
-    alt: Flujo de compra
+    alt: Sección Portafolio del sitio de Servicios Web Icono
     caption: Apartado de Portafolio
   - src: /img/SWI/SWI-5.png
-    alt: Panel de administración
+    alt: Modal de proyectos del sitio de Servicios Web Icono
     caption: Modal del Portafolio
   - src: /img/SWI/SWI-6.png
-    alt: Flujo de compra
+    alt: Sección de contacto del sitio de Servicios Web Icono
     caption: Sección de Contacto
   - src: /img/SWI/SWI-7.png
-    alt: Flujo de compra
-    caption: Formulario de contacto, Footer
+    alt: Formulario y pie de página del sitio de Servicios Web Icono
+    caption: Formulario de contacto y pie de página
 order: 3
 ---
