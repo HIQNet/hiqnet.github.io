@@ -45,6 +45,7 @@ function initializeInteractions() {
   );
   const persistent = document.querySelector<HTMLElement>("[data-persistent-cta]");
   const contact = document.querySelector<HTMLElement>("#contacto");
+  const storyDiagram = story?.querySelector<HTMLElement>(".operation-diagram") ?? null;
 
   const nav = Array.from(
     document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"),
@@ -59,8 +60,6 @@ function initializeInteractions() {
   let pointerX = 0;
   let pointerY = 0;
   let currentStage = -1;
-  let ambientStep = 0;
-  let ambientFrame = 0;
   let reducedSnapshot = reduced.matches;
 
   function closeMenu(restoreFocus = false) {
@@ -238,26 +237,83 @@ function initializeInteractions() {
       });
     }
 
-    // Ambient pulse: only when the hero is in or just out of the viewport, never while
-    // the user is reading other sections. The step counter advances once per frame.
-    if (routing && heroBounds && !reducedSnapshot) {
-      if (heroBounds.bottom > 0 && heroBounds.top < innerHeight - 80) {
-        const period = 220;
-        ambientStep = (ambientStep + 1) % period;
-        // A 2-3 second cycle is intentional: the page must read as alive without
-        // demanding attention.
-        const cycle = 180;
-        const pulseProgress = ambientStep / cycle;
-        if (ambientStep === 0) ambientFrame = 0;
-        root.style.setProperty("--ambient-pulse-step", `${(pulseProgress * 110).toFixed(2)}`);
-        root.style.setProperty("--motion-ambient-progress", pulseProgress > 1 ? "0" : "1");
-      } else {
-        root.style.setProperty("--motion-ambient-progress", "0");
+    // Ambient motion: discrete events with varied intervals. Driven by the same
+    // RAF as scroll-driven motion; only fires when its zone is visible, the tab is
+    // foreground, and reduced motion is not requested.
+    tickAmbient(performance.now());
+  }
+
+  // Ambient motion: discrete events with varied intervals across three zones.
+  // Each zone has its own scheduler; only one fires per tick to keep the page
+  // restrained (max one event clearly perceptible at a time).
+  interface AmbientZone {
+    element: HTMLElement | null;
+    duration: number;
+    delayMin: number;
+    delayMax: number;
+    className: string;
+    mobileEnabled: boolean;
+    requiresSystem?: boolean;
+  }
+  const ambientZones: AmbientZone[] = [
+    { element: routing, duration: 900, delayMin: 4500, delayMax: 8500, className: "is-ambient", mobileEnabled: true },
+    { element: storyDiagram, duration: 1100, delayMin: 5500, delayMax: 9500, className: "is-ambient", mobileEnabled: false, requiresSystem: true },
+    { element: contact, duration: 1500, delayMin: 6000, delayMax: 11000, className: "is-ambient", mobileEnabled: false },
+  ];
+  const nextAmbientFire = ambientZones.map((_, index) => performance.now() + 4500 + index * 1800);
+  const ambientActiveUntil = ambientZones.map(() => 0);
+  const mobileAmbient = matchMedia("(max-width: 47.999rem)");
+
+  function tickAmbient(now: number) {
+    if (reducedSnapshot) return;
+    if (document.visibilityState !== "visible") return;
+    let anyActive = false;
+    for (let index = 0; index < ambientZones.length; index += 1) {
+      const activeUntil = ambientActiveUntil[index];
+      if (activeUntil && now > activeUntil) {
+        ambientZones[index].element?.classList.remove(ambientZones[index].className);
+        ambientActiveUntil[index] = 0;
       }
-    } else if (routing) {
-      root.style.setProperty("--motion-ambient-progress", "0");
+      if (activeUntil && now <= activeUntil) anyActive = true;
+    }
+    if (anyActive) return;
+    for (let index = 0; index < ambientZones.length; index += 1) {
+      const zone = ambientZones[index];
+      if (!zone.element) continue;
+      if (!zone.mobileEnabled && mobileAmbient.matches) continue;
+      if (now < nextAmbientFire[index]) continue;
+      const rect = zone.element.getBoundingClientRect();
+      if (rect.bottom < -40 || rect.top > innerHeight + 40) {
+        nextAmbientFire[index] = now + 1500;
+        continue;
+      }
+      if (zone.requiresSystem) {
+        const systemProgress = Number(zone.element.style.getPropertyValue("--system")) || 0;
+        if (systemProgress < 0.6) {
+          nextAmbientFire[index] = now + 1500;
+          continue;
+        }
+      }
+      zone.element.classList.add(zone.className);
+      ambientActiveUntil[index] = now + zone.duration;
+      nextAmbientFire[index] = now + zone.delayMin + Math.random() * (zone.delayMax - zone.delayMin);
+      break;
     }
   }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") return;
+    // Reset schedules when returning to the tab so we don't burst-fire events.
+    const now = performance.now();
+    for (let index = 0; index < ambientZones.length; index += 1) {
+      nextAmbientFire[index] = now + 4000 + index * 1500;
+      if (ambientActiveUntil[index]) {
+        ambientZones[index].element?.classList.remove(ambientZones[index].className);
+        ambientActiveUntil[index] = 0;
+      }
+    }
+    schedule();
+  }, { signal });
 
   function schedule() {
     if (!frame) frame = requestAnimationFrame(update);
@@ -362,7 +418,6 @@ function initializeInteractions() {
     sequential.disconnect();
     capabilityObserver.disconnect();
     cancelAnimationFrame(frame);
-    cancelAnimationFrame(ambientFrame);
     closeMenu();
   };
 }

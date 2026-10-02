@@ -44,13 +44,9 @@
   --motion-base: 260ms;
   --motion-slow: 480ms;
   --motion-reveal: 560ms;
-  --motion-ambient: 7800ms;
   /* Two easings cover every interactive surface. UI is responsive; narrative has presence. */
   --ease-ui: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-narrative: cubic-bezier(0.65, 0, 0.35, 1);
-  /* Reduced-motion gate, set from JS for environment-accurate behavior. */
-  --motion-ambient-progress: 0;
-  --ambient-pulse-step: 0;
 }
 
 * { box-sizing: border-box; }
@@ -128,16 +124,31 @@ button:not(:disabled) { cursor: pointer; }
 .hero-routing svg { display: block; width: 100%; height: clamp(120px, 15vw, 190px); overflow: visible; }
 .hero-routing .route-in { stroke: var(--color-line); }
 .hero-routing .route-through { stroke: var(--color-brand-cyan); opacity: calc(.55 + var(--hero-progress, 0) * .45); stroke-dasharray: 1; stroke-dashoffset: calc(.2 - var(--hero-progress, 0) * .2); }
-/* Ambient pulse: the cyan line travels slowly from the left anchor into the central node,
-   reinforcing that the operation is alive. Disabled when --ambient-pulse-step is 0 (reduced motion). */
-.hero-routing .ambient-pulse { stroke: var(--color-brand-cyan); stroke-width: 1.5; opacity: calc(.55 * var(--motion-ambient-progress, 0)); stroke-dasharray: 22 92; stroke-dashoffset: calc(64 - var(--ambient-pulse-step, 0)); }
+/* As the user scrolls past the hero, the decorative curves lose presence; the system begins to fragment. */
+.hero-routing .route-secondary { opacity: calc(1 - var(--hero-progress, 0) * .45); transition: opacity var(--motion-base) var(--ease-narrative); }
+/* Ambient pulse: a single cyan line that only becomes visible during an ambient event. */
+.hero-routing .ambient-pulse { stroke: var(--color-brand-cyan); stroke-width: 1.5; fill: none; opacity: 0; pointer-events: none; }
+.hero-routing.is-ambient .ambient-pulse { animation: hero-ambient-pulse 900ms var(--ease-ui); }
+.hero-routing .hero-ambient-dot { fill: var(--color-brand-cyan); opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: center; }
+.hero-routing.is-ambient .hero-ambient-dot { animation: hero-ambient-dot 900ms var(--ease-ui); }
 .hero-routing .routing-plane { transform: translate(var(--pointer-x, 0px), var(--pointer-y, 0px)); }
 .hero-routing text { font: 10px var(--font-mono); fill: var(--color-muted); letter-spacing: 1px; }
+.hero-routing .hero-tag { font-size: 9px; letter-spacing: .1em; }
 .hero-routing .route-node { fill: var(--color-ink); stroke: var(--color-line); }
 .hero-routing .route-node--core { stroke: var(--color-brand-cyan); fill: var(--color-surface); }
+@keyframes hero-ambient-pulse {
+  0%, 100% { opacity: 0; }
+  40%, 60% { opacity: .85; }
+}
+@keyframes hero-ambient-dot {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  40%, 60% { opacity: .75; transform: scale(1.6); }
+}
 .hero-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-top: var(--space-4); color: var(--color-muted); font: .625rem/1.5 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
-.hero-bottom a { display: inline-flex; align-items: center; min-height: 44px; gap: var(--space-4); text-decoration: none; }
-.hero-bottom b { color: var(--color-brand-cyan); font-weight: 400; }
+.hero-bottom a, .hero-bottom span { display: inline-flex; align-items: center; min-height: 44px; gap: var(--space-4); }
+.hero-bottom a { text-decoration: none; color: var(--color-muted); transition: color var(--motion-fast) var(--ease-ui); }
+.hero-bottom a:hover { color: var(--color-brand-cyan); }
+.hero-bottom__signature { color: var(--color-muted); }
 /* A short connection that lives between the hero and the friction section, signaling the
    first hint of fragmentation as the system "starts to come loose" before the next block. */
 .hero-friction-bridge { height: clamp(60px, 8vw, 120px); padding-block: clamp(20px, 3vw, 40px); }
@@ -198,6 +209,12 @@ button:not(:disabled) { cursor: pointer; }
 .operation-diagram .diagram-flow path { stroke: var(--color-brand-blue); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--flow, 1)); }
 .operation-diagram .diagram-boundary { opacity: var(--system, 1); }
 .operation-diagram .diagram-boundary path { stroke: var(--color-brand-violet); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--system, 1)); }
+/* Story ambient: when --system is reached, the violet boundary briefly pulses, reinforcing that the organized system is running. */
+.operation-diagram.is-ambient .diagram-boundary path { animation: story-ambient-system 1100ms var(--ease-ui); }
+@keyframes story-ambient-system {
+  0%, 100% { stroke-opacity: 0; }
+  50% { stroke-opacity: .35; }
+}
 .diagram-legend { display: flex; flex-wrap: wrap; gap: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-line); font: .625rem/1.5 var(--font-mono); color: var(--color-muted); }
 .diagram-legend span { display: flex; align-items: center; gap: var(--space-2); }
 .diagram-legend i { width: 12px; height: 1px; background: var(--color-brand-cyan); }
@@ -261,7 +278,7 @@ button:not(:disabled) { cursor: pointer; }
 .engineering-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-12); align-items: start; }
 .engineering-intro .section-title { margin-block: var(--space-5) var(--space-6); }
 .engineering-stack { border-top: 1px solid var(--color-line); }
-.engineering-layer { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-5); padding-block: var(--space-5); border-bottom: 1px solid var(--color-line); transition: border-color var(--motion-base) var(--ease-ui); position: relative; }
+ vg .engineering-layer { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-5); padding-block: var(--space-5); border-bottom: 1px solid var(--color-line); transition: border-color var(--motion-base) var(--ease-ui); position: relative; }
 .js .engineering-layer:not(.is-current) { opacity: .55; }
 .engineering-layer::before { content: ""; position: absolute; inset: auto 0 -1px; height: 1px; width: var(--layer-emphasis, 0%); background: var(--color-brand-cyan); transition: width var(--motion-slow) var(--ease-narrative); }
 .engineering-layer.is-current::before { width: 100%; }
@@ -273,8 +290,22 @@ button:not(:disabled) { cursor: pointer; }
 .engineering-layer small { display: block; color: var(--color-brand-blue); font: .625rem/1.8 var(--font-mono); margin-top: var(--space-3); }
 .engineering-note { margin-top: var(--space-5); font-size: .8125rem; color: var(--color-muted); line-height: 1.7; }
 
-.contact-section { border-top: 1px solid var(--color-line); position: relative; padding-block: clamp(6rem, 11vw, 11rem); }
-.contact-section::before { content: ""; position: absolute; top: -1px; left: var(--gutter); width: var(--space-9); height: 1px; background: var(--color-brand-cyan); }
+.contact-section { border-top: 1px solid var(--color-line); position: relative; padding-block: clamp(6rem, 11vw, 11rem); overflow: clip; }
+.contact-section::before { content: ""; position: absolute; top: -1px; left: var(--gutter); width: var(--space-9); height: 1px; background: var(--color-brand-cyan); z-index: 1; }
+.contact-ambient { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.contact-ambient .ambient-line { stroke: var(--color-line); fill: none; stroke-width: 1; stroke-dasharray: 6 14; opacity: .12; }
+.contact-ambient .ambient-pip { fill: var(--color-brand-cyan); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.contact-section .container-page { position: relative; z-index: 1; }
+.contact-section.is-ambient .ambient-line { animation: contact-ambient-line 1500ms var(--ease-ui); }
+.contact-section.is-ambient .ambient-pip { animation: contact-ambient-pip 1500ms var(--ease-ui); }
+@keyframes contact-ambient-line {
+  0%, 100% { opacity: .12; stroke-dashoffset: 0; }
+  50% { opacity: .28; stroke-dashoffset: -36; }
+}
+@keyframes contact-ambient-pip {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: .55; transform: scale(1.4); }
+}
 .contact-title { max-width: 16ch; font-size: clamp(3rem, 6.7vw, 6.5rem); font-weight: 500; letter-spacing: -.05em; line-height: 1.05; margin-block: var(--space-6) var(--space-8); }
 .contact-bottom { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: var(--space-8); }
 .contact-bottom .section-copy { max-width: 31rem; }
@@ -374,6 +405,7 @@ button:not(:disabled) { cursor: pointer; }
   .hero-actions .button-primary { width: 100%; }
   .hero-routing svg { height: 110px; }
   .hero-routing .route-secondary, .hero-routing text { display: none; }
+    .hero-bottom__signature { display: none; }
   .hero-bottom > span { max-width: 18ch; }
   .friction-heading { gap: var(--space-6); }
   .fragment-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); font-size: .8125rem; margin-top: var(--space-8); gap: 0; }

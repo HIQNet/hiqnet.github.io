@@ -2,49 +2,47 @@
 import { site, whatsappUrl } from "../../data/site";
 import WhatsAppIcon from "../common/WhatsAppIcon.astro";
 ---
-
-<section
-    id="contacto"
-    class="contact-section section-space"
-    aria-labelledby="contacto-title"
->
-    <div class="container-page reveal">
-        <p class="eyebrow">
-            <span>06 /</span> Empecemos por una conversación
-        </p>
-        <h2 id="contacto-title" class="contact-title">
-            Cuéntanos cómo funciona tu operación.
-        </h2>
-        <div class="contact-bottom">
-            <p class="section-copy">
-                Podemos empezar entendiendo qué haces hoy, dónde existe fricción
-                y qué tendría sentido convertir en software.
-            </p>
-            <div class="contact-actions">
-                <a
-                    class="button-primary"
-                    href={whatsappUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-event="click_whatsapp"
-                >
-                    <WhatsAppIcon size={18} />
-                    Hablar por WhatsApp{" "}
-                    <span class="button-arrow" aria-hidden="true">
-                        ↗
-                    </span>
-                </a>
-                <a
-                    class="button-secondary"
-                    href={`mailto:${site.email}`}
-                    data-event="click_email"
-                >
-                    Enviar correo{" "}
-                    <span class="button-arrow" aria-hidden="true">
-                        ↗
-                    </span>
-                </a>
-            </div>
-        </div>
+<section id="contacto" class="contact-section section-space" aria-labelledby="contacto-title">
+  <svg
+    class="contact-ambient"
+    viewBox="0 0 1200 600"
+    fill="none"
+    preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true"
+  >
+    <path class="ambient-line" d="M0 120H1200M1200 480H0" />
+    <path class="ambient-line" d="M1200 0L0 600" />
+    <circle class="ambient-pip" cx="80" cy="120" r="2" />
+    <circle class="ambient-pip" cx="1120" cy="480" r="2" />
+  </svg>
+  <div class="container-page reveal">
+    <p class="eyebrow"><span>06 /</span> Empecemos por una conversación</p>
+    <h2 id="contacto-title" class="contact-title">Cuéntanos cómo funciona tu operación.</h2>
+    <div class="contact-bottom">
+      <p class="section-copy">
+        Podemos empezar entendiendo qué haces hoy, dónde existe fricción
+        y qué tendría sentido convertir en software.
+      </p>
+      <div class="contact-actions">
+        <a
+          class="button-primary"
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-event="click_whatsapp"
+        >
+          <WhatsAppIcon size={18} />Hablar por WhatsApp
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a
+          class="button-secondary"
+          href={`mailto:${site.email}`}
+          data-event="click_email"
+        >
+          Enviar correo
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
     </div>
+  </div>
 </section>

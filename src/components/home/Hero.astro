@@ -1,157 +1,84 @@
 ---
 import { whatsappUrl } from "../../data/site";
 ---
-
-<section
-    id="inicio"
-    class="hero-section"
-    aria-labelledby="hero-title"
-    data-hero
->
-    <div class="hero-composition container-page">
-        <div class="hero-meta">
-            <p class="eyebrow">
-                HiQNet <span aria-hidden="true">/</span> Ingeniería de software
-            </p>
-            <span>Para empresas y PyMEs</span>
-        </div>
-        <h1 id="hero-title" class="hero-title">
-            <span>Software alrededor</span>
-            <span>
-                de tu <em>operación.</em>
-            </span>
-        </h1>
-        <div class="hero-support">
-            <p class="hero-intro">
-                Convertimos procesos manuales, información dispersa y
-                herramientas desconectadas en sistemas construidos para tu
-                empresa.
-            </p>
-            <div class="hero-actions">
-                <a
-                    class="button-primary"
-                    href={whatsappUrl()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-event="click_cta_hero"
-                >
-                    Hablemos de tu operación
-                    <span class="button-arrow" aria-hidden="true">
-                        ↗
-                    </span>
-                </a>
-                <a class="text-link" href="#nosotros">
-                    Conocer cómo trabajamos
-                    <span aria-hidden="true">↓</span>
-                </a>
-            </div>
-        </div>
-        <div class="hero-routing" aria-hidden="true" data-hero-routing>
-            <svg
-                viewBox="0 0 1200 180"
-                fill="none"
-                preserveAspectRatio="xMidYMid meet"
-            >
-                <g class="route-in" stroke-width="1">
-                    <path d="M0 34H170L226 90H440M20 144H130L184 90H440M0 90H440" />
-                    <path
-                        class="route-secondary"
-                        d="M110 8H260L316 64H440M80 175H285L345 116H440"
-                    />
-                    <path d="M760 64H880L934 10H1100M760 116H840L892 168H1140M760 90H1200" />
-                </g>
-                <g class="routing-plane">
-                    <path
-                        class="route-through"
-                        pathLength="1"
-                        d="M184 90H460M740 90H1000"
-                    />
-                    <path class="ambient-pulse" d="M184 90H460M740 90H1000" />
-                    <rect
-                        class="route-node"
-                        x="460"
-                        y="30"
-                        width="280"
-                        height="120"
-                    />
-                    <path
-                        class="route-in"
-                        d="M484 54h72m-72 72h72M640 54h76m-76 72h76"
-                    />
-                    <rect
-                        class="route-node route-node--core"
-                        x="548"
-                        y="65"
-                        width="104"
-                        height="50"
-                    />
-                    <text
-                        x="600"
-                        y="95"
-                        text-anchor="middle"
-                        style="fill:var(--color-brand-cyan)"
-                    >
-                        OPERACIÓN
-                    </text>
-                    <path
-                        class="route-through"
-                        pathLength="1"
-                        d="M460 90H548M652 90H740"
-                    />
-                    <rect
-                        class="route-node"
-                        x="126"
-                        y="82"
-                        width="16"
-                        height="16"
-                    />
-                    <rect
-                        class="route-node"
-                        x="306"
-                        y="56"
-                        width="16"
-                        height="16"
-                    />
-                    <rect
-                        class="route-node"
-                        x="956"
-                        y="82"
-                        width="16"
-                        height="16"
-                    />
-                    <rect
-                        class="route-node"
-                        x="1070"
-                        y="160"
-                        width="16"
-                        height="16"
-                    />
-                    <text x="10" y="65">
-                        INFORMACIÓN
-                    </text>
-                    <text x="1030" y="70">
-                        SISTEMA
-                    </text>
-                </g>
-            </svg>
-        </div>
-        <div class="hero-bottom">
-            <span>
-                Procesos <b>→</b> Conexiones <b>→</b> Software
-            </span>
-            <a href="#friccion">
-                El punto de partida <span aria-hidden="true">↓</span>
-            </a>
-        </div>
+<section id="inicio" class="hero-section" aria-labelledby="hero-title" data-hero>
+  <div class="hero-composition container-page">
+    <div class="hero-meta">
+      <p class="eyebrow">HiQNet <span aria-hidden="true">/</span> Ingeniería de software</p>
+      <span>Para empresas y PyMEs</span>
     </div>
-    <div class="hero-friction-bridge" aria-hidden="true">
-        <svg viewBox="0 0 1200 60" fill="none" preserveAspectRatio="none">
-            <path class="bridge-active" d="M0 30 H1200" pathLength="1" />
-            <path d="M40 30 H160 M320 30 H440 M600 30 H720 M880 30 H1040 M1160 30 H1200" />
-            <circle cx="160" cy="30" r="3" />
-            <circle cx="440" cy="30" r="3" />
-            <circle cx="720" cy="30" r="3" />
-            <circle cx="1040" cy="30" r="3" />
-        </svg>
+    <h1 id="hero-title" class="hero-title">
+      <span>Software alrededor</span>
+      <span>de tu <em>operación.</em></span>
+    </h1>
+    <div class="hero-support">
+      <p class="hero-intro">
+        Convertimos procesos manuales, información dispersa y
+        herramientas desconectadas en sistemas construidos para tu
+        empresa.
+      </p>
+      <div class="hero-actions">
+        <a
+          class="button-primary"
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-event="click_cta_hero"
+        >
+          Hablemos de tu operación
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="text-link" href="#nosotros">
+          Conocer cómo trabajamos
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
     </div>
+    <div class="hero-routing" aria-hidden="true" data-hero-routing>
+      <svg viewBox="0 0 1200 180" fill="none" preserveAspectRatio="xMidYMid meet">
+        <g class="route-in" stroke-width="1">
+          <path d="M0 34H170L226 90H440M20 144H130L184 90H440M0 90H440" />
+          <path class="route-secondary" d="M110 8H260L316 64H440M80 175H285L345 116H440" />
+          <path d="M760 64H880L934 10H1100M760 116H840L892 168H1140M760 90H1200" />
+        </g>
+        <g class="routing-plane">
+          <path class="route-through" pathLength="1" d="M184 90H460M740 90H1000" />
+          <rect class="route-node" x="460" y="30" width="280" height="120" />
+          <path class="route-in" d="M484 54h72m-72 72h72M640 54h76m-76 72h76" />
+          <rect class="route-node route-node--core" x="548" y="65" width="104" height="50" />
+          <path class="route-through" pathLength="1" d="M460 90H548M652 90H740" />
+          <rect class="route-node" x="126" y="82" width="16" height="16" />
+          <rect class="route-node" x="306" y="56" width="16" height="16" />
+          <rect class="route-node" x="956" y="82" width="16" height="16" />
+          <rect class="route-node" x="1070" y="160" width="16" height="16" />
+          <!-- Technical texture (no narrative, no copy) -->
+          <text class="hero-tag" x="440" y="22">01</text>
+          <text class="hero-tag" x="784" y="22">02</text>
+          <text class="hero-tag" x="944" y="22">03</text>
+          <text class="hero-tag" x="944" y="172">04</text>
+          <!-- Ambient pulse path; visible only while .is-ambient is active -->
+          <path class="ambient-pulse" pathLength="1" d="M184 90H460M740 90H1000" />
+          <!-- Ambient indicator dots; visible only during ambient events -->
+          <circle class="hero-ambient-dot" cx="240" cy="40" r="1.5" />
+          <circle class="hero-ambient-dot" cx="240" cy="140" r="1.5" />
+          <circle class="hero-ambient-dot" cx="1058" cy="40" r="1.5" />
+          <circle class="hero-ambient-dot" cx="880" cy="170" r="1.5" />
+        </g>
+      </svg>
+    </div>
+    <div class="hero-bottom">
+      <span class="hero-bottom__signature">h-qn · engineering</span>
+      <a href="#friccion">El punto de partida <span aria-hidden="true">↓</span></a>
+    </div>
+  </div>
+  <div class="hero-friction-bridge" aria-hidden="true">
+    <svg viewBox="0 0 1200 60" fill="none" preserveAspectRatio="none">
+      <path class="bridge-active" d="M0 30 H1200" pathLength="1" />
+      <path d="M40 30 H160 M320 30 H440 M600 30 H720 M880 30 H1040 M1160 30 H1200" />
+      <circle cx="160" cy="30" r="3" />
+      <circle cx="440" cy="30" r="3" />
+      <circle cx="720" cy="30" r="3" />
+      <circle cx="1040" cy="30" r="3" />
+    </svg>
+  </div>
 </section>
