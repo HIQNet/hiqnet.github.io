@@ -36,33 +36,61 @@ import { whatsappUrl } from "../../data/site";
     </div>
     <div class="hero-routing" aria-hidden="true" data-hero-routing>
       <svg viewBox="0 0 1200 180" fill="none" preserveAspectRatio="xMidYMid meet">
-        <g class="route-in" stroke-width="1">
-          <path d="M0 34H170L226 90H440M20 144H130L184 90H440M0 90H440" />
-          <path class="route-secondary" d="M110 8H260L316 64H440M80 175H285L345 116H440" />
-          <path d="M760 64H880L934 10H1100M760 116H840L892 168H1140M760 90H1200" />
-        </g>
         <g class="routing-plane">
-          <path class="route-through" pathLength="1" d="M184 90H460M740 90H1000" />
-          <rect class="route-node" x="460" y="30" width="280" height="120" />
-          <path class="route-in" d="M484 54h72m-72 72h72M640 54h76m-76 72h76" />
-          <rect class="route-node route-node--core" x="548" y="65" width="104" height="50" />
-          <path class="route-through" pathLength="1" d="M460 90H548M652 90H740" />
-          <rect class="route-node" x="126" y="82" width="16" height="16" />
-          <rect class="route-node" x="306" y="56" width="16" height="16" />
-          <rect class="route-node" x="956" y="82" width="16" height="16" />
-          <rect class="route-node" x="1070" y="160" width="16" height="16" />
-          <!-- Technical texture (no narrative, no copy) -->
-          <text class="hero-tag" x="440" y="22">01</text>
-          <text class="hero-tag" x="784" y="22">02</text>
-          <text class="hero-tag" x="944" y="22">03</text>
-          <text class="hero-tag" x="944" y="172">04</text>
-          <!-- Ambient pulse path; visible only while .is-ambient is active -->
-          <path class="ambient-pulse" pathLength="1" d="M184 90H460M740 90H1000" />
-          <!-- Ambient indicator dots; visible only during ambient events -->
-          <circle class="hero-ambient-dot" cx="240" cy="40" r="1.5" />
-          <circle class="hero-ambient-dot" cx="240" cy="140" r="1.5" />
-          <circle class="hero-ambient-dot" cx="1058" cy="40" r="1.5" />
-          <circle class="hero-ambient-dot" cx="880" cy="170" r="1.5" />
+          <!-- Background structural grid: very subtle reference -->
+          <g class="hero-grid">
+            <path d="M0 45 H1200 M0 90 H1200 M0 135 H1200" />
+            <path d="M240 0 V180 M320 0 V180 M880 0 V180 M960 0 V180" />
+          </g>
+
+          <!-- Module A: left panel (input surface) -->
+          <g class="hero-module module-a">
+            <rect x="60" y="30" width="180" height="120" rx="2" />
+            <path d="M76 50 H160" class="module-header" />
+            <path d="M76 70 H224 M76 88 H200 M76 106 H224 M76 124 H180 M76 142 H224" class="module-row" />
+            <circle cx="222" cy="40" r="2" class="module-status" />
+          </g>
+
+          <!-- Connection A → B -->
+          <path class="hero-connection" d="M240 90 H320" />
+
+          <!-- Module B: main panel (primary) -->
+          <g class="hero-module module-main">
+            <rect x="320" y="20" width="560" height="140" rx="2" />
+            <path d="M340 36 H500" class="module-header" />
+            <circle cx="848" cy="36" r="2" class="module-status" />
+            <circle cx="858" cy="36" r="2" class="module-status" />
+            <circle cx="868" cy="36" r="2" class="module-status" />
+            <path d="M460 60 V160 M600 60 V160 M740 60 V160" class="module-divider" />
+            <path d="M340 70 H860 M340 95 H860 M340 120 H860 M340 145 H860" class="module-row" />
+            <rect x="475" y="100" width="100" height="14" rx="1" class="module-cell" />
+            <rect x="615" y="100" width="100" height="14" rx="1" class="module-cell" />
+            <rect x="755" y="100" width="85" height="14" rx="1" class="module-cell" />
+            <rect x="475" y="125" width="75" height="14" rx="1" class="module-cell" />
+            <rect x="615" y="125" width="100" height="14" rx="1" class="module-cell" />
+          </g>
+
+          <!-- Connection B → C -->
+          <path class="hero-connection" d="M880 90 H960" />
+
+          <!-- Module C: right panel (output surface) -->
+          <g class="hero-module module-c">
+            <rect x="960" y="30" width="180" height="120" rx="2" />
+            <path d="M976 50 H1100" class="module-header" />
+            <path d="M976 70 H1124 M976 88 H1124 M976 106 H1124 M976 124 H1124 M976 142 H1124" class="module-row" />
+            <circle cx="985" cy="40" r="2" class="module-status" />
+            <circle cx="1000" cy="40" r="2" class="module-status" />
+            <circle cx="1115" cy="40" r="2" class="module-status" />
+          </g>
+
+          <!-- Ambient pulse: signal traveling through the system (drawn effect) -->
+          <path class="ambient-pulse" pathLength="1" d="M240 90 H960" />
+
+          <!-- Ambient dots: scattered indicators -->
+          <circle class="hero-ambient-dot" cx="305" cy="80" r="2" />
+          <circle class="hero-ambient-dot" cx="305" cy="100" r="2" />
+          <circle class="hero-ambient-dot" cx="890" cy="50" r="2" />
+          <circle class="hero-ambient-dot" cx="950" cy="130" r="2" />
         </g>
       </svg>
     </div>

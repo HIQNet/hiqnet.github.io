@@ -256,9 +256,16 @@ function initializeInteractions() {
     requiresSystem?: boolean;
   }
   const ambientZones: AmbientZone[] = [
-    { element: routing, duration: 900, delayMin: 4500, delayMax: 8500, className: "is-ambient", mobileEnabled: true },
-    { element: storyDiagram, duration: 1100, delayMin: 5500, delayMax: 9500, className: "is-ambient", mobileEnabled: false, requiresSystem: true },
-    { element: contact, duration: 1500, delayMin: 6000, delayMax: 11000, className: "is-ambient", mobileEnabled: false },
+    // Hero: signal pulse drawn across the system routes (desktop/tablet).
+    { element: routing, duration: 1300, delayMin: 4500, delayMax: 8000, className: "is-ambient-pulse", mobileEnabled: false },
+    // Hero: status indicators and ambient dots brighten briefly (all viewports).
+    { element: routing, duration: 900, delayMin: 5500, delayMax: 9500, className: "is-ambient-status", mobileEnabled: true },
+    // Hero: cells within Module B light up briefly (desktop/tablet).
+    { element: routing, duration: 1500, delayMin: 6500, delayMax: 11000, className: "is-ambient-cells", mobileEnabled: false },
+    // Story final: violet boundary pulses when the system state is reached.
+    { element: storyDiagram, duration: 1500, delayMin: 6000, delayMax: 10500, className: "is-ambient", mobileEnabled: false, requiresSystem: true },
+    // Contact: background lines and indicators briefly alive (all viewports).
+    { element: contact, duration: 1700, delayMin: 7000, delayMax: 12000, className: "is-ambient", mobileEnabled: true },
   ];
   const nextAmbientFire = ambientZones.map((_, index) => performance.now() + 4500 + index * 1800);
   const ambientActiveUntil = ambientZones.map(() => 0);

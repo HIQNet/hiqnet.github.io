@@ -122,27 +122,68 @@ button:not(:disabled) { cursor: pointer; }
 .hero-actions .text-link { white-space: nowrap; }
 .hero-routing { margin-top: var(--space-7); transform: translateY(calc(var(--hero-progress, 0) * 6px)); }
 .hero-routing svg { display: block; width: 100%; height: clamp(120px, 15vw, 190px); overflow: visible; }
-.hero-routing .route-in { stroke: var(--color-line); }
-.hero-routing .route-through { stroke: var(--color-brand-cyan); opacity: calc(.55 + var(--hero-progress, 0) * .45); stroke-dasharray: 1; stroke-dashoffset: calc(.2 - var(--hero-progress, 0) * .2); }
-/* As the user scrolls past the hero, the decorative curves lose presence; the system begins to fragment. */
-.hero-routing .route-secondary { opacity: calc(1 - var(--hero-progress, 0) * .45); transition: opacity var(--motion-base) var(--ease-narrative); }
-/* Ambient pulse: a single cyan line that only becomes visible during an ambient event. */
-.hero-routing .ambient-pulse { stroke: var(--color-brand-cyan); stroke-width: 1.5; fill: none; opacity: 0; pointer-events: none; }
-.hero-routing.is-ambient .ambient-pulse { animation: hero-ambient-pulse 900ms var(--ease-ui); }
-.hero-routing .hero-ambient-dot { fill: var(--color-brand-cyan); opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: center; }
-.hero-routing.is-ambient .hero-ambient-dot { animation: hero-ambient-dot 900ms var(--ease-ui); }
+/* Hero composition: a technical surface with structural grid, three modules and routes.
+   Level A (primary modules), Level B (routes), Level C (ambient activity). */
+.hero-routing .hero-grid { stroke: var(--color-line); fill: none; opacity: .14; }
+.hero-routing .hero-grid path { stroke-width: .5; }
+.hero-routing .hero-module > rect:first-child { fill: var(--color-ink); stroke: var(--color-line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.hero-routing .module-header { stroke: var(--color-muted); fill: none; stroke-width: 1.4; }
+.hero-routing .module-row { stroke: var(--color-line); fill: none; stroke-width: .8; }
+.hero-routing .module-divider { stroke: var(--color-line); fill: none; }
+.hero-routing .module-cell { fill: var(--color-surface); stroke: var(--color-line); stroke-width: .8; vector-effect: non-scaling-stroke; }
+.hero-routing .module-status { fill: var(--color-brand-cyan); opacity: .55; }
+.hero-routing .hero-connection { stroke: var(--color-line); fill: none; stroke-width: 1; }
+/* Pointer interaction (desktop): subtle drift of the composition. */
 .hero-routing .routing-plane { transform: translate(var(--pointer-x, 0px), var(--pointer-y, 0px)); }
-.hero-routing text { font: 10px var(--font-mono); fill: var(--color-muted); letter-spacing: 1px; }
-.hero-routing .hero-tag { font-size: 9px; letter-spacing: .1em; }
-.hero-routing .route-node { fill: var(--color-ink); stroke: var(--color-line); }
-.hero-routing .route-node--core { stroke: var(--color-brand-cyan); fill: var(--color-surface); }
+/* Ambient pulse: a signal drawn across the system routes (Level C). */
+.hero-routing .ambient-pulse {
+  stroke: var(--color-brand-cyan);
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+.hero-routing.is-ambient-pulse .ambient-pulse {
+  animation: hero-ambient-pulse 1300ms var(--ease-ui);
+}
 @keyframes hero-ambient-pulse {
-  0%, 100% { opacity: 0; }
-  40%, 60% { opacity: .85; }
+  0% { stroke-dashoffset: 1; opacity: 0; }
+  35% { opacity: 1; }
+  65% { stroke-dashoffset: 0; opacity: 1; }
+  100% { opacity: 0; }
+}
+/* Ambient status: module indicators brighten briefly. */
+.hero-routing.is-ambient-status .module-status {
+  animation: hero-ambient-status 900ms var(--ease-ui);
+}
+@keyframes hero-ambient-status {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+/* Ambient cells: a brief highlight across the module structure. */
+.hero-routing.is-ambient-cells .module-cell {
+  animation: hero-ambient-cells 1500ms var(--ease-ui);
+}
+@keyframes hero-ambient-cells {
+  0%, 100% { stroke: var(--color-line); fill: var(--color-surface); }
+  50% { stroke: var(--color-brand-cyan); fill: var(--color-surface-raised); }
+}
+/* Ambient dots: scattered indicators that appear during the status event. */
+.hero-routing .hero-ambient-dot {
+  fill: var(--color-brand-cyan);
+  opacity: 0;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.hero-routing.is-ambient-status .hero-ambient-dot {
+  animation: hero-ambient-dot 1000ms var(--ease-ui);
 }
 @keyframes hero-ambient-dot {
   0%, 100% { opacity: 0; transform: scale(1); }
-  40%, 60% { opacity: .75; transform: scale(1.6); }
+  40%, 60% { opacity: 1; transform: scale(1.6); }
 }
 .hero-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding-top: var(--space-4); color: var(--color-muted); font: .625rem/1.5 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
 .hero-bottom a, .hero-bottom span { display: inline-flex; align-items: center; min-height: 44px; gap: var(--space-4); }
@@ -210,10 +251,10 @@ button:not(:disabled) { cursor: pointer; }
 .operation-diagram .diagram-boundary { opacity: var(--system, 1); }
 .operation-diagram .diagram-boundary path { stroke: var(--color-brand-violet); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--system, 1)); }
 /* Story ambient: when --system is reached, the violet boundary briefly pulses, reinforcing that the organized system is running. */
-.operation-diagram.is-ambient .diagram-boundary path { animation: story-ambient-system 1100ms var(--ease-ui); }
+.operation-diagram.is-ambient .diagram-boundary path { animation: story-ambient-system 1500ms var(--ease-ui); }
 @keyframes story-ambient-system {
   0%, 100% { stroke-opacity: 0; }
-  50% { stroke-opacity: .35; }
+  35%, 65% { stroke-opacity: .55; }
 }
 .diagram-legend { display: flex; flex-wrap: wrap; gap: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-line); font: .625rem/1.5 var(--font-mono); color: var(--color-muted); }
 .diagram-legend span { display: flex; align-items: center; gap: var(--space-2); }
@@ -296,15 +337,15 @@ button:not(:disabled) { cursor: pointer; }
 .contact-ambient .ambient-line { stroke: var(--color-line); fill: none; stroke-width: 1; stroke-dasharray: 6 14; opacity: .12; }
 .contact-ambient .ambient-pip { fill: var(--color-brand-cyan); opacity: 0; transform-box: fill-box; transform-origin: center; }
 .contact-section .container-page { position: relative; z-index: 1; }
-.contact-section.is-ambient .ambient-line { animation: contact-ambient-line 1500ms var(--ease-ui); }
-.contact-section.is-ambient .ambient-pip { animation: contact-ambient-pip 1500ms var(--ease-ui); }
+.contact-section.is-ambient .ambient-line { animation: contact-ambient-line 1700ms var(--ease-ui); }
+.contact-section.is-ambient .ambient-pip { animation: contact-ambient-pip 1700ms var(--ease-ui); }
 @keyframes contact-ambient-line {
   0%, 100% { opacity: .12; stroke-dashoffset: 0; }
-  50% { opacity: .28; stroke-dashoffset: -36; }
+  50% { opacity: .34; stroke-dashoffset: -36; }
 }
 @keyframes contact-ambient-pip {
   0%, 100% { opacity: 0; transform: scale(1); }
-  50% { opacity: .55; transform: scale(1.4); }
+  50% { opacity: .65; transform: scale(1.5); }
 }
 .contact-title { max-width: 16ch; font-size: clamp(3rem, 6.7vw, 6.5rem); font-weight: 500; letter-spacing: -.05em; line-height: 1.05; margin-block: var(--space-6) var(--space-8); }
 .contact-bottom { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: var(--space-8); }
@@ -376,8 +417,8 @@ button:not(:disabled) { cursor: pointer; }
   .hero-support { grid-template-columns: 1fr; gap: var(--space-5); }
   .hero-intro { max-width: 38rem; }
   .hero-routing { margin-top: var(--space-6); }
-  /* Hero composition simplification on tablet and mobile: 3-4 nodes, no label noise. */
-  .hero-routing rect[x="126"], .hero-routing rect[x="1070"] { display: none; }
+  /* Tablet: reduce structural grid and ambient dots. */
+  .hero-routing .hero-grid { opacity: .1; }
   .hero-ambient-dot:nth-of-type(1), .hero-ambient-dot:nth-of-type(4) { display: none; }
   .friction-heading { grid-template-columns: 1fr; }
   .fragment-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -407,9 +448,15 @@ button:not(:disabled) { cursor: pointer; }
   .hero-actions { display: grid; justify-items: start; gap: var(--space-2); }
   .hero-actions .button-primary { width: 100%; }
   .hero-routing svg { height: 96px; }
-  /* Hide the two extra small route-nodes on mobile, leaving 2 secondary nodes. */
-  .hero-routing rect[x="306"], .hero-routing rect[x="956"] { display: none; }
-  .hero-routing .route-secondary, .hero-routing text { display: none; }
+  /* Mobile: keep only Module B as the primary visual; pulse path through empty space is hidden. */
+  .hero-routing .module-a,
+  .hero-routing .module-c,
+  .hero-routing .hero-connection,
+  .hero-routing .module-row,
+  .hero-routing .module-divider,
+  .hero-routing .hero-ambient-dot,
+  .hero-routing .ambient-pulse { display: none; }
+  .hero-routing .hero-grid { opacity: .08; }
     .hero-bottom__signature { display: none; }
   .hero-bottom > span { max-width: 18ch; }
   .hero-bottom { justify-content: flex-end; }
