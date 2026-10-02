@@ -376,6 +376,9 @@ button:not(:disabled) { cursor: pointer; }
   .hero-support { grid-template-columns: 1fr; gap: var(--space-5); }
   .hero-intro { max-width: 38rem; }
   .hero-routing { margin-top: var(--space-6); }
+  /* Hero composition simplification on tablet and mobile: 3-4 nodes, no label noise. */
+  .hero-routing rect[x="126"], .hero-routing rect[x="1070"] { display: none; }
+  .hero-ambient-dot:nth-of-type(1), .hero-ambient-dot:nth-of-type(4) { display: none; }
   .friction-heading { grid-template-columns: 1fr; }
   .fragment-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fragment-index span { padding: var(--space-4) 0; }
@@ -403,10 +406,13 @@ button:not(:disabled) { cursor: pointer; }
   .hero-title span + span::before { content: " "; }
   .hero-actions { display: grid; justify-items: start; gap: var(--space-2); }
   .hero-actions .button-primary { width: 100%; }
-  .hero-routing svg { height: 110px; }
+  .hero-routing svg { height: 96px; }
+  /* Hide the two extra small route-nodes on mobile, leaving 2 secondary nodes. */
+  .hero-routing rect[x="306"], .hero-routing rect[x="956"] { display: none; }
   .hero-routing .route-secondary, .hero-routing text { display: none; }
     .hero-bottom__signature { display: none; }
   .hero-bottom > span { max-width: 18ch; }
+  .hero-bottom { justify-content: flex-end; }
   .friction-heading { gap: var(--space-6); }
   .fragment-index { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); font-size: .8125rem; margin-top: var(--space-8); gap: 0; }
   .story-step { display: block; }
@@ -416,7 +422,7 @@ button:not(:disabled) { cursor: pointer; }
   .capability-web, .capability-automate, .capability-business { display: flex; flex-direction: column; align-items: stretch; gap: var(--space-7); }
   .capability-business .capability-visual { order: 0; }
   .capability { padding-block: var(--space-8); }
-  .capability-visual { max-width: 32rem; }
+  .capability-visual { max-width: 32rem; align-self: center; }
   .capability-copy h3 { font-size: 2.5rem; }
   .method-step { padding-block: var(--space-5); }
   .contact-title { font-size: clamp(2.75rem, 10.8vw, 4.5rem); }
