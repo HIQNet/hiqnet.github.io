@@ -1,185 +1,43 @@
 ---
-import { whatsappUrl, yearsOperating } from "../../data/site";
-
-const problems = [
-    "Múltiples archivos de Excel con versiones distintas.",
-    "Pedidos y seguimiento que viven en WhatsApp.",
-    "Reportes que se construyen manualmente cada semana.",
-    "Herramientas que no comparten información.",
-    "Una página que informa, pero no genera conversaciones.",
-];
-
-const process = [
-    [
-        "01",
-        "Descubrimiento",
-        "Entendemos el proceso actual, los puntos de fricción y la prioridad de negocio.",
-    ],
-    [
-        "02",
-        "Propuesta",
-        "Definimos alcance, solución, arquitectura y costos antes de construir.",
-    ],
-    [
-        "03",
-        "Diseño y desarrollo",
-        "Trabajamos por iteraciones para que puedas revisar avances reales.",
-    ],
-    [
-        "04",
-        "Validación",
-        "Probamos con el flujo y las personas que usarán la solución.",
-    ],
-    [
-        "05",
-        "Lanzamiento",
-        "Publicamos, configuramos y acompañamos la puesta en marcha.",
-    ],
-    [
-        "06",
-        "Evolución",
-        "Damos mantenimiento y mejoras cuando el proyecto lo requiere.",
-    ],
-] as const;
-
-const quality = [
-    "Control de acceso y validación de datos cuando el proyecto lo requiere.",
-    "Control de versiones y procesos de despliegue reproducibles.",
-    "Arquitectura mantenible para facilitar cambios futuros.",
-    "HTTPS, respaldos y monitoreo definidos según el contexto de cada plataforma.",
+const fragments = [
+    "Información",
+    "Personas",
+    "Mensajes",
+    "Tareas",
+    "Herramientas",
+    "Procesos",
 ];
 ---
 
-<section class="py-12 sm:py-16">
-    <div class="container-page reveal grid gap-6 border-y border-line py-8 text-center sm:grid-cols-3">
-        <div>
-            <p class="text-2xl font-bold text-white">
-                Desde {new Date().getFullYear() - yearsOperating}
-            </p>
-            <p class="mt-1 text-sm text-muted">
-                Desarrollando soluciones digitales
-            </p>
-        </div>
-        <div>
-            <p class="text-2xl font-bold text-white">Casos documentados</p>
-            <p class="mt-1 text-sm text-muted">
-                Proyectos reales disponibles para revisar
-            </p>
-        </div>
-        <div>
-            <p class="text-2xl font-bold text-white">Atención directa</p>
-            <p class="mt-1 text-sm text-muted">
-                Contacto por WhatsApp y correo
-            </p>
-        </div>
-    </div>
-</section>
-
-<section class="py-16 sm:py-24">
-    <div class="container-page grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-        <div class="reveal">
-            <p class="eyebrow">El punto de partida</p>
-            <h2 class="section-title mt-4">
-                ¿Tu empresa todavía depende de esto?
-            </h2>
-            <p class="section-copy mt-5">
-                Cuando la información está dispersa, cada tarea toma más tiempo
-                y es más difícil saber qué está pasando. Diseñamos software para
-                convertir esos procesos en sistemas simples, medibles y
-                escalables.
-            </p>
-        </div>
-        <ul class="reveal grid gap-3" data-delay="1">
-            {problems.map((problem) => (
-                <li class="flex gap-3 rounded-lg border border-line bg-surface px-4 py-4 text-sm leading-6 text-copy">
-                    <span
-                        class="mt-2 h-2 w-2 shrink-0 rounded-full bg-brand-violet"
-                        aria-hidden="true"
-                    ></span>
-                    {problem}
-                </li>
-            ))}
-        </ul>
-    </div>
-</section>
-
 <section
-    id="nosotros"
-    class="border-y border-line bg-surface/45 py-20 sm:py-28"
+    id="friccion"
+    class="friction section-space"
+    aria-labelledby="friccion-title"
 >
-    <div class="container-page grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-        <div class="reveal">
-            <p class="eyebrow">Cómo trabajamos</p>
-            <h2 class="section-title mt-4">
-                Claridad antes, durante y después de construir.
-            </h2>
-            <p class="section-copy mt-5">
-                HiQNet es un equipo independiente de desarrollo de software.
-                Trabajamos con empresas que necesitan una solución útil para su
-                operación, no una lista de tecnologías sin contexto.
+    <div class="container-page">
+        <div class="friction-heading reveal">
+            <p class="eyebrow">
+                <span>01 /</span> El punto de partida
             </p>
-            <a
-                class="button-secondary mt-7"
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="click_cta_process"
-            >
-                Solicitar diagnóstico
-                <span class="button-arrow" aria-hidden="true">
-                    →
+            <div>
+                <h2 id="friccion-title" class="section-title">
+                    Tu operación no empieza en un software.
+                </h2>
+                <p class="section-copy">
+                    Empieza en las personas. En una hoja de cálculo, una
+                    conversación, una tarea pendiente. El problema aparece
+                    cuando alguien tiene que mantener todas esas piezas
+                    conectadas a mano.
+                </p>
+            </div>
+        </div>
+        <div class="fragment-index" aria-label="Elementos de una operación">
+            {fragments.map((fragment) => (
+                <span>
+                    <i aria-hidden="true"></i>
+                    {fragment}
                 </span>
-            </a>
-        </div>
-        <ol
-            class="reveal grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2"
-            data-delay="1"
-        >
-            {process.map(([number, title, description]) => (
-                <li class="bg-surface p-5">
-                    <p class="text-xs font-bold tracking-wider text-brand-cyan">
-                        {number}
-                    </p>
-                    <h3 class="mt-4 font-bold text-white">{title}</h3>
-                    <p class="mt-2 text-sm leading-6 text-muted">
-                        {description}
-                    </p>
-                </li>
             ))}
-        </ol>
-    </div>
-</section>
-
-<section class="py-20 sm:py-28">
-    <div class="container-page grid gap-10 lg:grid-cols-[1fr_0.9fr]">
-        <div class="reveal">
-            <p class="eyebrow">Calidad y seguridad</p>
-            <h2 class="section-title mt-4">
-                Software construido con buenas prácticas.
-            </h2>
-            <p class="section-copy mt-5">
-                La seguridad no es una promesa genérica. Definimos medidas de
-                acuerdo con el alcance, los datos y el entorno de cada proyecto.
-            </p>
         </div>
-        <ul class="reveal grid gap-3" data-delay="1">
-            {quality.map((item) => (
-                <li class="flex gap-3 rounded-lg border border-line bg-surface p-4 text-sm leading-6 text-copy">
-                    <svg
-                        class="mt-0.5 shrink-0 text-brand-cyan"
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
-                    >
-                        <path d="m5 12 4 4L19 6" />
-                    </svg>
-                    {item}
-                </li>
-            ))}
-        </ul>
     </div>
 </section>

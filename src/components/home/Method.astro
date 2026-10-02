@@ -1,0 +1,9 @@
+---
+import { method } from "../../data/narrative";
+---
+<section id="nosotros" class="method section-space" aria-labelledby="metodo-title">
+  <div class="container-page method-layout">
+    <div class="method-intro reveal"><p class="eyebrow"><span>03 /</span> Cómo trabajamos</p><h2 id="metodo-title" class="section-title">Entender antes de construir.</h2><p class="section-copy">No empezamos por elegir una tecnología. Empezamos por entender qué sucede, quién interviene y dónde se detiene el trabajo.</p><a class="text-link" href="#contacto">Hablemos del punto de partida <span class="button-arrow" aria-hidden="true">↗</span></a></div>
+    <ol>{method.map((step, index) => <li class="method-step reveal"><span>0{index + 1}</span><div><h3>{step.title}</h3><p>{step.copy}</p></div></li>)}</ol>
+  </div>
+</section>

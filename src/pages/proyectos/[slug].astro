@@ -3,8 +3,9 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
-import PersistentCta from "../../components/PersistentCta.astro";
-import { whatsappUrl } from "../../data/site";
+import { site, whatsappUrl } from "../../data/site";
+import { getProjectPresentation } from "../../data/projectPresentation";
+import "../../styles/projects.css";
 
 export async function getStaticPaths() {
     const projects = (await getCollection("projects")).sort(
@@ -28,192 +29,278 @@ interface Props {
 
 const { project, previous, next } = Astro.props;
 const data = project.data;
+const presentation = getProjectPresentation(project.id);
+const reference =
+    data.client.trim() === "-" ? "Sin cliente identificado" : data.client;
 ---
 
 <BaseLayout
-    title={`${data.cardTitle} | HiQNet`}
-    description={data.cardDescription}
+    title={`${presentation.name} | HiQNet`}
+    description={presentation.summary}
     canonicalPath={`/proyectos/${project.id}.html`}
-    image={data.cover}
+    image={presentation.image.src}
 >
-    <div class="site-shell">
-        <Navbar />
-        <main id="contenido">
-            <section class="border-b border-line py-14 sm:py-20">
-                <div class="container-page">
-                    <a
-                        href="/index.html#proyectos"
-                        class="inline-flex items-center gap-2 text-sm font-bold text-brand-cyan hover:text-white"
-                    >
-                        ← Volver a proyectos
-                    </a>
-                    <p class="eyebrow mt-8">Caso de éxito · {data.client}</p>
-                    <h1 class="mt-4 max-w-4xl text-4xl font-bold tracking-[-0.04em] text-white sm:text-5xl">
-                        {data.title}
-                    </h1>
-                    <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">
-                        {data.subtitle}
+    <Navbar />
+    <main id="contenido" class="project-detail">
+        <header class="project-detail__hero container-page">
+            <a href="/index.html#proyectos" class="text-link project-link">
+                <span aria-hidden="true">←</span>Todos los proyectos
+            </a>
+            <div class="project-detail__intro">
+                <p class="eyebrow">
+                    {presentation.sector} / {presentation.name}
+                </p>
+                <h1>{presentation.title}</h1>
+                <p class="section-copy">{presentation.summary}</p>
+            </div>
+            <figure class="project-detail__cover">
+                <img
+                    src={presentation.image.src}
+                    width={presentation.image.width}
+                    height={presentation.image.height}
+                    alt={presentation.image.alt}
+                    fetchpriority="high"
+                    decoding="async"
+                />
+                <figcaption>{presentation.image.caption}</figcaption>
+            </figure>
+        </header>
+
+        <div class="container-page project-detail__layout section-space">
+            <div class="project-narrative">
+                <section
+                    class="project-chapter"
+                    aria-labelledby="contexto-title"
+                >
+                    <p class="project-chapter__number" aria-hidden="true">
+                        01 / Contexto
                     </p>
-                </div>
-            </section>
-
-            <section class="py-12 sm:py-20">
-                <div class="container-page grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+                    <h2 id="contexto-title">La forma de trabajar.</h2>
+                    <p>{presentation.context}</p>
+                </section>
+                <section
+                    class="project-chapter"
+                    aria-labelledby="problema-title"
+                >
+                    <p class="project-chapter__number" aria-hidden="true">
+                        02 / Problema
+                    </p>
+                    <h2 id="problema-title">El punto de partida.</h2>
+                    <p>{presentation.problem}</p>
+                </section>
+                <section
+                    class="project-chapter"
+                    aria-labelledby="intervencion-title"
+                >
+                    <p class="project-chapter__number" aria-hidden="true">
+                        03 / Intervención
+                    </p>
+                    <h2 id="intervencion-title">Qué se trabajó.</h2>
+                    <p>{presentation.intervention}</p>
+                </section>
+                <section
+                    class="project-chapter"
+                    aria-labelledby="sistema-title"
+                >
+                    <p class="project-chapter__number" aria-hidden="true">
+                        04 / Sistema
+                    </p>
+                    <h2 id="sistema-title">Cómo se relacionan las piezas.</h2>
+                    <p>{presentation.system}</p>
+                    <ol
+                        class="project-system"
+                        aria-label="Secuencia del sistema descrito"
+                    >
+                        {presentation.flow.map((step, index) => (
+                            <li>
+                                <span
+                                    class="project-system__number"
+                                    aria-hidden="true"
+                                >
+                                    0{index + 1}
+                                </span>
+                                <span>{step}</span>
+                            </li>
+                        ))}
+                    </ol>
+                </section>
+            </div>
+            <aside class="project-facts" aria-labelledby="ficha-title">
+                <h2 id="ficha-title" class="eyebrow">
+                    Ficha del proyecto
+                </h2>
+                <dl>
                     <div>
-                        <div class="reveal overflow-hidden rounded-panel border border-line">
-                            <img
-                                src={data.cover}
-                                width="1600"
-                                height="956"
-                                alt={`Captura principal del proyecto ${data.cardTitle}`}
-                                class="w-full"
-                            />
-                        </div>
-                        <div class="mt-10 space-y-9">
-                            <section class="reveal">
-                                <h2 class="text-2xl font-bold text-white">
-                                    El problema
-                                </h2>
-                                <ul class="mt-4 grid gap-3">
-                                    {data.challenges.map((challenge) => (
-                                        <li class="border-l-2 border-brand-violet pl-4 text-base leading-7 text-muted">
-                                            {challenge}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                            <section class="reveal">
-                                <h2 class="text-2xl font-bold text-white">
-                                    La solución
-                                </h2>
-                                <p class="mt-4 leading-8 text-muted">
-                                    {data.solution}
-                                </p>
-                            </section>
-                            <section class="reveal rounded-panel border border-brand-cyan/25 bg-brand-cyan/5 p-6">
-                                <h2 class="text-2xl font-bold text-white">
-                                    Resultado buscado
-                                </h2>
-                                <ul class="mt-4 grid gap-3">
-                                    {data.results.map((result) => (
-                                        <li class="flex gap-3 text-sm leading-6 text-copy">
-                                            <span
-                                                class="text-brand-cyan"
-                                                aria-hidden="true"
-                                            >
-                                                ✓
-                                            </span>
-                                            {result}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                        </div>
+                        <dt>Sector</dt>
+                        <dd>{presentation.sector}</dd>
                     </div>
-                    <aside class="reveal h-fit rounded-panel border border-line bg-surface p-6 lg:sticky lg:top-24">
-                        <h2 class="text-lg font-bold text-white">
-                            Ficha del proyecto
-                        </h2>
-                        <dl class="mt-6 grid gap-5 text-sm">
-                            <div>
-                                <dt class="font-semibold text-muted">
-                                    Cliente
-                                </dt>
-                                <dd class="mt-1 text-white">{data.client}</dd>
-                            </div>
-                            <div>
-                                <dt class="font-semibold text-muted">Estado</dt>
-                                <dd class="mt-1 text-white">{data.status}</dd>
-                            </div>
-                            <div>
-                                <dt class="font-semibold text-muted">
-                                    Tecnologías
-                                </dt>
-                                <dd class="mt-2 flex flex-wrap gap-2">
-                                    {data.tech.map((tech) => (
-                                        <span class="rounded-md border border-line px-2 py-1 text-xs text-copy">
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </dd>
-                            </div>
-                        </dl>
-                        <a
-                            href={whatsappUrl(
-                                `Hola, vi el caso de ${data.cardTitle} y quiero platicar sobre un proyecto.`,
-                            )}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="button-primary mt-8 w-full"
-                        >
-                            Cuéntanos tu proyecto{" "}
-                            <span class="button-arrow" aria-hidden="true">
-                                →
-                            </span>
-                        </a>
-                    </aside>
+                    <div>
+                        <dt>Referencia del proyecto</dt>
+                        <dd>{reference}</dd>
+                    </div>
+                    <div>
+                        <dt>Duración declarada</dt>
+                        <dd>{data.duration}</dd>
+                    </div>
+                    <div>
+                        <dt>Estado declarado</dt>
+                        <dd>{data.status}</dd>
+                    </div>
+                    <div>
+                        <dt>Tecnologías</dt>
+                        <dd>{data.tech.join(" / ")}</dd>
+                    </div>
+                </dl>
+                <div class="project-facts__scope">
+                    <h3>Alcance del caso</h3>
+                    <p>{presentation.scope}</p>
                 </div>
-            </section>
+                {data.links.length > 0 && (
+                    <div class="project-facts__resources">
+                        <h3>Recursos del proyecto</h3>
+                        <ul>
+                            {data.links.map((link) => (
+                                <li>
+                                    <a
+                                        class="text-link project-link"
+                                        href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {link.label}
+                                        <span aria-hidden="true">↗</span>
+                                        <span class="project-visually-hidden">
+                                            {" "}
+                                            (se abre en otra pestaña)
+                                        </span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </aside>
+        </div>
 
-            {data.gallery.length > 0 && (
-                <section class="border-t border-line bg-surface/45 py-12 sm:py-16">
-                    <div class="container-page">
-                        <h2 class="reveal text-2xl font-bold text-white">
-                            Pantallas del proyecto
-                        </h2>
-                        <div class="mt-7 grid gap-4 sm:grid-cols-2">
-                            {data.gallery.map((image, index) => (
-                                <figure
-                                    class="reveal overflow-hidden rounded-lg border border-line bg-ink"
-                                    data-delay={String((index % 3) + 1)}
+        {presentation.gallery.length > 0 && (
+            <section
+                class="project-gallery section-space"
+                aria-labelledby="galeria-title"
+            >
+                <div class="container-page">
+                    <header class="section-heading projects-heading">
+                        <div>
+                            <p class="eyebrow">Archivo visual</p>
+                            <h2 id="galeria-title" class="section-title">
+                                El proyecto en pantalla.
+                            </h2>
+                        </div>
+                        <p class="section-copy">
+                            Un recorrido por las interfaces y las tareas que
+                            resuelve cada pantalla.
+                        </p>
+                    </header>
+                    <div class="project-gallery__list">
+                        {presentation.gallery.map((image, index) => (
+                            <figure class="project-gallery__item">
+                                <a
+                                    href={image.src}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`Abrir imagen a tamaño completo: ${image.alt} (otra pestaña)`}
                                 >
                                     <img
                                         src={image.src}
-                                        width="1360"
-                                        height="643"
+                                        width={image.width}
+                                        height={image.height}
                                         loading="lazy"
                                         decoding="async"
                                         alt={image.alt}
-                                        class="aspect-[16/9] w-full object-cover"
                                     />
-                                    <figcaption class="p-3 text-sm text-muted">
-                                        {image.caption}
-                                    </figcaption>
-                                </figure>
-                            ))}
-                        </div>
+                                </a>
+                                <figcaption>
+                                    <span
+                                        class="project-gallery__number"
+                                        aria-hidden="true"
+                                    >
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
+                                    <span>{image.caption}</span>
+                                    <span aria-hidden="true">↗</span>
+                                </figcaption>
+                            </figure>
+                        ))}
                     </div>
-                </section>
+                </div>
+            </section>
+        )}
+
+        <section
+            class="project-contact section-space"
+            aria-labelledby="project-contact-title"
+        >
+            <div class="container-page project-contact__layout">
+                <div>
+                    <p class="eyebrow">Hablemos de tu operación</p>
+                    <h2 id="project-contact-title" class="section-title">
+                        ¿Qué proceso necesitas ordenar?
+                    </h2>
+                    <p class="section-copy">
+                        Cuéntanos cómo trabaja tu equipo, qué información
+                        necesita y dónde se detiene el proceso. Ese es el punto
+                        de partida.
+                    </p>
+                </div>
+                <div class="project-contact__actions">
+                    <a
+                        href={whatsappUrl(
+                            `Hola, vi el proyecto ${presentation.name} y quiero conversar sobre un proceso de mi empresa.`,
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="button-primary"
+                        data-event="click_project_cta"
+                    >
+                        Conversar por WhatsApp <span aria-hidden="true">↗</span>
+                    </a>
+                    <a
+                        href={`mailto:${site.email}`}
+                        class="text-link project-link"
+                        data-event="click_email"
+                    >
+                        {site.email}
+                        <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <nav
+            class="container-page project-pagination"
+            aria-label="Navegación entre proyectos"
+        >
+            {previous && (
+                <a
+                    class="project-pagination__link"
+                    href={`/proyectos/${previous.id}.html`}
+                    rel="prev"
+                >
+                    <span class="project-kicker">← Proyecto anterior</span>
+                    <strong>{getProjectPresentation(previous.id).name}</strong>
+                </a>
             )}
-            <nav
-                class="container-page flex flex-wrap justify-between gap-4 py-10"
-                aria-label="Navegación entre proyectos"
-            >
-                {previous ? (
-                    <a
-                        class="button-secondary"
-                        href={`/proyectos/${previous.id}.html`}
-                    >
-                        ← Caso anterior
-                    </a>
-                ) : (
-                    <span />
-                )}
-                {next && (
-                    <a
-                        class="button-secondary"
-                        href={`/proyectos/${next.id}.html`}
-                    >
-                        Siguiente caso{" "}
-                        <span class="button-arrow" aria-hidden="true">
-                            →
-                        </span>
-                    </a>
-                )}
-            </nav>
-        </main>
-        <Footer />
-        <PersistentCta />
-    </div>
+            {next && (
+                <a
+                    class="project-pagination__link project-pagination__link--next"
+                    href={`/proyectos/${next.id}.html`}
+                    rel="next"
+                >
+                    <span class="project-kicker">Proyecto siguiente →</span>
+                    <strong>{getProjectPresentation(next.id).name}</strong>
+                </a>
+            )}
+        </nav>
+    </main>
+    <Footer />
     <script src="../../scripts/index.ts"></script>
 </BaseLayout>

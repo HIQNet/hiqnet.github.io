@@ -1,107 +1,242 @@
----
-import { whatsappUrl } from "../../data/site";
-const solutions = [
-    {
-        name: "HiQNet Web",
-        problem:
-            "Tu sitio existe, pero no está ayudando a generar oportunidades.",
-        solution:
-            "Diseñamos presencia digital clara, rápida y orientada a conversión.",
-        benefit: "Convierte visitas en conversaciones comerciales.",
-        examples:
-            "Sitios empresariales · landing pages · catálogos · e-commerce",
-    },
-    {
-        name: "HiQNet Automate",
-        problem:
-            "Tu equipo repite tareas y mueve información entre herramientas.",
-        solution:
-            "Conectamos sistemas, APIs y flujos para que la operación avance sin pasos innecesarios.",
-        benefit: "Reduce trabajo manual y evita información duplicada.",
-        examples: "Integraciones · reportes · sincronización · flujos internos",
-    },
-    {
-        name: "HiQNet Business",
-        problem:
-            "Excel ya no alcanza para controlar una operación que está creciendo.",
-        solution:
-            "Construimos software a la medida de la forma en que trabaja tu empresa.",
-        benefit:
-            "Ten control de procesos, datos y seguimiento en un solo lugar.",
-        examples: "Inventarios · POS · CRM · dashboards · plataformas internas",
-    },
-];
----
-
-<section id="soluciones" class="py-20 sm:py-28">
+<section
+    id="soluciones"
+    class="capabilities section-space"
+    aria-labelledby="soluciones-title"
+>
     <div class="container-page">
-        <div class="editorial-reveal grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div class="section-heading reveal">
             <div>
-                <p class="eyebrow">Soluciones</p>
-                <h2 class="section-title mt-4">
-                    Tecnología aplicada al problema correcto.
+                <p class="eyebrow">
+                    <span>02 /</span> Qué podemos construir
+                </p>
+                <h2 id="soluciones-title" class="section-title">
+                    Cada operación pide una estructura.
                 </h2>
             </div>
             <p class="section-copy">
-                No empezamos por el framework. Empezamos por entender dónde se
-                detiene tu operación y qué debe cambiar para que tu equipo
-                trabaje con mayor claridad.
+                A veces hace falta una interfaz. A veces, conectar lo que ya
+                existe. Otras, construir un sistema propio. La solución depende
+                del proceso, no de una plantilla.
             </p>
         </div>
-        <div class="mt-12 grid gap-5 lg:grid-cols-3">
-            {solutions.map((item, index) => (
-                <article
-                    class="solution-card card-reveal panel flex flex-col p-6"
-                    data-delay={String(index + 1)}
-                >
-                    <svg
-                        class="solution-orbit"
-                        viewBox="0 0 72 56"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path d="M8 40C22 10 49 7 64 26" />
-                        <path d="M17 47C34 54 55 45 65 29" />
-                        <circle cx="39" cy="29" r="7" />
-                        <circle cx="8" cy="40" r="2" />
-                        <circle cx="65" cy="29" r="2" />
-                    </svg>
-                    <p class="text-xs font-bold tracking-wider text-brand-cyan">
-                        0{index + 1}
-                    </p>
-                    <h3 class="mt-5 text-2xl font-bold text-white">
-                        {item.name}
-                    </h3>
-                    <div class="mt-6 space-y-5 text-sm leading-6">
-                        <div>
-                            <p class="font-semibold text-white">Problema</p>
-                            <p class="mt-1 text-muted">{item.problem}</p>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-white">Qué hacemos</p>
-                            <p class="mt-1 text-muted">{item.solution}</p>
-                        </div>
-                        <div class="border-l-2 border-brand-violet pl-3">
-                            <p class="font-semibold text-white">Resultado</p>
-                            <p class="mt-1 text-muted">{item.benefit}</p>
-                        </div>
-                    </div>
-                    <p class="mt-6 text-xs leading-5 text-muted">
-                        {item.examples}
-                    </p>
-                    <a
-                        class="mt-6 text-sm font-bold text-brand-cyan hover:text-white"
-                        href={whatsappUrl(
-                            `Hola, encontré HiQNet y quiero conocer más sobre ${item.name}.`,
-                        )}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-event="click_solution"
-                    >
-                        Hablemos de tu caso <span aria-hidden="true">→</span>
-                    </a>
-                </article>
-            ))}
-        </div>
+        <article id="hiqnet-web" class="capability capability-web">
+            <div class="capability-copy reveal">
+                <p class="capability-name">HiQNet Web</p>
+                <h3>
+                    La interfaz de
+                    <br />
+                    tu negocio.
+                </h3>
+                <p class="section-copy">
+                    Sitios y plataformas web que organizan lo que ofreces y lo
+                    que tus usuarios necesitan hacer. Desde consultar un
+                    catálogo hasta trabajar dentro de una aplicación.
+                </p>
+                <p class="capability-meta">
+                    Sitios empresariales / Catálogos / Plataformas web
+                </p>
+            </div>
+            <div class="capability-visual reveal" aria-hidden="true">
+                <svg viewBox="0 0 520 320" fill="none">
+                    <path class="wire" d="M30 250H490M70 30V290M450 30V290" />
+                    <path class="wire" d="m90 208 190-92 160 76-190 94Z" />
+                    <path class="wire" d="m90 172 190-92 160 76-190 94Z" />
+                    <path class="surface" d="m90 136 190-92 160 76-190 94Z" />
+                    <path
+                        class="signal"
+                        pathLength="1"
+                        d="m90 136 160 78 190-94M250 214v72"
+                    />
+                    <path
+                        class="wire"
+                        d="m134 135 144-69 36 17-144 69Zm56 26 60 29 115-55-60-29Z"
+                    />
+                    <path
+                        class="signal"
+                        pathLength="1"
+                        d="m320 101 37 18 38-18"
+                    />
+                    <text x="16" y="30">
+                        01 / INTERFAZ
+                    </text>
+                    <text x="340" y="302">
+                        CONTENIDO + ACCIÓN
+                    </text>
+                </svg>
+            </div>
+        </article>
+        <article id="hiqnet-automate" class="capability capability-automate">
+            <div class="capability-copy reveal">
+                <p class="capability-name">HiQNet Automate</p>
+                <h3>
+                    Menos copiar.
+                    <br />
+                    Más conectar.
+                </h3>
+                <p class="section-copy">
+                    Integramos herramientas y APIs para que un dato no tenga que
+                    capturarse en cada sistema. Definimos reglas, sincronización
+                    y flujos alrededor de las tareas repetitivas.
+                </p>
+                <p class="capability-meta">
+                    APIs / Integraciones / Sincronización / Flujos
+                </p>
+            </div>
+            <div class="capability-visual reveal" aria-hidden="true">
+                <svg viewBox="0 0 600 280" fill="none">
+                    <path class="wire" d="M20 140H580M300 30V250" />
+                    <path
+                        class="signal"
+                        pathLength="1"
+                        d="M100 140H220M340 140H400V60H480M400 140H480M400 140V220H480"
+                    />
+                    <rect
+                        class="surface"
+                        x="20"
+                        y="112"
+                        width="80"
+                        height="56"
+                    />
+                    <rect
+                        class="surface"
+                        x="220"
+                        y="96"
+                        width="120"
+                        height="88"
+                    />
+                    <rect
+                        class="surface"
+                        x="480"
+                        y="36"
+                        width="100"
+                        height="48"
+                    />
+                    <rect
+                        class="surface"
+                        x="480"
+                        y="116"
+                        width="100"
+                        height="48"
+                    />
+                    <rect
+                        class="surface"
+                        x="480"
+                        y="196"
+                        width="100"
+                        height="48"
+                    />
+                    <path
+                        class="signal"
+                        pathLength="1"
+                        d="M220 96h120M157 135l6 5-6 5M429 135l6 5-6 5"
+                    />
+                    <text x="60" y="144" text-anchor="middle">
+                        ENTRADA
+                    </text>
+                    <text x="280" y="137" text-anchor="middle">
+                        REGLAS
+                    </text>
+                    <text x="280" y="155" text-anchor="middle">
+                        DEL PROCESO
+                    </text>
+                    <text x="530" y="64" text-anchor="middle">
+                        SISTEMA A
+                    </text>
+                    <text x="530" y="144" text-anchor="middle">
+                        SISTEMA B
+                    </text>
+                    <text x="530" y="224" text-anchor="middle">
+                        REGISTRO
+                    </text>
+                    <text x="20" y="30">
+                        02 / INTEGRACIÓN
+                    </text>
+                </svg>
+            </div>
+        </article>
+        <article id="hiqnet-business" class="capability capability-business">
+            <div class="capability-copy reveal">
+                <p class="capability-name">HiQNet Business</p>
+                <h3>
+                    Tu proceso.
+                    <br />
+                    Tu sistema.
+                </h3>
+                <p class="section-copy">
+                    Software interno para gestionar información,
+                    responsabilidades y seguimiento. Módulos que comparten
+                    datos, construidos para las reglas de tu organización.
+                </p>
+                <p class="capability-meta">
+                    Sistemas internos / Administración / Software a medida
+                </p>
+            </div>
+            <div class="capability-visual reveal" aria-hidden="true">
+                <svg viewBox="0 0 520 320" fill="none">
+                    <path class="wire" d="M60 60H460V280H60Z" />
+                    <rect
+                        class="surface"
+                        x="84"
+                        y="90"
+                        width="148"
+                        height="62"
+                    />
+                    <rect
+                        class="surface"
+                        x="256"
+                        y="90"
+                        width="180"
+                        height="62"
+                    />
+                    <rect
+                        class="surface"
+                        x="84"
+                        y="176"
+                        width="88"
+                        height="62"
+                    />
+                    <rect
+                        class="surface"
+                        x="196"
+                        y="176"
+                        width="110"
+                        height="62"
+                    />
+                    <rect
+                        class="surface"
+                        x="330"
+                        y="176"
+                        width="106"
+                        height="62"
+                    />
+                    <path
+                        class="signal"
+                        pathLength="1"
+                        d="M60 60H460M158 152v12h188v-12M128 176v-12h255v12M251 164v12"
+                    />
+                    <text x="100" y="126">
+                        PERSONAS
+                    </text>
+                    <text x="272" y="126">
+                        PROCESOS
+                    </text>
+                    <text x="100" y="212">
+                        DATOS
+                    </text>
+                    <text x="212" y="212">
+                        CONTROL
+                    </text>
+                    <text x="345" y="212">
+                        CONSULTA
+                    </text>
+                    <text x="60" y="40">
+                        03 / ARQUITECTURA
+                    </text>
+                    <text x="60" y="305">
+                        MÓDULOS CON UN CONTEXTO COMPARTIDO
+                    </text>
+                </svg>
+            </div>
+        </article>
     </div>
 </section>

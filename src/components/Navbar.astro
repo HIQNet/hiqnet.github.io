@@ -1,18 +1,18 @@
 ---
 import { navLinks, whatsappUrl } from "../data/site";
 const isHome =
-    Astro.url.pathname === "/" || Astro.url.pathname.endsWith("/index.html");
-const homeHref = (href: string) => (isHome ? href : `/index.html${href}`);
+    Astro.url.pathname === "/" || Astro.url.pathname === "/index.html";
+const homeHref = (href: string) => (isHome ? href : `/${href}`);
 ---
 
-<header class="sticky top-0 z-50 border-b border-line/80 bg-ink/95 backdrop-blur">
+<header class="site-header" data-site-header>
     <nav
-        class="container-page flex min-h-16 items-center justify-between gap-4"
+        class="site-header__inner container-page"
         aria-label="Navegación principal"
     >
         <a
             href={homeHref("#inicio")}
-            class="shrink-0"
+            class="brand-link"
             aria-label="HiQNet, ir al inicio"
         >
             <img
@@ -20,74 +20,89 @@ const homeHref = (href: string) => (isHome ? href : `/index.html${href}`);
                 alt="HiQNet"
                 width="1850"
                 height="550"
-                class="h-8 w-auto"
             />
         </a>
-        <div class="hidden items-center gap-1 lg:flex">
+        <div class="desktop-nav">
             {navLinks.map((link) => (
                 <a
+                    class="nav-link"
                     href={homeHref(link.href)}
-                    class="rounded-md px-3 py-2 text-sm font-medium text-muted transition hover:text-white"
+                    data-nav-link={link.href}
                 >
                     {link.label}
                 </a>
             ))}
         </div>
-        <div class="hidden lg:block">
-            <a
-                class="button-primary"
-                href={whatsappUrl()}
-                data-event="click_cta_header"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Cuéntanos tu proyecto
-            </a>
-        </div>
+        <a
+            class="button-secondary nav-cta desktop-cta"
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event="click_cta_header"
+        >
+            Hablemos{" "}
+            <span class="button-arrow" aria-hidden="true">
+                ↗
+            </span>
+        </a>
         <button
             id="menu-toggle"
-            class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-line text-copy lg:hidden"
+            class="menu-toggle"
             type="button"
             aria-expanded="false"
             aria-controls="mobile-menu"
+            hidden
         >
             <span class="sr-only">Abrir menú</span>
             <svg
-                aria-hidden="true"
-                width="22"
-                height="22"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                stroke-width="1.5"
+                aria-hidden="true"
             >
-                <path d="M4 7h16M4 12h16M4 17h16" />
+                <path d="M4 8h16" />
+                <path d="M4 16h16" />
             </svg>
         </button>
     </nav>
-    <div
+    <nav
         id="mobile-menu"
-        class="container-page border-t border-line py-3 lg:hidden"
+        class="mobile-menu"
         hidden
+        aria-label="Navegación móvil"
     >
-        <div class="grid gap-1">
+        <div class="container-page">
             {navLinks.map((link) => (
                 <a
+                    class="nav-link"
                     href={homeHref(link.href)}
-                    class="rounded-md px-3 py-3 font-medium text-copy hover:bg-surface-raised"
+                    data-nav-link={link.href}
                 >
                     {link.label}
                 </a>
             ))}
             <a
-                class="button-primary mt-2"
+                class="button-primary"
                 href={whatsappUrl()}
-                data-event="click_cta_mobile"
                 target="_blank"
                 rel="noopener noreferrer"
+                data-event="click_cta_mobile"
             >
-                Cuéntanos tu proyecto
+                Hablemos <span aria-hidden="true">↗</span>
             </a>
         </div>
-    </div>
+    </nav>
+    <noscript>
+        <nav
+            class="container-page no-script-nav"
+            aria-label="Enlaces de navegación"
+        >
+            {navLinks.map((link) => (
+                <a href={homeHref(link.href)}>{link.label}</a>
+            ))}
+        </nav>
+    </noscript>
 </header>

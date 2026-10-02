@@ -1,95 +1,46 @@
 ---
-import { navLinks, serviceLinks, site, whatsappUrl } from "../data/site";
-const isHome =
-    Astro.url.pathname === "/" || Astro.url.pathname.endsWith("/index.html");
-const href = (value: string) => (isHome ? value : `/index.html${value}`);
-const year = new Date().getFullYear();
+import { site } from "../data/site";
 ---
 
-<footer class="border-t border-line bg-ink py-14">
-    <div class="container-page grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-        <div>
-            <img
-                src="/img/FullLogo.webp"
-                alt="HiQNet"
-                width="1850"
-                height="550"
-                class="h-9 w-auto"
-            />
-            <p class="mt-5 max-w-sm text-sm leading-6 text-muted">
-                Software, automatización y experiencias web para empresas que
-                buscan operar con menos fricción.
-            </p>
+<footer class="site-footer">
+    <div class="container-page">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a class="brand-link" href="/" aria-label="HiQNet, inicio">
+                    <img
+                        src="/img/FullLogo.webp"
+                        alt="HiQNet"
+                        width="1850"
+                        height="550"
+                        loading="lazy"
+                    />
+                </a>
+                <p>Software construido alrededor de cómo opera tu empresa.</p>
+            </div>
+            <nav class="footer-links" aria-label="Contacto y redes sociales">
+                <a href={`mailto:${site.email}`} data-event="click_email">
+                    {site.email}
+                </a>
+                <a
+                    href={site.socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram ↗
+                </a>
+                <a
+                    href={site.socials.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Facebook ↗
+                </a>
+            </nav>
         </div>
-        <div>
-            <h2 class="text-sm font-bold text-white">Navegación</h2>
-            <ul class="mt-4 grid gap-3 text-sm text-muted">
-                {navLinks.map((link) => (
-                    <li>
-                        <a class="hover:text-brand-cyan" href={href(link.href)}>
-                            {link.label}
-                        </a>
-                    </li>
-                ))}
-            </ul>
+        <div class="footer-bottom">
+            <span>© {new Date().getFullYear()} HiQNet</span>
+            <span>Entender. Conectar. Construir.</span>
+            <a href="/#inicio">Volver al inicio ↑</a>
         </div>
-        <div>
-            <h2 class="text-sm font-bold text-white">Soluciones</h2>
-            <ul class="mt-4 grid gap-3 text-sm text-muted">
-                {serviceLinks.map((link) => (
-                    <li>
-                        <a class="hover:text-brand-cyan" href={href(link.href)}>
-                            {link.label}
-                        </a>
-                    </li>
-                ))}
-            </ul>
-        </div>
-        <div>
-            <h2 class="text-sm font-bold text-white">Contacto</h2>
-            <ul class="mt-4 grid gap-3 text-sm text-muted">
-                <li>
-                    <a
-                        class="hover:text-brand-cyan"
-                        href={whatsappUrl()}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-event="click_whatsapp"
-                    >
-                        WhatsApp
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="break-all hover:text-brand-cyan"
-                        href={`mailto:${site.email}`}
-                        data-event="click_email"
-                    >
-                        {site.email}
-                    </a>
-                </li>
-                <li class="flex gap-4 pt-2">
-                    <a
-                        href={site.socials.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-event="click_instagram"
-                    >
-                        Instagram
-                    </a>
-                    <a
-                        href={site.socials.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-event="click_facebook"
-                    >
-                        Facebook
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="container-page mt-12 border-t border-line pt-6 text-sm text-muted">
-        © {year} {site.name}. Todos los derechos reservados.
     </div>
 </footer>

@@ -1,0 +1,9 @@
+---
+import { engineering } from "../../data/narrative";
+---
+<section class="engineering section-space" aria-labelledby="ingenieria-title">
+  <div class="container-page engineering-layout">
+    <div class="engineering-intro reveal"><p class="eyebrow"><span>05 /</span> Ingeniería detrás del proceso</p><h2 id="ingenieria-title" class="section-title">Lo que se ve.<br />Y lo que lo sostiene.</h2><p class="section-copy">Una interfaz es solo una parte. La lógica, los datos y las conexiones tienen que responder al mismo proceso. Elegimos las herramientas según lo que el sistema necesita resolver.</p></div>
+    <div><ol class="engineering-stack">{engineering.map((layer, index) => <li class="engineering-layer reveal"><span>0{index + 1}</span><div><h3>{layer.title}</h3><p>{layer.copy}</p><small>{layer.evidence}</small></div></li>)}</ol><p class="engineering-note">Las tecnologías citadas aparecen en nuestros proyectos. Las medidas de operación se definen para el alcance de cada solución.</p></div>
+  </div>
+</section>

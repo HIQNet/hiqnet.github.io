@@ -1,76 +1,164 @@
 ---
 import { getCollection } from "astro:content";
+import {
+    featuredProjectIds,
+    getProjectPresentation,
+} from "../../data/projectPresentation";
+import "../../styles/projects.css";
+
 const projects = (await getCollection("projects")).sort(
     (a, b) => a.data.order - b.data.order,
 );
+const featured = featuredProjectIds.map((id) => {
+    const project = projects.find((entry) => entry.id === id);
+    if (!project)
+        throw new Error(`No se encontró el proyecto destacado: ${id}`);
+    const presentation = getProjectPresentation(id);
+    return {
+        project,
+        presentation,
+        preview: presentation.preview ?? presentation,
+        image: presentation.preview?.image ?? presentation.image,
+    };
+});
+const remaining = projects
+    .filter((project) => !featuredProjectIds.some((id) => id === project.id))
+    .map((project) => ({
+        project,
+        presentation: getProjectPresentation(project.id),
+    }));
 ---
 
 <section
     id="proyectos"
-    class="border-y border-line bg-surface/45 py-20 sm:py-28"
+    class="projects-editorial section-space"
+    aria-labelledby="proyectos-title"
 >
     <div class="container-page">
-        <div class="reveal flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <header class="section-heading projects-heading">
             <div>
-                <p class="eyebrow">Casos de éxito</p>
-                <h2 class="section-title mt-4">
-                    Proyectos reales, explicados desde la operación.
+                <p class="eyebrow">04 / Software en contexto</p>
+                <h2 id="proyectos-title" class="section-title">
+                    Software aplicado a procesos concretos.
                 </h2>
             </div>
             <p class="section-copy">
-                Cada caso resume el contexto, la solución implementada y el
-                proceso que se buscó mejorar. Las tecnologías son el respaldo,
-                no el titular.
+                Catálogos, servicios y contacto: distintas formas de conectar la
+                información con el trabajo de cada negocio.
             </p>
-        </div>
-        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, index) => (
-                <article
-                    class="project-card reveal overflow-hidden rounded-panel border border-line bg-ink"
-                    data-delay={String((index % 3) + 1)}
-                >
-                    <div class="project-card__media">
-                        <img
-                            src={project.data.cover}
-                            width="1600"
-                            height="956"
-                            loading="lazy"
-                            decoding="async"
-                            alt={`Captura del proyecto ${project.data.cardTitle}`}
-                            class="aspect-[16/9] w-full object-cover"
-                        />
-                    </div>
-                    <div class="p-6">
-                        <p class="text-xs font-bold uppercase tracking-wider text-brand-cyan">
-                            {project.data.client}
-                        </p>
-                        <h3 class="mt-3 text-xl font-bold text-white">
-                            {project.data.cardTitle}
-                        </h3>
-                        <p class="mt-3 text-sm leading-6 text-muted">
-                            {project.data.cardDescription}
-                        </p>
-                        <div class="mt-5 border-t border-line pt-4">
-                            <p class="text-xs font-semibold uppercase tracking-wider text-muted">
-                                Problema que atendimos
+        </header>
+
+        <div class="project-features">
+            {featured.map(
+                ({ project, presentation, preview, image }, index) => (
+                    <article
+                        class:list={[
+                            "project-feature",
+                            { "project-feature--reverse": index % 2 === 1 },
+                        ]}
+                        aria-labelledby={`project-${project.id}`}
+                    >
+                        <figure class="project-feature__media">
+                            <a
+                                href={`/proyectos/${project.id}.html`}
+                                aria-label={`Ver caso: ${presentation.name}`}
+                                data-event="view_project"
+                            >
+                                <img
+                                    src={image.src}
+                                    width={image.width}
+                                    height={image.height}
+                                    alt={image.alt}
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </a>
+                            <figcaption>{image.caption}</figcaption>
+                        </figure>
+                        <div class="project-feature__body">
+                            <p class="project-kicker">
+                                <span aria-hidden="true">0{index + 1}</span>
+                                <span>{presentation.sector}</span>
                             </p>
-                            <p class="mt-2 text-sm leading-6 text-copy">
-                                {project.data.challenges[0]}
+                            <p class="project-name">{presentation.name}</p>
+                            <h3
+                                id={`project-${project.id}`}
+                                class="project-feature__title"
+                            >
+                                {presentation.title}
+                            </h3>
+                            <dl class="project-reading">
+                                <div>
+                                    <dt>Problema</dt>
+                                    <dd>{preview.problem}</dd>
+                                </div>
+                                <div>
+                                    <dt>Intervención</dt>
+                                    <dd>{preview.intervention}</dd>
+                                </div>
+                                <div>
+                                    <dt>Sistema</dt>
+                                    <dd>{preview.system}</dd>
+                                </div>
+                            </dl>
+                            <p class="project-stack">
+                                <span>Tecnologías</span>
+                                {project.data.tech.join(" / ")}
                             </p>
+                            <a
+                                class="text-link project-link"
+                                href={`/proyectos/${project.id}.html`}
+                                aria-label={`Ver caso: ${presentation.name}`}
+                                data-event="view_project"
+                            >
+                                Ver caso
+                                <span aria-hidden="true">↗</span>
+                            </a>
                         </div>
-                        <a
-                            class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-brand-cyan hover:text-white"
-                            href={`/proyectos/${project.id}.html`}
-                            data-event="view_project"
-                        >
-                            Ver caso{" "}
-                            <span class="button-arrow" aria-hidden="true">
-                                →
-                            </span>
-                        </a>
-                    </div>
-                </article>
-            ))}
+                    </article>
+                ),
+            )}
         </div>
+
+        {remaining.length > 0 && (
+            <section
+                class="project-index"
+                aria-labelledby="project-index-title"
+            >
+                <div class="project-index__heading">
+                    <p class="eyebrow">Más proyectos</p>
+                    <h3 id="project-index-title">
+                        Otros contextos, otras piezas.
+                    </h3>
+                </div>
+                <ul class="project-index__list">
+                    {remaining.map(({ project, presentation }) => (
+                        <li>
+                            <a
+                                class="project-index__entry"
+                                href={`/proyectos/${project.id}.html`}
+                                data-event="view_project"
+                            >
+                                <span class="project-index__identity">
+                                    <span class="project-kicker">
+                                        {presentation.sector}
+                                    </span>
+                                    <strong>{presentation.name}</strong>
+                                </span>
+                                <span class="project-index__summary">
+                                    {presentation.summary}
+                                </span>
+                                <span
+                                    class="project-index__arrow"
+                                    aria-hidden="true"
+                                >
+                                    ↗
+                                </span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
     </div>
 </section>

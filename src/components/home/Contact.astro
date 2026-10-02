@@ -3,53 +3,48 @@ import { site, whatsappUrl } from "../../data/site";
 import WhatsAppIcon from "../common/WhatsAppIcon.astro";
 ---
 
-<section id="contacto" class="py-20 sm:py-28">
-    <div class="container-page panel overflow-hidden p-6 sm:p-10 lg:grid lg:grid-cols-[1fr_0.9fr] lg:gap-16">
-        <div class="reveal">
-            <p class="eyebrow">Contacto</p>
-            <h2 class="section-title mt-4">Cuéntanos qué quieres construir.</h2>
-            <p class="section-copy mt-5">
-                Explícanos qué problema quieres resolver y te ayudamos a
-                encontrar una solución adecuada para tu operación. Puedes
-                escribirnos por WhatsApp o correo, sin formularios que se queden
-                sin respuesta.
+<section
+    id="contacto"
+    class="contact-section section-space"
+    aria-labelledby="contacto-title"
+>
+    <div class="container-page reveal">
+        <p class="eyebrow">
+            <span>06 /</span> Empecemos por una conversación
+        </p>
+        <h2 id="contacto-title" class="contact-title">
+            Cuéntanos cómo funciona tu operación.
+        </h2>
+        <div class="contact-bottom">
+            <p class="section-copy">
+                Podemos empezar entendiendo qué haces hoy, dónde existe fricción
+                y qué tendría sentido convertir en software.
             </p>
-        </div>
-        <div class="reveal mt-8 grid gap-4 lg:mt-0" data-delay="1">
-            <a
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="click_whatsapp"
-                class="contact-channel rounded-lg border border-brand-cyan/45 bg-brand-cyan/8 p-5"
-            >
-                <span class="contact-channel__icon">
-                    <WhatsAppIcon size={22} />
-                </span>
-                <p class="mt-4 text-sm font-bold text-brand-cyan">WhatsApp</p>
-                <p class="mt-2 text-xl font-bold text-white">
-                    La forma más directa de empezar.
-                </p>
-                <p class="mt-2 text-sm text-muted">
-                    Abrir conversación{" "}
+            <div class="contact-actions">
+                <a
+                    class="button-primary"
+                    href={whatsappUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-event="click_whatsapp"
+                >
+                    <WhatsAppIcon size={18} />
+                    Hablar por WhatsApp{" "}
                     <span class="button-arrow" aria-hidden="true">
-                        →
+                        ↗
                     </span>
-                </p>
-            </a>
-            <a
-                href={`mailto:${site.email}`}
-                data-event="click_email"
-                class="contact-channel rounded-lg border border-line bg-ink p-5"
-            >
-                <p class="text-sm font-bold text-brand-blue">Correo</p>
-                <p class="mt-2 break-all text-xl font-bold text-white">
-                    {site.email}
-                </p>
-                <p class="mt-2 text-sm text-muted">
-                    Escríbenos los detalles de tu proyecto.
-                </p>
-            </a>
+                </a>
+                <a
+                    class="button-secondary"
+                    href={`mailto:${site.email}`}
+                    data-event="click_email"
+                >
+                    Enviar correo{" "}
+                    <span class="button-arrow" aria-hidden="true">
+                        ↗
+                    </span>
+                </a>
+            </div>
         </div>
     </div>
 </section>

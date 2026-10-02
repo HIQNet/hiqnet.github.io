@@ -10,6 +10,8 @@ import Solutions from "../components/home/Solutions.astro";
 import Portfolio from "../components/home/Portfolio.astro";
 import Contact from "../components/home/Contact.astro";
 import { site } from "../data/site";
+import Method from "../components/home/Method.astro";
+import Engineering from "../components/home/Engineering.astro";
 ---
 
 <BaseLayout title={site.title} description={site.description}>
@@ -20,7 +22,9 @@ import { site } from "../data/site";
             <BusinessSections />
             <TransformationStory />
             <Solutions />
+            <Method />
             <Portfolio />
+            <Engineering />
             <Contact />
         </main>
         <Footer />

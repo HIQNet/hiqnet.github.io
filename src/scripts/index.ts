@@ -1,148 +1,169 @@
-const menuButton = document.querySelector<HTMLButtonElement>("#menu-toggle");
-const menu = document.querySelector<HTMLElement>("#mobile-menu");
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const clamp = (value: number) => Math.min(1, Math.max(0, value));
+const phase = (progress: number, start: number, end: number) => clamp((progress - start) / (end - start));
 
-const closeMenu = (restoreFocus = false) => {
-  if (!menuButton || !menu || menu.hidden) return;
-  menu.hidden = true;
-  menuButton.setAttribute("aria-expanded", "false");
-  menuButton.querySelector(".sr-only")!.textContent = "Abrir menú";
-  if (restoreFocus) menuButton.focus();
-};
+function initializeInteractions() {
+  const controller = new AbortController();
+  const { signal } = controller;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const desktop = matchMedia("(min-width: 64rem)");
+  const pointer = matchMedia("(hover: hover) and (pointer: fine)");
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  const button = document.querySelector<HTMLButtonElement>("#menu-toggle");
+  const menu = document.querySelector<HTMLElement>("#mobile-menu");
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+  const routing = document.querySelector<HTMLElement>("[data-hero-routing]");
+  const story = document.querySelector<HTMLElement>("[data-story-visual]");
+  const steps = Array.from(document.querySelectorAll<HTMLElement>("[data-story-step]"));
+  const caption = document.querySelector<HTMLElement>("[data-story-caption]");
+  const contact = document.querySelector<HTMLElement>("#contacto");
+  const persistent = document.querySelector<HTMLElement>("[data-persistent-cta]");
+  const nav = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+  const sections = [...new Set(nav.map(link => link.dataset.navLink))]
+    .flatMap(id => { const section = id ? document.querySelector<HTMLElement>(id) : null; return section ? [section] : []; });
+  let frame = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let currentStage = -1;
 
-const toggleMenu = () => {
-  if (!menuButton || !menu) return;
-  const isOpen = menu.hidden;
-  menu.hidden = !isOpen;
-  menuButton.setAttribute("aria-expanded", String(isOpen));
-  menuButton.querySelector(".sr-only")!.textContent = isOpen ? "Cerrar menú" : "Abrir menú";
-  if (!isOpen) menuButton.focus();
-};
-
-menuButton?.addEventListener("click", toggleMenu);
-menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeMenu()));
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeMenu(true);
-});
-document.addEventListener("click", (event) => {
-  if (!menuButton || !menu || menu.hidden) return;
-  const target = event.target as Node;
-  if (!menu.contains(target) && !menuButton.contains(target)) closeMenu();
-});
-
-const clamp = (value: number, min = 0, max = 1) => Math.min(Math.max(value, min), max);
-const stageProgress = (progress: number, start: number, end: number) => clamp((progress - start) / (end - start));
-
-const brandAnimation = document.querySelector<HTMLImageElement>("[data-brand-animation]");
-const brandPoster = brandAnimation?.dataset.brandPoster || brandAnimation?.currentSrc || brandAnimation?.src;
-
-if (brandAnimation && brandPoster) {
-  const setBrandSource = () => {
-    const source = prefersReducedMotion.matches
-      ? brandPoster
-      : brandAnimation.dataset.brandAnimation;
-    if (source && brandAnimation.getAttribute("src") !== source) brandAnimation.src = source;
-  };
-  brandAnimation.addEventListener("error", () => { brandAnimation.src = brandPoster; }, { once: true });
-  setBrandSource();
-  prefersReducedMotion.addEventListener("change", setBrandSource);
-}
-
-if (!prefersReducedMotion.matches) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("is-visible");
-      revealObserver.unobserve(entry.target);
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll<HTMLElement>(".reveal, .card-reveal, .editorial-reveal, [data-motion]").forEach((element) => revealObserver.observe(element));
-
-  const storySection = document.querySelector<HTMLElement>("[data-story-section]");
-  const storyVisual = document.querySelector<HTMLElement>("[data-story-visual]");
-  const storySteps = Array.from(document.querySelectorAll<HTMLElement>("[data-story-step]"));
-  const storyStepsElement = document.querySelector<HTMLElement>("[data-story-steps]");
-  const desktopStory = window.matchMedia("(min-width: 64rem)");
-
-  if (storySection && storyVisual && storyStepsElement && storySteps.length > 0) {
-    const setActiveStep = (stage: number) => {
-      storyVisual.dataset.storyStage = String(stage);
-      storySteps.forEach((step, index) => step.classList.toggle("is-current", index === stage - 1));
-    };
-    let teardownStory = () => {};
-
-    const setUpStory = () => {
-      teardownStory();
-      storyVisual.style.removeProperty("--story-progress");
-      storyVisual.style.removeProperty("--story-source");
-      storyVisual.style.removeProperty("--story-connection");
-      storyVisual.style.removeProperty("--story-flow");
-      storyVisual.style.removeProperty("--story-system");
-      storyVisual.style.removeProperty("--story-core-scale");
-      storyVisual.style.removeProperty("--story-source-scale");
-      storyVisual.style.removeProperty("--story-flow-scale");
-      storyStepsElement.style.removeProperty("--story-progress-percent");
-
-      if (!desktopStory.matches) {
-        const stepObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            setActiveStep(Number((entry.target as HTMLElement).dataset.storyStep ?? "1"));
-          });
-        }, { rootMargin: "-30% 0px -45% 0px", threshold: 0 });
-        storySteps.forEach((step) => stepObserver.observe(step));
-        teardownStory = () => stepObserver.disconnect();
-        return;
-      }
-
-      let frameRequested = false;
-      const updateStory = () => {
-        frameRequested = false;
-        const bounds = storySection.getBoundingClientRect();
-        const availableDistance = Math.max(bounds.height - window.innerHeight * 0.45, 1);
-        const progress = clamp((window.innerHeight * 0.55 - bounds.top) / availableDistance);
-        const connection = stageProgress(progress, 0.18, 0.48);
-        const flow = stageProgress(progress, 0.45, 0.73);
-        const system = stageProgress(progress, 0.68, 0.92);
-        const source = 1 - progress * 0.12;
-        const stage = Math.min(4, Math.floor(progress * 4) + 1);
-
-        storyVisual.style.setProperty("--story-progress", String(progress));
-        storyVisual.style.setProperty("--story-source", String(source));
-        storyVisual.style.setProperty("--story-connection", String(connection));
-        storyVisual.style.setProperty("--story-flow", String(flow));
-        storyVisual.style.setProperty("--story-system", String(system));
-        storyVisual.style.setProperty("--story-core-scale", String(0.88 + connection * 0.12));
-        storyVisual.style.setProperty("--story-source-scale", String(0.96 + source * 0.04));
-        storyVisual.style.setProperty("--story-flow-scale", String(0.94 + flow * 0.06));
-        storyStepsElement.style.setProperty("--story-progress-percent", `${progress * 100}%`);
-        setActiveStep(stage);
-      };
-      const scheduleStoryUpdate = () => {
-        if (!frameRequested) {
-          frameRequested = true;
-          window.requestAnimationFrame(updateStory);
-        }
-      };
-      const resizeObserver = new ResizeObserver(scheduleStoryUpdate);
-      resizeObserver.observe(storySection);
-      window.addEventListener("scroll", scheduleStoryUpdate, { passive: true });
-      window.addEventListener("resize", scheduleStoryUpdate, { passive: true });
-      scheduleStoryUpdate();
-      teardownStory = () => {
-        resizeObserver.disconnect();
-        window.removeEventListener("scroll", scheduleStoryUpdate);
-        window.removeEventListener("resize", scheduleStoryUpdate);
-      };
-    };
-
-    desktopStory.addEventListener("change", setUpStory);
-    setUpStory();
+  function closeMenu(restoreFocus = false) {
+    if (!button || !menu) return;
+    const wasOpen = !menu.hidden;
+    menu.hidden = true;
+    document.body.classList.remove("menu-open");
+    button.setAttribute("aria-expanded", "false");
+    const label = button.querySelector(".sr-only");
+    if (label) label.textContent = "Abrir menú";
+    if (wasOpen && restoreFocus) button.focus();
   }
+  if (button && menu) {
+    button.hidden = false;
+    button.addEventListener("click", () => {
+      if (!menu.hidden) { closeMenu(); return; }
+      menu.hidden = false;
+      document.body.classList.add("menu-open");
+      button.setAttribute("aria-expanded", "true");
+      const label = button.querySelector(".sr-only");
+      if (label) label.textContent = "Cerrar menú";
+    }, { signal });
+    menu.addEventListener("click", event => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>("a");
+      if (!link) return;
+      closeMenu();
+      // Keep keyboard focus at the destination rather than inside a closed disclosure.
+      if (link.hash && link.pathname === location.pathname) {
+        const destination = document.getElementById(link.hash.slice(1));
+        destination?.setAttribute("tabindex", "-1");
+        destination?.focus({ preventScroll: true });
+        destination?.addEventListener("blur", () => destination.removeAttribute("tabindex"), { once: true, signal });
+      } else if (link.target === "_blank") button.focus();
+    }, { signal });
+    document.addEventListener("keydown", event => {
+      if (menu.hidden) return;
+      if (event.key === "Escape") { closeMenu(true); return; }
+      if (event.key !== "Tab") return;
+      const links = Array.from(menu.querySelectorAll<HTMLAnchorElement>("a[href]"));
+      const last = links.at(-1);
+      if (event.shiftKey && document.activeElement === button && last) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); button.focus(); }
+    }, { signal });
+    document.addEventListener("click", event => {
+      if (menu.hidden || !(event.target instanceof Node)) return;
+      if (!menu.contains(event.target) && !button.contains(event.target)) closeMenu();
+    }, { signal });
+  }
+
+  function update() {
+    frame = 0;
+    header?.classList.toggle("is-scrolled", window.scrollY > 16);
+    if (desktop.matches) closeMenu();
+    let active = "";
+    for (const section of sections) {
+      const bounds = section.getBoundingClientRect();
+      if (bounds.top < window.innerHeight * .5 && bounds.bottom > 120) active = `#${section.id}`;
+    }
+    nav.forEach(link => {
+      const isActive = link.dataset.navLink === active;
+      link.classList.toggle("is-active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+    const heroBounds = hero?.getBoundingClientRect();
+    if (routing) {
+      routing.style.setProperty("--hero-progress", String(reduced.matches ? 0 : clamp(-(heroBounds?.top ?? 0) / (heroBounds?.height || 1))));
+      routing.style.setProperty("--pointer-x", `${reduced.matches ? 0 : pointerX}px`);
+      routing.style.setProperty("--pointer-y", `${reduced.matches ? 0 : pointerY}px`);
+    }
+    if (persistent && heroBounds && contact) {
+      persistent.hidden = heroBounds.bottom > 80 || contact.getBoundingClientRect().top < innerHeight;
+    }
+    if (!story || !steps.length) return;
+    if (reduced.matches || !desktop.matches) {
+      ["--connection", "--flow", "--system", "--dispersion"].forEach(name => story.style.removeProperty(name));
+      steps.forEach(step => step.classList.remove("is-current"));
+      if (caption) caption.textContent = "Un sistema conectado";
+      currentStage = -1;
+      return;
+    }
+    const first = steps[0].getBoundingClientRect();
+    const last = steps[steps.length - 1].getBoundingClientRect();
+    const start = first.top + first.height * .5;
+    const end = last.top + last.height * .5;
+    const progress = clamp((innerHeight * .5 - start) / Math.max(1, end - start));
+    story.style.setProperty("--dispersion", String(1 - phase(progress, 0, .3)));
+    story.style.setProperty("--connection", String(phase(progress, .08, .34)));
+    story.style.setProperty("--flow", String(phase(progress, .4, .67)));
+    story.style.setProperty("--system", String(phase(progress, .73, 1)));
+    const stage = Math.round(progress * 3);
+    if (stage !== currentStage) {
+      currentStage = stage;
+      story.dataset.storyStage = String(stage + 1);
+      steps.forEach((step, index) => step.classList.toggle("is-current", index === stage));
+      if (caption) caption.textContent = ["01 / Dispersión", "02 / Conexión", "03 / Automatización", "04 / Sistema"][stage];
+    }
+  }
+  function schedule() { if (!frame) frame = requestAnimationFrame(update); }
+  window.addEventListener("scroll", schedule, { passive: true, signal });
+  window.addEventListener("resize", schedule, { passive: true, signal });
+  desktop.addEventListener("change", schedule, { signal });
+  reduced.addEventListener("change", () => {
+    document.querySelectorAll(".is-entering").forEach(element => element.classList.remove("is-entering"));
+    pointerX = pointerY = 0;
+    schedule();
+  }, { signal });
+  hero?.addEventListener("pointermove", event => {
+    if (reduced.matches || !pointer.matches) return;
+    const bounds = hero.getBoundingClientRect();
+    pointerX = ((event.clientX - bounds.left) / bounds.width - .5) * 6;
+    pointerY = ((event.clientY - bounds.top) / bounds.height - .5) * 4;
+    schedule();
+  }, { passive: true, signal });
+  hero?.addEventListener("pointerleave", () => { pointerX = pointerY = 0; schedule(); }, { signal });
+
+  const reveal = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      if (!reduced.matches) entry.target.classList.add("is-entering");
+      entry.target.classList.add("is-visible");
+      reveal.unobserve(entry.target);
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(element => reveal.observe(element));
+  document.addEventListener("animationend", event => {
+    if (event.target instanceof Element) event.target.classList.remove("is-entering");
+  }, { signal });
+  document.addEventListener("click", event => {
+    const element = event.target instanceof Element ? event.target.closest<HTMLElement>("[data-event]") : null;
+    if (element) window.dispatchEvent(new CustomEvent("hiqnet:conversion", { detail: { name: element.dataset.event } }));
+  }, { signal });
+  update();
+  return () => {
+    controller.abort();
+    reveal.disconnect();
+    cancelAnimationFrame(frame);
+    closeMenu();
+  };
 }
 
-document.querySelectorAll<HTMLElement>("[data-event]").forEach((element) => {
-  element.addEventListener("click", () => {
-    window.dispatchEvent(new CustomEvent("hiqnet:conversion", { detail: { name: element.dataset.event } }));
-  });
-});
+let cleanup = initializeInteractions();
+window.addEventListener("pagehide", () => cleanup());
+window.addEventListener("pageshow", event => { if (event.persisted) cleanup = initializeInteractions(); });
