@@ -1,0 +1,25 @@
+---
+const situations = [
+  "Un proceso manual ya no escala con el equipo.",
+  "La información está repartida entre varias herramientas.",
+  "Existen tareas repetitivas que tendrían sentido automatizarse.",
+  "Necesitan un sistema interno construido alrededor de su forma de trabajar.",
+];
+---
+<section class="qualification" aria-labelledby="qualification-title">
+  <div class="container-page">
+    <div class="qualification__heading reveal">
+      <p class="eyebrow"><span>06 /</span> Antes de escribirnos</p>
+      <h3 id="qualification-title">Tiene sentido conversar si…</h3>
+      <p>Estas son las situaciones donde encajamos. Si ninguna describe lo que necesitan, también podemos orientarles a alguien que pueda ayudar.</p>
+    </div>
+    <ul class="qualification__list">
+      {situations.map((copy, index) => (
+        <li>
+          <span aria-hidden="true">0{index + 1}</span>
+          <p>{copy}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -12,6 +12,8 @@ import Contact from "../components/home/Contact.astro";
 import { site } from "../data/site";
 import Method from "../components/home/Method.astro";
 import Engineering from "../components/home/Engineering.astro";
+import CommercialBridge from "../components/home/CommercialBridge.astro";
+import Qualification from "../components/home/Qualification.astro";
 ---
 
 <BaseLayout title={site.title} description={site.description}>
@@ -23,8 +25,10 @@ import Engineering from "../components/home/Engineering.astro";
             <TransformationStory />
             <Solutions />
             <Method />
+            <CommercialBridge />
             <Portfolio />
             <Engineering />
+            <Qualification />
             <Contact />
         </main>
         <Footer />

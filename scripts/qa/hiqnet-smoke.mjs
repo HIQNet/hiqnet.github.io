@@ -593,7 +593,7 @@ export async function runSmoke({ baseUrl = process.env.HIQNET_BASE_URL ?? "http:
                 return false;
               });
               if (!missing.length) break;
-              await page.evaluate(() => new Promise(requestAnimationFrame));
+              await page.waitForTimeout(60);
             } while (Date.now() < deadline);
             assert.deepEqual(missing, [], `content disappeared in ${mode}: ${missing.slice(0, 8).join("; ")}`);
             assert.equal(await page.locator("main h1").count(), 1);

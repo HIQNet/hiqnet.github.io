@@ -31,7 +31,56 @@ const fragments = [
                 </p>
             </div>
         </div>
-        <div class="fragment-index" aria-label="Elementos de una operación">
+        <ul
+            class="friction-signals"
+            data-friction-signals
+            aria-label="Señales de una operación fragmentada"
+        >
+            <li>
+                <span aria-hidden="true">01</span>
+                <div>
+                    <strong>Decisiones que esperan datos.</strong>
+                    <p>
+                        La información se reúne a mano cuando hace falta
+                        decidir.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <span aria-hidden="true">02</span>
+                <div>
+                    <strong>Seguimiento que depende de personas.</strong>
+                    <p>
+                        Una tarea se completa cuando alguien la recuerda, no
+                        cuando el sistema lo confirma.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <span aria-hidden="true">03</span>
+                <div>
+                    <strong>Contexto que se pierde al rotar.</strong>
+                    <p>
+                        Quien llega nuevo necesita que alguien le explique cómo
+                        funciona todo.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <span aria-hidden="true">04</span>
+                <div>
+                    <strong>Trabajo que se vuelve a hacer.</strong>
+                    <p>
+                        Trabajo que ya se hizo una vez se repite, en otra parte.
+                    </p>
+                </div>
+            </li>
+        </ul>
+        <div
+            class="fragment-index"
+            data-fragment-index
+            aria-label="Elementos que conviven en la operación"
+        >
             {fragments.map((fragment) => (
                 <span>
                     <i aria-hidden="true"></i>
