@@ -337,27 +337,18 @@ function initializeInteractions() {
   }, { signal });
 
   // View Transitions API: progressive enhancement only when the browser supports it.
-  // Image and title participate; other content transitions normally.
-  const supportsViewTransitions = typeof document !== "undefined"
-    && "startViewTransition" in document;
-  if (supportsViewTransitions) {
-    document.documentElement.style.setProperty("view-transition-name", "none");
+  // The handler calls the method directly on `document` so the receiver is preserved;
+  // extracting it as a bare function reference triggers `Illegal invocation` in V8.
+  const viewTransition = (document as Document & {
+    startViewTransition?: (callback?: () => void | Promise<void>) => unknown;
+  }).startViewTransition;
+  if (typeof viewTransition === "function") {
     document.querySelectorAll<HTMLAnchorElement>("a[href^='/proyectos/']").forEach((link) => {
       link.addEventListener("click", (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
         event.preventDefault();
         const destination = link.href;
-        const transition = (document as Document & {
-          startViewTransition?: (callback: () => Promise<void> | void) => unknown;
-        }).startViewTransition;
-        if (!transition) {
-          location.href = destination;
-          return;
-        }
-        transition(async () => {
-          await fetch(destination, { headers: { Accept: "text/html" } });
-          document.body.style.opacity = "0";
-          await new Promise((resolve) => setTimeout(resolve, 140));
+        document.startViewTransition!(() => {
           location.href = destination;
         });
       }, { signal });
