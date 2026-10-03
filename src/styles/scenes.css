@@ -231,7 +231,6 @@
 }
 
 /* ---------- HiQNet Web: an interface assembling ---------------------------- */
-
 .web-scene {
   --scene-aspect: 520 / 320;
   position: relative;

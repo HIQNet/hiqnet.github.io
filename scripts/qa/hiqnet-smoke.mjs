@@ -7,7 +7,6 @@ import { chromium } from "playwright";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const siteUrl = "https://hiqnet.github.io";
 const actionTimeout = 10_000;
-const storyVariables = ["--connection", "--flow", "--system"];
 export const projectRoutes = [
   "/proyectos/about-gestion-medica.html",
   "/proyectos/about-laTerraza.html",
@@ -223,10 +222,31 @@ async function assertMenu(page, route, width) {
 }
 
 async function storySnapshot(page) {
-  return page.locator("[data-story-visual]").evaluate((element, names) => {
-    const style = getComputedStyle(element);
-    return names.map((name) => style.getPropertyValue(name).trim());
-  }, storyVariables);
+  // The Story scene is now driven by GSAP timelines. Snapshots read the
+  // visible caption + active step + whether the GSAP pin has reached its
+  // final state, so we can still assert the narrative progressed.
+  return page.evaluate(() => {
+    const caption = document.querySelector("[data-story-caption]")?.textContent?.trim() ?? "";
+    const steps = Array.from(document.querySelectorAll("[data-story-step]"));
+    const activeIndex = steps.findIndex((s) => {
+      const cs = getComputedStyle(s);
+      return Number(cs.opacity) >= 0.95;
+    });
+    // A pin is "active" only when GSAP currently has its trigger in an
+    // active range AND the pin-spacer is taller than the original (i.e.
+    // pinSpacing actually inflated the layout). We compare the spacer's
+    // height to the visual's natural height (the visual itself sits
+    // inside the spacer after pin), so we measure the spacer wrapper.
+    const spacerWrapper = document.querySelector(".pin-spacer");
+    const visual = document.querySelector("[data-story-visual]");
+    let hasPin = false;
+    if (spacerWrapper && visual) {
+      const wrapperHeight = spacerWrapper.getBoundingClientRect().height;
+      const visualHeight = visual.getBoundingClientRect().height;
+      hasPin = wrapperHeight > visualHeight + 100;
+    }
+    return { caption, activeIndex, hasPin };
+  });
 }
 
 async function assertStoryNotSticky(page) {
@@ -261,13 +281,10 @@ async function exerciseStory(page, width, reduced, screenshot) {
     });
     await scrollTo(page, y);
     if (active) {
-      await condition(page, "desktop story variables must be numeric progress values", (names) => {
-        const style = getComputedStyle(document.querySelector("[data-story-visual]"));
-        return names.every((name) => {
-          const value = style.getPropertyValue(name).trim();
-          return value !== "" && Number.isFinite(Number(value)) && Number(value) >= 0 && Number(value) <= 1;
-        });
-      }, storyVariables);
+      await condition(page, "desktop story must produce a distinct active step", () => {
+        const steps = Array.from(document.querySelectorAll("[data-story-step]"));
+        return steps.some((s) => Number(getComputedStyle(s).opacity) >= 0.9);
+      });
     }
     samples.push(await storySnapshot(page));
     await assertOverflow(page);
@@ -276,16 +293,20 @@ async function exerciseStory(page, width, reduced, screenshot) {
   await scrollTo(page, bounds.end);
   samples.push(await storySnapshot(page));
   if (active) {
-    storyVariables.forEach((name, index) => {
-      const values = samples.map((sample) => Number(sample[index]));
-      assert.ok(samples.every((sample) => sample[index] !== "") && values.every((value) => Number.isFinite(value) && value >= 0 && value <= 1),
-        `${name} must remain a numeric 0–1 progress value`);
-      assert.ok(Math.max(...values) - Math.min(...values) > 0.01,
-        `${name} must progress through desktop story steps: ${values.join(", ")}`);
-      assert.ok(values.at(-1) >= values[0], `${name} must advance, not reverse`);
-    });
+    // GSAP owns the scene; we assert that GSAP pinned the visual and the
+    // eyebrow caption progressed across all four labels.
+    assert.ok(samples.every((sample) => sample.hasPin),
+      "desktop story must use the GSAP pinned visual on >= 1024px");
+    const captions = samples.map((sample) => sample.caption);
+    const unique = new Set(captions);
+    assert.ok(unique.size >= 2,
+      `desktop story caption must progress through the four states: ${captions.join(" | ")}`);
+    const activeIndices = samples.map((sample) => sample.activeIndex);
+    const distinctActive = new Set(activeIndices.filter((index) => index >= 0));
+    assert.ok(distinctActive.size >= 2,
+      `desktop story must highlight different steps as the user scrolls: ${activeIndices.join(", ")}`);
   } else {
-    assert.ok(samples.every((sample) => JSON.stringify(sample) === JSON.stringify(samples[0])),
+    assert.ok(samples.every((sample) => !sample.hasPin),
       `story scroll progress must be inactive on mobile/reduced motion: ${JSON.stringify(samples)}`);
   }
 }

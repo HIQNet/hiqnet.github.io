@@ -230,7 +230,7 @@ button:not(:disabled) { cursor: pointer; }
 
 .story-section { padding-bottom: var(--space-10); }
 .story-layout { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--space-10); align-items: start; }
-.story-visual { --connection: 1; --flow: 1; --system: 1; --dispersion: 0; position: sticky; top: calc(var(--nav-height) + var(--space-6)); max-height: calc(100svh - var(--nav-height) - var(--space-7)); }
+.story-visual { --connection: 1; --flow: 1; --system: 1; --dispersion: 0; }
 .diagram-heading { display: flex; justify-content: space-between; gap: var(--space-4); border-bottom: 1px solid var(--color-line); padding-block: var(--space-4); font: .625rem/1.5 var(--font-mono); color: var(--color-muted); letter-spacing: .06em; text-transform: uppercase; }
 .diagram-heading span:last-child { color: var(--color-brand-cyan); white-space: nowrap; }
 .operation-diagram { display: block; width: 100%; height: 100%; }
@@ -261,13 +261,19 @@ button:not(:disabled) { cursor: pointer; }
   35%, 65% { stroke-opacity: .55; }
 }
 .story-step { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; padding-block: var(--space-9); border-top: 1px solid var(--color-line); transition: border-color var(--motion-base) var(--ease-ui); }
-.js .story-step:not(.is-current) { opacity: .35; }
+.js .story-step:not(.is-current):not([style*="opacity"]) { opacity: .35; }
 .story-step.is-current { border-top-color: var(--color-brand-cyan); }
 .story-step h3 { margin-block: var(--space-5); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.12; letter-spacing: -.035em; max-width: 15ch; font-weight: 500; }
 .story-step .section-copy { max-width: 28rem; }
 .story-mobile-diagram { display: none; }
 
 .capabilities { border-top: 1px solid var(--color-line); }
+/* Capabilities horizontal scrub: the section heading stays in the section flow;
+   below it sits the pinned viewport holding the moving track. On desktop the
+   track is a horizontal flex whose translateX is driven by GSAP. On tablet
+   and below, the heading + track fall back to a vertical stack. */
+.cap-pinned { position: relative; }
+.cap-track { display: flex; will-change: transform; }
 .capability { padding-block: var(--space-9); border-top: 1px solid var(--color-line); }
 .capability-web { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
 .capability-copy h3 { margin-top: var(--space-5); font-size: clamp(2rem,3.5vw,3.5rem); letter-spacing: -.04em; font-weight: 500; }
@@ -291,6 +297,40 @@ button:not(:disabled) { cursor: pointer; }
 .capability-automate .capability-visual { color: var(--color-brand-blue); }
 .capability-business { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
 .capability-business .capability-visual { order: -1; color: var(--color-brand-violet); }
+/* Indicator: a discreet three-segment progress bar, bottom-right of the
+   pinned viewport. GSAP only flips `data-cap-panel` on the parent; CSS
+   lights the active segment. No visible text mutation. */
+.cap-indicator {
+  position: absolute;
+  right: var(--gutter);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  margin: 0;
+  font: .625rem/1.5 var(--font-mono);
+  color: var(--color-muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: .6em;
+}
+.cap-indicator__label { color: var(--color-muted); }
+.cap-indicator__track { display: inline-flex; gap: 4px; align-items: center; }
+.cap-indicator__track i {
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: var(--color-line);
+  transition: background var(--motion-fast) var(--ease-ui), opacity var(--motion-base) var(--ease-ui);
+  opacity: .4;
+}
+.cap-indicator[data-cap-panel="1"] .cap-indicator__track i:nth-child(-n+1),
+.cap-indicator[data-cap-panel="2"] .cap-indicator__track i:nth-child(-n+2),
+.cap-indicator[data-cap-panel="3"] .cap-indicator__track i {
+  background: var(--color-brand-cyan);
+  opacity: 1;
+}
+.cap-indicator__sep { color: var(--color-line); }
+.cap-indicator__total { color: var(--color-muted); }
 /* Business: modules settle into place from a wider radius when the section enters. */
 .capability-visual.is-entering .surface { animation: module-settle var(--motion-slow) var(--ease-narrative) both; transform-box: fill-box; transform-origin: center; }
 @keyframes module-settle { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
@@ -423,12 +463,31 @@ button:not(:disabled) { cursor: pointer; }
 @media (min-width: 90rem) and (min-height: 850px) {
   .hero-composition { min-height: calc(100svh - var(--nav-height)); display: flex; flex-direction: column; justify-content: space-between; }
 }
+@media (min-width: 64rem) {
+  /* Desktop horizontal capabilities: each panel owns its own column inside
+     the pinned track so the GSAP translate can carry them across. The pinned
+     viewport clips overflow; we let it stay visible so ScrollTrigger can
+     measure the natural track width through getBoundingClientRect when
+     setting up. */
+  .cap-pinned { overflow: clip; }
+  .cap-track { gap: 0; width: max-content; padding-inline: var(--gutter); }
+  .capability {
+    flex: 0 0 calc(100vw - var(--gutter) * 2);
+    max-width: calc(80rem - var(--gutter) * 2);
+    margin-inline: auto;
+    border-top-color: transparent;
+  }
+}
 @media (max-width: 79.999rem) {
   .hero-actions { justify-content: flex-start; }
   .story-layout, .method-layout, .engineering-layout, .commercial-bridge .container-page, .qualification .container-page { gap: var(--space-9); }
 }
 @media (max-width: 63.999rem) {
   :root { --nav-height: 4.5rem; }
+  /* Tablet/mobile capabilities: vertical stack, no horizontal scrub. */
+  .cap-pinned { overflow: visible; }
+  .cap-track { flex-direction: column; }
+  .cap-indicator { display: none; }
   .desktop-nav, .desktop-cta { display: none; }
   .menu-toggle { display: inline-flex; }
   .hero-title { font-size: clamp(3.5rem, 8.5vw, 6rem); }
@@ -459,6 +518,10 @@ button:not(:disabled) { cursor: pointer; }
   .section-heading, .method-layout, .engineering-layout { grid-template-columns: 1fr; gap: var(--space-7); }
   .section-heading { margin-bottom: var(--space-8); }
   .section-heading > .section-copy { justify-self: start; }
+  /* Mobile capabilities: stack vertically, drop the horizontal scrub. */
+  .cap-track { flex-direction: column; }
+  .capability { border-top-color: var(--color-line); }
+  .cap-indicator { display: none; }
   .hero-meta > span { display: none; }
   .hero-title { font-size: clamp(3rem, 11.8vw, 5.5rem); margin-block: var(--space-7) var(--space-6); letter-spacing: -.055em; }
   .hero-title span { display: inline; }

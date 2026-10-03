@@ -1,3 +1,5 @@
+import { bindGsapLifecycle } from "./gsap-init";
+
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const phase = (progress: number, start: number, end: number) =>
   clamp((progress - start) / (end - start));
@@ -19,11 +21,6 @@ function initializeInteractions() {
   const hero = document.querySelector<HTMLElement>("[data-hero]");
   const routing = document.querySelector<HTMLElement>("[data-hero-routing]");
   const bridge = document.querySelector<HTMLElement>(".hero-friction-bridge");
-  const story = document.querySelector<HTMLElement>("[data-story-visual]");
-  const steps = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-story-step]"),
-  );
-  const caption = document.querySelector<HTMLElement>("[data-story-caption]");
   const frictionSignals = document.querySelector<HTMLElement>(
     "[data-friction-signals]",
   );
@@ -51,7 +48,6 @@ function initializeInteractions() {
   );
   const persistent = document.querySelector<HTMLElement>("[data-persistent-cta]");
   const contact = document.querySelector<HTMLElement>("#contacto");
-  const storyDiagram = story?.querySelector<HTMLElement>(".operation-diagram") ?? null;
 
   const nav = Array.from(
     document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"),
@@ -65,7 +61,6 @@ function initializeInteractions() {
   let frame = 0;
   let pointerX = 0;
   let pointerY = 0;
-  let currentStage = -1;
   let reducedSnapshot = reduced.matches;
 
   function closeMenu(restoreFocus = false) {
@@ -173,45 +168,9 @@ function initializeInteractions() {
       persistent.classList.toggle("is-visible", pastHero && !nearContact);
     }
 
-    if (story && steps.length && desktop.matches && !reducedSnapshot) {
-      const firstRect = steps[0].getBoundingClientRect();
-      const lastRect = steps[steps.length - 1].getBoundingClientRect();
-      const start = mid(firstRect);
-      const end = mid(lastRect);
-      const rawProgress = clamp((innerHeight * 0.5 - start) / Math.max(1, end - start));
-      // Phases are tied directly to rawProgress so each state reads distinctly while
-      // the user scrolls past it; smoothstep is reserved for the visual interpolation
-      // (CSS transitions on the scene elements handle the smoothness).
-      story.style.setProperty("--dispersion", String(clamp(1 - phase(rawProgress, 0, 0.25))));
-      story.style.setProperty("--connection", String(phase(rawProgress, 0.18, 0.55)));
-      story.style.setProperty("--flow", String(phase(rawProgress, 0.45, 0.78)));
-      story.style.setProperty("--system", String(phase(rawProgress, 0.72, 1)));
-      const stage = Math.round(rawProgress * (steps.length - 1));
-      if (stage !== currentStage) {
-        currentStage = stage;
-        story.dataset.storyStage = String(stage + 1);
-        steps.forEach((step, index) => step.classList.toggle("is-current", index === stage));
-        if (caption) {
-          caption.textContent = [
-            "01 / Dispersión",
-            "02 / Conexión",
-            "03 / Automatización",
-            "04 / Sistema",
-          ][stage];
-        }
-      }
-      const resolved = Number(story.style.getPropertyValue("--system")) || 0;
-      if (resolved > 0.92) story.classList.add("is-system");
-      else story.classList.remove("is-system");
-    } else if (story) {
-      ["--connection", "--flow", "--system", "--dispersion"].forEach((name) =>
-        story.style.removeProperty(name),
-      );
-      story.classList.remove("is-system");
-      steps.forEach((step) => step.classList.remove("is-current"));
-      if (caption) caption.textContent = "Un sistema conectado";
-      currentStage = -1;
-    }
+    // The Story section is owned by GSAP (see gsap-init.ts). Its scroll-driven
+    // animation is now handled by ScrollTrigger timelines; the legacy RAF
+    // path is removed so it cannot fight the timeline.
 
     if (methodSteps && methodStepItems.length) {
       const firstRect = methodSteps.getBoundingClientRect();
@@ -279,8 +238,11 @@ function initializeInteractions() {
     { element: routing, duration: 900, delayMin: 5500, delayMax: 9500, className: "is-ambient-status", mobileEnabled: true },
     // Hero: cells within Module B light up briefly (desktop/tablet).
     { element: routing, duration: 1500, delayMin: 6500, delayMax: 11000, className: "is-ambient-cells", mobileEnabled: false },
-    // Story final: a row of the assembled app briefly updates.
-    { element: storyDiagram, duration: 1500, delayMin: 6000, delayMax: 10500, className: "is-ambient", mobileEnabled: false, requiresSystem: true },
+    // Story final: a row of the assembled app briefly updates. GSAP owns the
+    // scene progress; this just gives the row a quiet pulse while the section
+    // is in view. No requiresSystem gate (the variable is no longer written
+    // by the RAF path).
+    { element: document.querySelector<HTMLElement>(".story-software"), duration: 1500, delayMin: 6000, delayMax: 10500, className: "is-ambient", mobileEnabled: false },
     // Web scene: a card value updates briefly.
     { element: document.querySelector<HTMLElement>("[data-web-frame]"), duration: 1700, delayMin: 5500, delayMax: 9000, className: "is-ambient", mobileEnabled: true },
     // Automate scene: a result row updates briefly.
@@ -468,3 +430,8 @@ window.addEventListener("pagehide", () => cleanup());
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) cleanup = initializeInteractions();
 });
+
+// GSAP feature ownership — pinned scrub timelines for Story and
+// Capabilities. The lifecycle helper subscribes to Astro's page events so
+// triggers don't leak across navigation.
+bindGsapLifecycle();
