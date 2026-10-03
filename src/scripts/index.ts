@@ -35,10 +35,16 @@ function initializeInteractions() {
     document.querySelectorAll<HTMLElement>("[data-method-step]"),
   );
   const engineeringLayers = document.querySelector<HTMLElement>(
-    "[data-engineering-layers]",
+    "[data-engineering-stack]",
   );
   const engineeringLayerItems = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-engineering-layer]"),
+    engineeringLayers?.querySelectorAll<HTMLElement>("[data-engineering-layer]") ?? [],
+  );
+  const architectureLayers = document.querySelector<HTMLElement>(
+    "[data-architecture-layers]",
+  );
+  const architectureLayerItems = Array.from(
+    architectureLayers?.querySelectorAll<HTMLElement>("[data-architecture-layer]") ?? [],
   );
   const capabilityVisuals = Array.from(
     document.querySelectorAll<HTMLElement>(".capability-visual"),
@@ -173,14 +179,14 @@ function initializeInteractions() {
       const start = mid(firstRect);
       const end = mid(lastRect);
       const rawProgress = clamp((innerHeight * 0.5 - start) / Math.max(1, end - start));
-      // Smoothstep blends the four phases so the eye perceives a single continuous
-      // transformation rather than four discrete jumps.
-      const progress = smoothstep(rawProgress);
-      story.style.setProperty("--dispersion", String(clamp(1 - phase(rawProgress, 0, 0.22))));
-      story.style.setProperty("--connection", String(phase(progress, 0.18, 0.55)));
-      story.style.setProperty("--flow", String(phase(progress, 0.45, 0.78)));
-      story.style.setProperty("--system", String(phase(progress, 0.72, 1)));
-      const stage = Math.round(progress * (steps.length - 1));
+      // Phases are tied directly to rawProgress so each state reads distinctly while
+      // the user scrolls past it; smoothstep is reserved for the visual interpolation
+      // (CSS transitions on the scene elements handle the smoothness).
+      story.style.setProperty("--dispersion", String(clamp(1 - phase(rawProgress, 0, 0.25))));
+      story.style.setProperty("--connection", String(phase(rawProgress, 0.18, 0.55)));
+      story.style.setProperty("--flow", String(phase(rawProgress, 0.45, 0.78)));
+      story.style.setProperty("--system", String(phase(rawProgress, 0.72, 1)));
+      const stage = Math.round(rawProgress * (steps.length - 1));
       if (stage !== currentStage) {
         currentStage = stage;
         story.dataset.storyStage = String(stage + 1);
@@ -237,6 +243,17 @@ function initializeInteractions() {
       });
     }
 
+    if (architectureLayers && architectureLayerItems.length) {
+      let activeIndex = -1;
+      for (let index = 0; index < architectureLayerItems.length; index += 1) {
+        const rect = architectureLayerItems[index].getBoundingClientRect();
+        if (rect.top < innerHeight * 0.7) activeIndex = index;
+      }
+      architectureLayerItems.forEach((layer, index) => {
+        layer.classList.toggle("is-current", index === activeIndex);
+      });
+    }
+
     // Ambient motion: discrete events with varied intervals. Driven by the same
     // RAF as scroll-driven motion; only fires when its zone is visible, the tab is
     // foreground, and reduced motion is not requested.
@@ -262,8 +279,16 @@ function initializeInteractions() {
     { element: routing, duration: 900, delayMin: 5500, delayMax: 9500, className: "is-ambient-status", mobileEnabled: true },
     // Hero: cells within Module B light up briefly (desktop/tablet).
     { element: routing, duration: 1500, delayMin: 6500, delayMax: 11000, className: "is-ambient-cells", mobileEnabled: false },
-    // Story final: violet boundary pulses when the system state is reached.
+    // Story final: a row of the assembled app briefly updates.
     { element: storyDiagram, duration: 1500, delayMin: 6000, delayMax: 10500, className: "is-ambient", mobileEnabled: false, requiresSystem: true },
+    // Web scene: a card value updates briefly.
+    { element: document.querySelector<HTMLElement>("[data-web-frame]"), duration: 1700, delayMin: 5500, delayMax: 9000, className: "is-ambient", mobileEnabled: true },
+    // Automate scene: a result row updates briefly.
+    { element: document.querySelector<HTMLElement>("[data-automate-stage]"), duration: 1500, delayMin: 6500, delayMax: 10500, className: "automate-ambient", mobileEnabled: false },
+    // Business scene: a module value updates briefly.
+    { element: document.querySelector<HTMLElement>("[data-business-frame]"), duration: 1500, delayMin: 6000, delayMax: 10000, className: "is-ambient", mobileEnabled: true },
+    // Architecture: a layer receives a brief signal.
+    { element: document.querySelector<HTMLElement>("[data-architecture-layers]"), duration: 1700, delayMin: 7000, delayMax: 11000, className: "is-ambient", mobileEnabled: false },
     // Contact: background lines and indicators briefly alive (all viewports).
     { element: contact, duration: 1700, delayMin: 7000, delayMax: 12000, className: "is-ambient", mobileEnabled: true },
   ];
@@ -374,10 +399,19 @@ function initializeInteractions() {
           window.setTimeout(() => visual.classList.add("is-pulsing"), 120);
         }
       }
+      // Discovery scene cycles focus on each fragment once visible.
+      if (element.classList.contains("commercial-bridge__visual")) {
+        const surface = element.querySelector("[data-discovery-surface]") as HTMLElement | null;
+        if (surface) surface.classList.add("is-entering");
+      }
       capabilityObserver.unobserve(element);
     });
   }, { threshold: 0.32 });
   capabilityVisuals.forEach((element) => capabilityObserver.observe(element));
+  // Discovery visual also needs the entering trigger.
+  document.querySelectorAll<HTMLElement>(".commercial-bridge__visual").forEach((element) =>
+    capabilityObserver.observe(element),
+  );
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {

@@ -1,0 +1,90 @@
+---
+// Single scene that progressively becomes a coherent software product.
+// Fragments drift apart on dispersion, then align as connection / flow / system resolve.
+// All four states share the same composition; only their transforms and clip-paths change.
+---
+
+<div class="story-software" aria-hidden="true" data-story-software>
+  <div class="story-software__canvas" data-story-canvas>
+    <!-- Backdrop: the structural grid that becomes the app's layout surface. -->
+    <div class="ssurface ssurface--backdrop"></div>
+
+    <!-- Fragmentary pieces of UI scattered in the dispersion state. -->
+    <div class="sfrag sfrag--list" data-piece="dispersion">
+      <span class="sfrag__line"></span>
+        <span class="sfrag__line"></span>
+        <span class="sfrag__line sfrag__line--short"></span>
+        <span class="sfrag__line"></span>
+    </div>
+    <div class="sfrag sfrag--sheet" data-piece="dispersion">
+      <span class="sfrag__row"></span>
+        <span class="sfrag__row sfrag__row--short"></span>
+        <span class="sfrag__row"></span>
+        <span class="sfrag__row sfrag__row--shorter"></span>
+    </div>
+    <div class="sfrag sfrag--card" data-piece="dispersion">
+      <span class="sfrag__dot"></span>
+      <span class="sfrag__line"></span>
+        <span class="sfrag__line sfrag__line--short"></span>
+    </div>
+    <div class="sfrag sfrag--msg" data-piece="dispersion">
+      <span class="sfrag__bubble"></span>
+      <span class="sfrag__bubble sfrag__bubble--alt"></span>
+    </div>
+    <div class="sfrag sfrag--task" data-piece="dispersion">
+      <span class="sfrag__check"></span>
+      <span class="sfrag__line"></span>
+    </div>
+
+    <!-- The application that emerges: header, sidebar, content, modules, status. -->
+    <div class="sapp" data-piece="app">
+      <div class="sapp__header">
+        <span class="sapp__brand"></span>
+        <span class="sapp__nav">
+          <i></i><i></i><i></i><i></i>
+        </span>
+        <span class="sapp__user"></span>
+      </div>
+      <div class="sapp__body">
+        <aside class="sapp__sidebar">
+          <span class="sapp__rail-item is-active"></span>
+          <span class="sapp__rail-item"></span>
+          <span class="sapp__rail-item"></span>
+          <span class="sapp__rail-item"></span>
+          <span class="sapp__rail-item"></span>
+        </aside>
+        <main class="sapp__main">
+          <div class="sapp__title">
+            <span></span>
+            <span class="sapp__title-meta"></span>
+          </div>
+          <div class="sapp__metrics">
+            <span class="sapp__metric">
+              <span class="sapp__metric-key"></span>
+              <span class="sapp__metric-value"></span>
+            </span>
+            <span class="sapp__metric">
+              <span class="sapp__metric-key"></span>
+              <span class="sapp__metric-value"></span>
+            </span>
+            <span class="sapp__metric">
+              <span class="sapp__metric-key"></span>
+              <span class="sapp__metric-value"></span>
+            </span>
+          </div>
+          <ul class="sapp__rows">
+            <li><span class="sapp__row-tag"></span><span class="sapp__row-line"></span><span class="sapp__row-state"></span></li>
+            <li><span class="sapp__row-tag"></span><span class="sapp__row-line"></span><span class="sapp__row-state"></span></li>
+            <li><span class="sapp__row-tag"></span><span class="sapp__row-line"></span><span class="sapp__row-state"></span></li>
+            <li><span class="sapp__row-tag"></span><span class="sapp__row-line"></span><span class="sapp__row-state"></span></li>
+          </ul>
+        </main>
+      </div>
+      <footer class="sapp__statusbar">
+        <span class="sapp__status-dot"></span>
+        <span class="sapp__status-line"></span>
+        <span class="sapp__status-line sapp__status-line--short"></span>
+      </footer>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+---
+import { engineering } from "../../data/narrative";
+const layers = engineering;
+---
+
+<div class="architecture-scene" aria-hidden="true">
+  <div class="architecture-layers" data-architecture-layers>
+    {layers.map((layer, index) => (
+      <div class="architecture-layer" data-architecture-layer={index + 1}>
+        <span class="architecture-layer__num">0{index + 1}</span>
+        <div class="architecture-layer__body">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

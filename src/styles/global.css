@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./scenes.css";
 
 @theme {
   --color-ink: #101314;
@@ -8,7 +9,7 @@
   --color-muted: #a6b0b2;
   --color-line: #343c3e;
   --color-line-soft: #2a3133;
-  --color-brand-cyan: #72dce0;
+  --color-brand-cyan: #4d9cc8;
   --color-brand-blue: #8bb5ec;
   --color-brand-violet: #aea1dc;
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -233,34 +234,32 @@ button:not(:disabled) { cursor: pointer; }
 .diagram-heading { display: flex; justify-content: space-between; gap: var(--space-4); border-bottom: 1px solid var(--color-line); padding-block: var(--space-4); font: .625rem/1.5 var(--font-mono); color: var(--color-muted); letter-spacing: .06em; text-transform: uppercase; }
 .diagram-heading span:last-child { color: var(--color-brand-cyan); white-space: nowrap; }
 .operation-diagram { display: block; width: 100%; height: 100%; }
-.operation-diagram text { font-family: var(--font-mono); font-size: 11px; letter-spacing: .4px; fill: var(--color-copy); }
-.operation-diagram .diagram-sub { font-size: 9px; fill: var(--color-muted); }
-.operation-diagram .diagram-grid { stroke: var(--color-line); opacity: .35; }
-.operation-diagram .diagram-node rect { fill: var(--color-ink); stroke: var(--color-line); }
-.operation-diagram .diagram-source-a { transform: translate(calc(var(--dispersion, 0) * -20px), calc(var(--dispersion, 0) * -22px)); }
-.operation-diagram .diagram-source-b { transform: translate(calc(var(--dispersion, 0) * 18px), calc(var(--dispersion, 0) * -30px)); }
-.operation-diagram .diagram-source-c { transform: translate(calc(var(--dispersion, 0) * -14px), calc(var(--dispersion, 0) * 25px)); }
-.operation-diagram .diagram-source-d { transform: translate(calc(var(--dispersion, 0) * 24px), calc(var(--dispersion, 0) * 16px)); }
-.operation-diagram .diagram-connections { opacity: var(--connection, 1); }
-.operation-diagram .diagram-connections path { stroke: var(--color-brand-cyan); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--connection, 1)); }
-.operation-diagram .diagram-core { opacity: var(--connection, 1); }
-.operation-diagram .diagram-core rect { stroke: var(--color-brand-cyan); fill: var(--color-surface); transition: box-shadow var(--motion-base) var(--ease-narrative); }
-.operation-diagram.is-system .diagram-core rect { box-shadow: 0 0 0 1px var(--color-brand-cyan); }
-.operation-diagram .diagram-flow { opacity: var(--flow, 1); }
-.operation-diagram .diagram-flow path { stroke: var(--color-brand-blue); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--flow, 1)); }
-.operation-diagram .diagram-boundary { opacity: var(--system, 1); }
-.operation-diagram .diagram-boundary path { stroke: var(--color-brand-violet); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--system, 1)); }
-/* Story ambient: when --system is reached, the violet boundary briefly pulses, reinforcing that the organized system is running. */
-.operation-diagram.is-ambient .diagram-boundary path { animation: story-ambient-system 1500ms var(--ease-ui); }
+/* Editorial composition: pieces drift while dispersion is high, then align into a
+   module as connection / flow / system resolve. Each layer reads as a structural
+   element rather than as data. */
+.operation-diagram .diagram-grid { stroke: var(--color-line); opacity: .28; }
+.operation-diagram .diagram-piece rect { fill: var(--color-ink); stroke: var(--color-line); transition: stroke var(--motion-slow) var(--ease-narrative); }
+.operation-diagram .diagram-piece path { stroke: var(--color-line); transition: stroke var(--motion-slow) var(--ease-narrative); }
+/* When the system resolves, the pieces soften their borders to feel resolved, not isolated. */
+.operation-diagram.is-system .diagram-piece rect { stroke: var(--color-line-soft); }
+.operation-diagram.is-system .diagram-piece path { stroke: var(--color-line-soft); }
+.operation-diagram .piece-01 { transform: translate(calc(var(--dispersion, 0) * -22px), calc(var(--dispersion, 0) * -18px)); }
+.operation-diagram .piece-02 { transform: translate(calc(var(--dispersion, 0) * 24px), calc(var(--dispersion, 0) * -26px)); }
+.operation-diagram .piece-03 { transform: translate(calc(var(--dispersion, 0) * -18px), calc(var(--dispersion, 0) * 22px)); }
+.operation-diagram .piece-04 { transform: translate(calc(var(--dispersion, 0) * 26px), calc(var(--dispersion, 0) * 18px)); }
+.operation-diagram .diagram-piece { transition: transform var(--motion-slow) var(--ease-narrative); }
+.operation-diagram .diagram-spine { opacity: var(--connection, 1); }
+.operation-diagram .diagram-spine path { stroke: var(--color-brand-cyan); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--connection, 1)); transition: stroke var(--motion-slow) var(--ease-narrative); }
+.operation-diagram .diagram-rails { opacity: var(--flow, 1); }
+.operation-diagram .diagram-rails path { stroke: var(--color-brand-blue); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--flow, 1)); transition: stroke var(--motion-slow) var(--ease-narrative); }
+.operation-diagram .diagram-perimeter { opacity: var(--system, 1); }
+.operation-diagram .diagram-perimeter path { stroke: var(--color-brand-violet); stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--system, 1)); transition: stroke var(--motion-slow) var(--ease-narrative); }
+/* Story ambient: when --system is reached, the violet perimeter briefly pulses, reinforcing that the organized system is running. */
+.operation-diagram.is-ambient .diagram-perimeter path { animation: story-ambient-system 1500ms var(--ease-ui); }
 @keyframes story-ambient-system {
   0%, 100% { stroke-opacity: 0; }
   35%, 65% { stroke-opacity: .55; }
 }
-.diagram-legend { display: flex; flex-wrap: wrap; gap: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--color-line); font: .625rem/1.5 var(--font-mono); color: var(--color-muted); }
-.diagram-legend span { display: flex; align-items: center; gap: var(--space-2); }
-.diagram-legend i { width: 12px; height: 1px; background: var(--color-brand-cyan); }
-.diagram-legend span:nth-child(2) i { background: var(--color-brand-blue); }
-.diagram-legend span:nth-child(3) i { background: var(--color-brand-violet); }
 .story-step { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; padding-block: var(--space-9); border-top: 1px solid var(--color-line); transition: border-color var(--motion-base) var(--ease-ui); }
 .js .story-step:not(.is-current) { opacity: .35; }
 .story-step.is-current { border-top-color: var(--color-brand-cyan); }
@@ -318,6 +317,15 @@ button:not(:disabled) { cursor: pointer; }
 .engineering { border-top: 1px solid var(--color-line); position: relative; }
 .engineering-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-12); align-items: start; }
 .engineering-intro .section-title { margin-block: var(--space-5) var(--space-6); }
+.engineering-stack-wrap { display: grid; gap: var(--space-5); }
+.engineering-rhythm { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-line); }
+.engineering-rhythm span { display: block; height: 1px; background: var(--color-line); transition: background var(--motion-base) var(--ease-ui); }
+/* Light up the corresponding rhythm span when a layer becomes current.
+   :has() lets CSS react to the JS-driven `.is-current` marker without extra timers. */
+.engineering-stack-wrap:has(.engineering-layer[data-engineering-layer="1"].is-current) .engineering-rhythm span:nth-child(1),
+.engineering-stack-wrap:has(.engineering-layer[data-engineering-layer="2"].is-current) .engineering-rhythm span:nth-child(2),
+.engineering-stack-wrap:has(.engineering-layer[data-engineering-layer="3"].is-current) .engineering-rhythm span:nth-child(3),
+.engineering-stack-wrap:has(.engineering-layer[data-engineering-layer="4"].is-current) .engineering-rhythm span:nth-child(4) { background: var(--color-brand-cyan); }
 .engineering-stack { border-top: 1px solid var(--color-line); }
  vg .engineering-layer { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-5); padding-block: var(--space-5); border-bottom: 1px solid var(--color-line); transition: border-color var(--motion-base) var(--ease-ui); position: relative; }
 .js .engineering-layer:not(.is-current) { opacity: .55; }
@@ -353,15 +361,25 @@ button:not(:disabled) { cursor: pointer; }
 .contact-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--space-4); }
 
 /* Commercial bridge before the cases. Sober editorial: software follows the operation,
-   not the other way around. */
+   not the other way around. The left visual reads as a small set of stacked panels,
+   not as a diagram. */
 .commercial-bridge { border-top: 1px solid var(--color-line); padding-block: clamp(4rem, 7vw, 6rem); }
-.commercial-bridge .container-page { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+.commercial-bridge .container-page { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: start; }
+.commercial-bridge__visual { display: grid; gap: var(--space-5); }
 .commercial-bridge__note { display: grid; gap: var(--space-4); }
 .commercial-bridge__note h3 { font-size: clamp(1.5rem, 2.6vw, 2.25rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.15; max-width: 18ch; }
 .commercial-bridge__note p { color: var(--color-muted); font-size: 1rem; line-height: 1.7; max-width: 32rem; }
 .commercial-bridge__mark { display: grid; gap: var(--space-3); }
 .commercial-bridge__mark span { display: block; height: 1px; background: var(--color-line); }
 .commercial-bridge__mark span:first-child { background: var(--color-brand-cyan); width: var(--space-9); }
+.commercial-bridge__panels { display: grid; gap: var(--space-3); }
+.commercial-bridge__panel { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: var(--space-4); padding: var(--space-4) var(--space-5); border: 1px solid var(--color-line); background: var(--color-surface); color: var(--color-copy); font-size: .9375rem; line-height: 1.4; transition: border-color var(--motion-base) var(--ease-ui); }
+.commercial-bridge__panel--wide { background: var(--color-surface-raised); }
+.commercial-bridge__panel > span:first-child { color: var(--color-brand-cyan); font: .6875rem/1.5 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.commercial-bridge__panel > span:last-child { font-weight: 500; letter-spacing: -.01em; }
+@media (hover: hover) and (pointer: fine) {
+  .commercial-bridge__panel:hover { border-color: var(--color-brand-cyan); }
+}
 
 /* Qualification block before the final CTA: helps visitors self-identify before they
    reach the form, framed as orientation rather than as a sales checklist. */
@@ -389,7 +407,7 @@ button:not(:disabled) { cursor: pointer; }
 .persistent-cta.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 
 @media (hover: hover) {
-  .button-primary:hover { background: #9be8e9; transform: translateY(-1px); }
+  .button-primary:hover { background: #76b6dc; transform: translateY(-1px); }
   .button-primary:active { transform: translateY(0); transition-duration: var(--motion-instant); }
   .button-secondary:hover { border-color: var(--color-brand-cyan); }
   .button-secondary:hover::after { transform: scaleX(1); }

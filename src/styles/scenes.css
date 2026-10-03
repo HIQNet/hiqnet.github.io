@@ -1,0 +1,714 @@
+/* =============================================================================
+   Scenes — visual language for contextual animations.
+   Shared design language: same border thickness, radii, surfaces, typography,
+   contrast, easing and motion tokens as global.css.
+   ============================================================================= */
+
+/* ---------- Storytelling: software being built ----------------------------- */
+
+.story-software {
+  --story-aspect: 600 / 360;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--story-aspect);
+  contain: layout paint;
+}
+.story-software__canvas {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--color-ink);
+  isolation: isolate;
+}
+
+.ssurface--backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(transparent calc(100% - 1px), color-mix(in srgb, var(--color-line) 60%, transparent) 1px) 0 0 / 100% 25%,
+    linear-gradient(90deg, transparent calc(100% - 1px), color-mix(in srgb, var(--color-line) 60%, transparent) 1px) 0 0 / 16.66% 100%;
+  opacity: calc(.06 + var(--system, 0) * .14);
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+
+/* Fragments in dispersion state.
+   Each piece is a small independent UI fragment that drifts apart when dispersion
+   is high and folds into the software when the system resolves. */
+.sfrag {
+  --frag-x: 0;
+  --frag-y: 0;
+  --frag-rot: 0deg;
+  position: absolute;
+  width: 76px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 8px 9px;
+  display: grid;
+  gap: 6px;
+  transform: translate(calc(-50% + var(--frag-x) + var(--dispersion, 0) * var(--frag-dx, 0px)),
+                       calc(-50% + var(--frag-y) + var(--dispersion, 0) * var(--frag-dy, 0px)))
+                       rotate(calc(var(--frag-rot) + var(--dispersion, 0) * var(--frag-dr, 0deg)));
+  opacity: calc(1 - var(--connection, 0) * .55);
+  transition: transform var(--motion-slow) var(--ease-narrative),
+              opacity var(--motion-slow) var(--ease-narrative),
+              border-color var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+/* Each fragment has its own drift vector so they scatter asymmetrically. */
+.sfrag--list { top: 22%; left: 14%; --frag-dx: -56px; --frag-dy: -36px; --frag-dr: -8deg; }
+.sfrag--sheet { top: 78%; left: 16%; --frag-dx: -52px; --frag-dy: 40px; --frag-dr: 6deg; }
+.sfrag--card { top: 22%; left: 86%; --frag-dx: 60px; --frag-dy: -42px; --frag-dr: 10deg; }
+.sfrag--msg { top: 80%; left: 86%; --frag-dx: 58px; --frag-dy: 44px; --frag-dr: -7deg; }
+.sfrag--task { top: 50%; left: 92%; --frag-dx: 24px; --frag-dy: 8px; --frag-dr: 4deg; }
+
+.sfrag__line,
+.sfrag__row,
+.sfrag__dot,
+.sfrag__bubble,
+.sfrag__check {
+  display: block;
+  background: var(--color-line);
+  border-radius: 1px;
+  height: 3px;
+}
+.sfrag__line--short { width: 60%; }
+.sfrag__row { width: 92%; }
+.sfrag__row--short { width: 70%; }
+.sfrag__row--shorter { width: 48%; }
+.sfrag__dot { width: 6px; height: 6px; border-radius: 50%; }
+.sfrag__bubble { width: 70%; height: 6px; border-radius: 2px; }
+.sfrag__bubble--alt { width: 50%; background: color-mix(in srgb, var(--color-line) 80%, transparent); }
+.sfrag__check { width: 7px; height: 7px; border-radius: 50%; }
+
+/* The application: assembled view that reveals as connection / flow / system rise.
+   Starts compressed with a vertical mask and unfolds into the layout surface. */
+.sapp {
+  position: absolute;
+  inset: 7% 7% 7% 7%;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 3px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  opacity: calc(var(--connection, 0));
+  clip-path: inset(calc((1 - var(--connection, 0)) * 50%) 0 0 0 round 2px);
+  transform: scale(calc(.94 + var(--connection, 0) * .06));
+  transition: opacity var(--motion-slow) var(--ease-narrative),
+              clip-path var(--motion-slow) var(--ease-narrative),
+              transform var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+  will-change: opacity, clip-path, transform;
+}
+
+.sapp__header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-line);
+  opacity: calc(var(--connection, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__brand { width: 36px; height: 6px; background: var(--color-line); border-radius: 1px; }
+.sapp__nav { display: flex; gap: 10px; justify-content: center; }
+.sapp__nav i { width: 22px; height: 3px; background: var(--color-line); border-radius: 1px; }
+.sapp__user { width: 22px; height: 22px; border: 1px solid var(--color-line); border-radius: 50%; justify-self: end; }
+
+.sapp__body {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  min-height: 0;
+}
+.sapp__sidebar {
+  border-right: 1px solid var(--color-line);
+  padding: 12px 10px;
+  display: grid;
+  gap: 10px;
+  opacity: calc(var(--connection, 0) * var(--flow, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__rail-item { height: 4px; background: var(--color-line); border-radius: 1px; }
+.sapp__rail-item.is-active { background: var(--color-brand-cyan); }
+
+.sapp__main {
+  padding: 12px 14px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.sapp__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  opacity: calc(var(--connection, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__title > span:first-child { width: 96px; height: 6px; background: var(--color-line); border-radius: 1px; }
+.sapp__title-meta { width: 22px; height: 6px; background: color-mix(in srgb, var(--color-line) 70%, transparent); border-radius: 1px; }
+
+.sapp__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  opacity: calc(var(--flow, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__metric {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  border-radius: 2px;
+}
+.sapp__metric-key { height: 3px; width: 60%; background: var(--color-line); border-radius: 1px; }
+.sapp__metric-value { height: 8px; width: 80%; background: color-mix(in srgb, var(--color-line) 80%, transparent); border-radius: 1px; }
+
+.sapp__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  opacity: calc(var(--flow, 0) * var(--system, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__rows li {
+  display: grid;
+  grid-template-columns: 28px 1fr 28px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+}
+.sapp__row-tag { height: 6px; background: var(--color-line); border-radius: 1px; }
+.sapp__row-line { height: 3px; background: color-mix(in srgb, var(--color-line) 75%, transparent); border-radius: 1px; }
+.sapp__row-state { height: 6px; background: var(--color-line); border-radius: 1px; justify-self: end; width: 16px; }
+
+.sapp__statusbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-top: 1px solid var(--color-line);
+  opacity: calc(var(--system, 0));
+  transition: opacity var(--motion-slow) var(--ease-narrative);
+}
+.sapp__status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-brand-cyan); }
+.sapp__status-line { height: 3px; width: 64px; background: var(--color-line); border-radius: 1px; }
+.sapp__status-line--short { width: 28px; }
+
+/* Subtle ambient pulse on the app once the system has resolved:
+   one of the rows briefly changes its tag color, reinforcing "the system is alive". */
+.story-software.is-ambient .sapp__rows li:nth-child(2) .sapp__row-state {
+  animation: story-row-ambient 1700ms var(--ease-ui);
+}
+@keyframes story-row-ambient {
+  0%, 100% { background: var(--color-line); }
+  40%, 60% { background: var(--color-brand-cyan); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-software .sfrag,
+  .story-software .sapp,
+  .story-software .sapp__header,
+  .story-software .sapp__sidebar,
+  .story-software .sapp__title,
+  .story-software .sapp__metrics,
+  .story-software .sapp__rows,
+  .story-software .ssurface--backdrop {
+    transition: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .story-software .sfrag { opacity: .15; }
+  .story-software .sapp { opacity: 1; }
+}
+
+/* ---------- HiQNet Web: an interface assembling ---------------------------- */
+
+.web-scene {
+  --scene-aspect: 520 / 320;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--scene-aspect);
+  contain: layout paint;
+}
+.web-frame {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  overflow: hidden;
+}
+.web-frame__sidebar {
+  border-right: 1px solid var(--color-line);
+  padding: 12px 10px;
+  display: grid;
+  gap: 8px;
+}
+.web-frame__sidebar span { height: 4px; background: var(--color-line); border-radius: 1px; }
+.web-frame__sidebar span.is-active { background: var(--color-brand-cyan); }
+
+.web-frame__body { display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+.web-frame__topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-line);
+}
+.web-frame__topbar i { display: block; height: 4px; background: var(--color-line); border-radius: 1px; }
+.web-frame__topbar i:nth-child(1) { width: 36px; }
+.web-frame__topbar i:nth-child(2) { width: 60px; }
+.web-frame__topbar i:nth-child(3) { width: 28px; }
+.web-frame__topbar i:nth-child(4) { margin-left: auto; width: 18px; height: 8px; border-radius: 1px; }
+
+.web-frame__main {
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.web-frame__title { width: 50%; height: 6px; background: var(--color-line); border-radius: 1px; }
+.web-frame__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.web-frame__card {
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+  border-radius: 2px;
+}
+.web-frame__card i { display: block; height: 4px; background: var(--color-line); border-radius: 1px; }
+.web-frame__card i:nth-child(1) { width: 60%; }
+.web-frame__card i:nth-child(2) { width: 80%; }
+.web-frame__card i:nth-child(3) { width: 40%; }
+.web-frame__card.is-active { border-color: var(--color-brand-cyan); }
+.web-frame__card.is-active i { background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line)); }
+
+.web-frame__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  border-radius: 2px;
+  width: max-content;
+}
+.web-frame__cta::before { content: ""; display: block; width: 16px; height: 3px; background: var(--color-line); border-radius: 1px; }
+.web-frame__cta::after { content: ""; display: block; width: 8px; height: 8px; border: 1px solid var(--color-line); border-radius: 50%; }
+
+/* Entrance: structure -> regions -> controls -> content -> finished state.
+   Triggered when the section enters the viewport (IntersectionObserver adds
+   .is-entering to the .capability-visual wrapper). After entrance, ambient
+   updates a single value briefly. */
+.web-frame__sidebar,
+.web-frame__topbar,
+.web-frame__title,
+.web-frame__grid > *,
+.web-frame__cta { opacity: 0; transform: translateY(6px); transition: opacity var(--motion-slow) var(--ease-narrative), transform var(--motion-slow) var(--ease-narrative); }
+.capability-visual.is-entering .web-frame__sidebar { opacity: 1; transform: none; transition-delay: 60ms; }
+.capability-visual.is-entering .web-frame__topbar { opacity: 1; transform: none; transition-delay: 180ms; }
+.capability-visual.is-entering .web-frame__title { opacity: 1; transform: none; transition-delay: 320ms; }
+.capability-visual.is-entering .web-frame__grid > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 460ms; }
+.capability-visual.is-entering .web-frame__grid > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 540ms; }
+.capability-visual.is-entering .web-frame__grid > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 620ms; }
+.capability-visual.is-entering .web-frame__cta { opacity: 1; transform: none; transition-delay: 740ms; }
+
+.capability-visual.is-ambient .web-frame__card.is-active i:nth-child(2),
+.web-frame.is-ambient .web-frame__card.is-active i:nth-child(2) {
+  animation: web-card-ambient 1700ms var(--ease-ui);
+}
+@keyframes web-card-ambient {
+  0%, 100% { background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line)); }
+  50% { background: var(--color-brand-cyan); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-frame > * { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- HiQNet Automate: repetitive work becoming a process ----------- */
+
+.automate-scene {
+  --scene-aspect: 600 / 280;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--scene-aspect);
+  contain: layout paint;
+}
+.automate-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  gap: 0;
+  align-items: center;
+}
+.automate-column { display: grid; gap: 8px; align-content: center; padding: 0 12px; }
+.automate-column--in { justify-items: start; }
+.automate-column--out { justify-items: end; }
+
+.automate-task {
+  display: grid;
+  grid-template-columns: 14px 1fr 14px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 2px;
+  font-size: .75rem;
+  color: var(--color-muted);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--motion-slow) var(--ease-narrative),
+              transform var(--motion-slow) var(--ease-narrative),
+              border-color var(--motion-slow) var(--ease-narrative),
+              color var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+}
+.automate-task::before { content: ""; display: block; width: 6px; height: 6px; border: 1px solid var(--color-line); border-radius: 50%; }
+.automate-task::after { content: ""; display: block; height: 3px; background: var(--color-line); border-radius: 1px; }
+.automate-task > span { height: 3px; background: var(--color-line); border-radius: 1px; }
+
+.automate-task.is-processed { opacity: 1; transform: none; color: var(--color-muted); }
+.automate-task.is-processed.is-old { opacity: .25; }
+.automate-task.is-result { border-color: var(--color-brand-cyan); }
+.automate-task.is-result::before { background: var(--color-brand-cyan); border-color: var(--color-brand-cyan); }
+
+/* Entrance: three repetitive tasks in the left column, then a one-shot pulse
+   traveling through the central process to consolidated results on the right.
+   The .capability-visual wrapper receives .is-entering and .is-pulsing. */
+.capability-visual.is-entering .automate-task[data-step="1"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 80ms; }
+.capability-visual.is-entering .automate-task[data-step="2"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 180ms; }
+.capability-visual.is-entering .automate-task[data-step="3"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 280ms; }
+.capability-visual.is-pulsing .automate-task[data-step="1"].is-result,
+.capability-visual.is-pulsing .automate-task[data-step="2"].is-result,
+.capability-visual.is-pulsing .automate-task[data-step="3"].is-result { animation: automate-resolve var(--motion-slow) var(--ease-narrative) both; }
+@keyframes automate-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes automate-resolve {
+  0% { border-color: var(--color-line); }
+  60%, 100% { border-color: var(--color-brand-cyan); }
+}
+
+.automate-core {
+  position: relative;
+  align-self: stretch;
+  margin: 0 12px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 2px;
+  display: grid;
+  place-items: center;
+}
+.automate-core__label {
+  font: .625rem/1.5 var(--font-mono);
+  color: var(--color-muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.automate-core__label > span { color: var(--color-brand-cyan); margin-right: 4px; }
+
+/* Vertical pulse line that travels from top to bottom of the core while
+   the scene is "pulsing": visualizes the automatic handling of input -> result. */
+.automate-core__pulse {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: 1px;
+  height: 72%;
+  background: var(--color-line);
+  overflow: hidden;
+}
+.automate-core__pulse::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 24%;
+  background: var(--color-brand-cyan);
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.capability-visual.is-pulsing .automate-core__pulse::after {
+  animation: automate-pulse 1300ms var(--ease-ui) both;
+}
+@keyframes automate-pulse {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(400%); opacity: 0; }
+}
+
+.automate-stage.is-ambient .automate-task.is-result::after,
+.automate-ambient .automate-task.is-result::after { animation: automate-ambient 1500ms var(--ease-ui) both; }
+@keyframes automate-ambient {
+  0%, 100% { background: var(--color-line); }
+  50% { background: var(--color-brand-cyan); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .automate-task,
+  .automate-stage .automate-task { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }
+  .automate-core__pulse::after { animation: none !important; transform: translateY(150%) !important; opacity: 0 !important; }
+}
+
+/* ---------- HiQNet Business: a modular platform ---------------------------- */
+
+.business-scene {
+  --scene-aspect: 520 / 320;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--scene-aspect);
+  contain: layout paint;
+}
+.business-frame {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  overflow: hidden;
+}
+.business-frame__rail {
+  border-right: 1px solid var(--color-line);
+  padding: 12px 8px;
+  display: grid;
+  gap: 10px;
+}
+.business-frame__rail span { height: 4px; background: var(--color-line); border-radius: 1px; }
+
+.business-frame__main { display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+.business-frame__topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-line);
+}
+.business-frame__topbar i { height: 4px; background: var(--color-line); border-radius: 1px; }
+.business-frame__topbar i:nth-child(1) { width: 40px; }
+.business-frame__topbar i:nth-child(2) { width: 60px; }
+.business-frame__topbar i:nth-child(3) { width: 28px; }
+.business-frame__topbar i:nth-child(4) { margin-left: auto; width: 24px; height: 8px; border-radius: 1px; }
+
+.business-frame__body { padding: 14px; display: grid; gap: 10px; align-content: start; }
+.business-frame__title { height: 6px; background: var(--color-line); border-radius: 1px; width: 45%; }
+
+.business-frame__modules {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.business-frame__module {
+  position: relative;
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  padding: 10px;
+  display: grid;
+  gap: 6px;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--motion-slow) var(--ease-narrative), transform var(--motion-slow) var(--ease-narrative), border-color var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+}
+.business-frame__module i { display: block; height: 3px; background: var(--color-line); border-radius: 1px; }
+.business-frame__module i:nth-child(1) { width: 50%; }
+.business-frame__module i:nth-child(2) { width: 80%; }
+.business-frame__module i:nth-child(3) { width: 30%; }
+.business-frame__module.is-active { border-color: var(--color-brand-cyan); }
+.business-frame__module.is-active i { background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line)); }
+
+/* Entrance: independent modules rise and integrate into the same app. */
+.capability-visual.is-entering .business-frame__module { opacity: 1; transform: none; }
+.capability-visual.is-entering .business-frame__module:nth-child(1) { transition-delay: 80ms; }
+.capability-visual.is-entering .business-frame__module:nth-child(2) { transition-delay: 200ms; }
+.capability-visual.is-entering .business-frame__module:nth-child(3) { transition-delay: 320ms; }
+
+/* Ambient: one of the modules briefly changes state to read as "alive". */
+.capability-visual.is-ambient .business-frame__module.is-active i:nth-child(2),
+.business-frame.is-ambient .business-frame__module.is-active i:nth-child(2) {
+  animation: business-module-ambient 1500ms var(--ease-ui);
+}
+@keyframes business-module-ambient {
+  0%, 100% { background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line)); }
+  50% { background: var(--color-brand-cyan); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-frame__module { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- Engineering: architecture layers ------------------------------- */
+
+.architecture-scene {
+  --scene-aspect: 480 / 320;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--scene-aspect);
+  contain: layout paint;
+}
+.architecture-layers {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  padding: 4px;
+}
+.architecture-layer {
+  position: relative;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 2px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 12px;
+  opacity: .5;
+  transition: opacity var(--motion-slow) var(--ease-narrative),
+              border-color var(--motion-slow) var(--ease-narrative),
+              background var(--motion-slow) var(--ease-narrative),
+              transform var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+}
+.architecture-layer__num { font: .625rem/1 var(--font-mono); color: var(--color-muted); letter-spacing: .12em; }
+.architecture-layer__body { display: grid; gap: 4px; }
+.architecture-layer__body > span { height: 4px; background: var(--color-line); border-radius: 1px; }
+.architecture-layer__body > span:nth-child(1) { width: 30%; }
+.architecture-layer__body > span:nth-child(2) { width: 75%; }
+.architecture-layer__body > span:nth-child(3) { width: 50%; }
+
+.architecture-layer.is-current {
+  opacity: 1;
+  background: var(--color-surface-raised);
+  border-color: var(--color-brand-cyan);
+  transform: translateX(4px);
+}
+.architecture-layer.is-current .architecture-layer__num { color: var(--color-brand-cyan); }
+.architecture-layer.is-current .architecture-layer__body > span {
+  background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line));
+}
+
+.architecture-layers.is-ambient .architecture-layer.is-current {
+  animation: architecture-layer-ambient 1700ms var(--ease-ui);
+}
+@keyframes architecture-layer-ambient {
+  0%, 100% { background: var(--color-surface-raised); border-color: var(--color-brand-cyan); }
+  50% { background: var(--color-surface); border-color: var(--color-line); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-layer { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- Discovery: "Antes de mostrar trabajo" -------------------------- */
+
+.discovery-scene {
+  --scene-aspect: 520 / 320;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--scene-aspect);
+  contain: layout paint;
+}
+.discovery-surface {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 3px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+.discovery-fragment {
+  border: 1px solid var(--color-line);
+  background: var(--color-ink);
+  padding: 10px;
+  display: grid;
+  gap: 5px;
+  border-radius: 2px;
+  opacity: .35;
+  transition: opacity var(--motion-slow) var(--ease-narrative),
+              border-color var(--motion-slow) var(--ease-narrative),
+              transform var(--motion-slow) var(--ease-narrative);
+  pointer-events: none;
+}
+.discovery-fragment > span { display: block; height: 3px; background: var(--color-line); border-radius: 1px; }
+.discovery-fragment > span:nth-child(1) { width: 50%; }
+.discovery-fragment > span:nth-child(2) { width: 75%; }
+.discovery-fragment > span:nth-child(3) { width: 30%; }
+
+/* Sequential focus: as the section sits in view, each fragment cycles through
+   focus in turn via CSS animations triggered by .is-entering. */
+.discovery-surface.is-entering .discovery-fragment { opacity: 1; }
+.discovery-surface.is-entering .discovery-fragment.is-1 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 0ms; }
+.discovery-surface.is-entering .discovery-fragment.is-2 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 600ms; }
+.discovery-surface.is-entering .discovery-fragment.is-3 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 1200ms; }
+.discovery-surface.is-entering .discovery-fragment.is-4 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 1800ms; }
+.discovery-surface.is-entering .discovery-fragment.is-5 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 2400ms; }
+.discovery-surface.is-entering .discovery-fragment.is-6 { animation: discovery-focus 3600ms var(--ease-narrative) infinite; animation-delay: 3000ms; }
+
+@keyframes discovery-focus {
+  0%, 100% { opacity: .3; border-color: var(--color-line); transform: none; }
+  8%, 14% { opacity: 1; border-color: var(--color-brand-cyan); transform: translateX(2px); }
+  22% { opacity: .35; border-color: var(--color-line); transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .discovery-fragment { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- Mobile simplifications ---------------------------------------- */
+
+@media (max-width: 47.999rem) {
+  .story-software { --story-aspect: 600 / 380; }
+  .sfrag { width: 40px; padding: 6px; gap: 4px; }
+  .sfrag__line, .sfrag__row { height: 2px; }
+  .sfrag__dot { width: 4px; height: 4px; }
+  .sapp { inset: 3% 3% 3% 3%; }
+  .sapp__nav { display: none; }
+  .sapp__header { grid-template-columns: auto 1fr; }
+  .sapp__body { grid-template-columns: 36px 1fr; }
+  .sapp__metrics { grid-template-columns: repeat(2, 1fr); }
+
+  .web-frame { grid-template-columns: 44px 1fr; }
+  .web-frame__grid { grid-template-columns: repeat(2, 1fr); }
+  .web-frame__topbar i:nth-child(3) { display: none; }
+
+  .automate-stage { grid-template-columns: 1fr 48px 1fr; }
+  .automate-task { padding: 4px 8px; font-size: .6875rem; }
+  .automate-core__label { font-size: .5625rem; }
+
+  .business-frame { grid-template-columns: 52px 1fr; }
+  .business-frame__modules { grid-template-columns: repeat(2, 1fr); }
+
+  .architecture-layers { grid-template-rows: repeat(4, 1fr); gap: 6px; padding: 0; }
+  .architecture-layer { padding: 8px 10px; }
+
+  .discovery-surface { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 1fr); padding: 12px; gap: 8px; }
+}

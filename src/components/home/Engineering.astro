@@ -1,5 +1,6 @@
 ---
 import { engineering } from "../../data/narrative";
+import ArchitectureLayers from "../scenes/ArchitectureLayers.astro";
 ---
 
 <section class="engineering section-space" aria-labelledby="ingenieria-title">
@@ -17,9 +18,7 @@ import { engineering } from "../../data/narrative";
                 conexiones tienen que responder al mismo proceso. Elegimos las
                 herramientas según lo que el sistema necesita resolver.
             </p>
-        </div>
-        <div>
-            <ol class="engineering-stack" data-engineering-layers>
+            <ol class="engineering-stack" data-engineering-stack>
                 {engineering.map((layer, index) => (
                     <li
                         class="engineering-layer"
@@ -39,6 +38,9 @@ import { engineering } from "../../data/narrative";
                 medidas de operación se definen para el alcance de cada
                 solución.
             </p>
+        </div>
+        <div class="engineering-visual reveal" aria-hidden="true">
+            <ArchitectureLayers />
         </div>
     </div>
 </section>

@@ -1,5 +1,5 @@
 ---
-import OperationDiagram from "../common/OperationDiagram.astro";
+import StorySoftwareBuild from "../scenes/StorySoftwareBuild.astro";
 import { transformation } from "../../data/narrative";
 ---
 
@@ -15,21 +15,10 @@ import { transformation } from "../../data/narrative";
         <div class="story-layout">
             <div class="story-visual" data-story-visual aria-hidden="true">
                 <div class="diagram-heading">
-                    <span>Mapa de operación / Esquema conceptual</span>
+                    <span>Composición / Una sola escena</span>
                     <span data-story-caption>Un sistema conectado</span>
                 </div>
-                <OperationDiagram />
-                <div class="diagram-legend">
-                    <span>
-                        <i></i>Conexión
-                    </span>
-                    <span>
-                        <i></i>Automatización
-                    </span>
-                    <span>
-                        <i></i>Sistema
-                    </span>
-                </div>
+                <StorySoftwareBuild />
             </div>
             <ol class="story-steps" data-story-steps>
                 {transformation.map((stage, index) => (
@@ -42,10 +31,11 @@ import { transformation } from "../../data/narrative";
                         <p class="section-copy">{stage.copy}</p>
                         <div
                             class="story-mobile-diagram"
+                            data-stage={index + 1}
                             style={stage.diagram}
                             aria-hidden="true"
                         >
-                            <OperationDiagram />
+                            <StorySoftwareBuild />
                         </div>
                     </li>
                 ))}
