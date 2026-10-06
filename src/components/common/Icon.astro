@@ -1,0 +1,56 @@
+---
+// Server-side Lucide renderer. Avoids per-icon React hydration while keeping
+// the SVG geometry identical to lucide-react (ISC, same node arrays).
+//
+// Sizes follow the editorial scale (14/16/18/20/24). The component inherits
+// colour from `currentColor`; styling (gap, baseline, hover) lives on the
+// parent so icons can share a single visual personality.
+
+import { icons, type IconName } from "../../icons/lucide";
+
+interface Props {
+    name: IconName;
+    size?: number;
+    class?: string;
+    strokeWidth?: number;
+    "aria-hidden"?: boolean | "true" | "false";
+    "aria-label"?: string;
+}
+
+const {
+    name,
+    size = 18,
+    class: className,
+    strokeWidth = 1.75,
+    "aria-hidden": ariaHidden = true,
+    "aria-label": ariaLabel,
+} = Astro.props;
+
+const definition = icons[name];
+if (!definition) {
+    throw new Error(
+        `Lucide icon "${name}" is not registered in src/icons/lucide.ts`,
+    );
+}
+
+const labelAttrs =
+    ariaHidden === false
+        ? { role: "img" as const, "aria-label": ariaLabel ?? name }
+        : { "aria-hidden": "true" as const, focusable: "false" };
+---
+
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox={`0 0 ${definition.size} ${definition.size}`}
+    fill="none"
+    stroke="currentColor"
+    stroke-width={strokeWidth}
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class={className}
+    {...labelAttrs}
+>
+    <Fragment set:html={definition.inner} />
+</svg>

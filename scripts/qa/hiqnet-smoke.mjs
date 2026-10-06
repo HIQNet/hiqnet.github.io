@@ -40,7 +40,10 @@ async function condition(page, label, predicate, argument) {
 }
 
 async function scrollTo(page, y) {
-  await page.evaluate((top) => { window.scrollTo(0, top); }, y);
+  // Use `instant` so the smooth-scroll CSS added in global.css doesn't make
+  // every assertion wait for an animation. Production anchors still scroll
+  // smoothly via the `scroll-behavior: smooth` rule on `html`.
+  await page.evaluate((top) => { window.scrollTo({ top, behavior: "instant" }); }, y);
   // Two frames are enough for IntersectionObserver and scroll handlers to settle,
   // and they survive network or preview hiccups without leaving dangling promises.
   await page.waitForTimeout(60);
@@ -503,9 +506,14 @@ export async function runSmoke({ baseUrl = process.env.HIQNET_BASE_URL ?? "http:
     const deliberatelyBlocked = new Set();
     const resourceChecks = [];
     if (options.blockBundles) {
+      // Normalize by pathname so Astro's retry URL (which appends
+      // `?astro-retry=...`) still matches the original blocked resource.
+      const blockedPathnames = new Set();
       await page.route("**/*", async (requestRoute) => {
         const request = requestRoute.request();
         if (request.resourceType() === "script" && new URL(request.url()).origin === origin.origin) {
+          const pathname = new URL(request.url()).pathname;
+          blockedPathnames.add(pathname);
           deliberatelyBlocked.add(request.url());
           await requestRoute.abort("failed");
         } else await requestRoute.continue();
@@ -515,15 +523,32 @@ export async function runSmoke({ baseUrl = process.env.HIQNET_BASE_URL ?? "http:
       // Chromium can omit a URL on its synthetic failed-resource console message.
       // Unrelated failures still surface through requestfailed/response/pageerror.
       const expectedFailure = options.blockBundles && deliberatelyBlocked.size > 0
-        && (!message.location().url || deliberatelyBlocked.has(message.location().url))
-        && message.type() === "error" && /^Failed to load resource: net::ERR_FAILED$/.test(message.text());
+        && message.type() === "error"
+        && (/^Failed to load resource: net::ERR_FAILED$/.test(message.text())
+          // Astro islands log a hydration error when their JS bundle is blocked;
+          // the SSR'd fallback still renders the desktop nav, so this is expected.
+          || /^\[astro-island\] Error hydrating /.test(message.text()));
       if (["warning", "error"].includes(message.type()) && !expectedFailure) {
         errors.push(`${message.type()}: ${message.text()} (${message.location().url})`);
       }
     });
-    page.on("pageerror", (error) => errors.push(`pageerror: ${error.message}`));
+    page.on("pageerror", (error) => {
+          // Astro islands throw when their JS bundle is blocked in the
+          // `blocked-bundle` test mode; the SSR'd fallback still works.
+          const blockedBundle = options.blockBundles && deliberatelyBlocked.size > 0
+            && (/Error hydrating /.test(error.message)
+              || /Failed to fetch dynamically imported module/.test(error.message));
+          if (!blockedBundle) errors.push(`pageerror: ${error.message}`);
+        });
     page.on("requestfailed", (request) => {
-      if (!deliberatelyBlocked.has(request.url())) errors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText})`);
+      // Astro's retry mechanism re-requests a blocked bundle with a fresh
+      // query string; match by pathname so the second attempt is also
+      // recognised as deliberate.
+      const pathname = new URL(request.url()).pathname;
+      const blocked = options.blockBundles && deliberatelyBlocked.size > 0
+        && (deliberatelyBlocked.has(request.url())
+          || (typeof blockedPathnames !== "undefined" && blockedPathnames.has(pathname)));
+      if (!blocked) errors.push(`requestfailed: ${request.url()} (${request.failure()?.errorText})`);
     });
     page.on("response", (response) => {
       if (response.status() >= 400) errors.push(`HTTP ${response.status()}: ${response.url()}`);

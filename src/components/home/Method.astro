@@ -1,5 +1,6 @@
 ---
 import { method } from "../../data/narrative";
+import Icon from "../common/Icon.astro";
 ---
 
 <section
@@ -20,7 +21,8 @@ import { method } from "../../data/narrative";
                 qué sucede, quién interviene y dónde se detiene el trabajo.
             </p>
             <a class="text-link" href="#contacto">
-                Hablemos del punto de partida <span aria-hidden="true">↗</span>
+                Hablemos del punto de partida{" "}
+                <Icon name="arrow-up-right" size={14} class="ui-icon" />
             </a>
         </div>
         <ol class="method-steps" data-method-steps>

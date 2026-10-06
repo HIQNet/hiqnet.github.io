@@ -7,8 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  * The rest of the project must import `gsap` from this module so we never
  * call `gsap.registerPlugin(ScrollTrigger)` twice (which would log a warning
  * and double-initialize ScrollTrigger's internal state). Feature modules
- * (story-motion, capabilities-motion) register themselves against the same
- * context but own their own timelines/triggers for clean teardown.
+ * (story-motion) register themselves against the same context but own
+ * their own timelines/triggers for clean teardown.
  */
 let registered = false;
 

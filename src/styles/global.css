@@ -36,6 +36,7 @@
   --container: 80rem;
   --gutter: clamp(1.5rem, 4.5vw, 4rem);
   --nav-height: 5.5rem;
+    --nav-anchor-offset: 5.5rem;
   --text-small: .8125rem;
   --text-body: clamp(1rem, 1.25vw, 1.125rem);
   --text-title: clamp(2.25rem, 4.8vw, 4.5rem);
@@ -51,7 +52,11 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-padding-top: calc(var(--nav-height) + 1rem); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-anchor-offset, var(--nav-height)) + .25rem); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+section[id], main :target { scroll-margin-top: calc(var(--nav-anchor-offset, var(--nav-height)) + .25rem); }
 body { margin: 0; background: var(--color-ink); color: var(--color-copy); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 body.menu-open { overflow: hidden; }
 img { display: block; max-width: 100%; height: auto; }
@@ -79,6 +84,14 @@ button:not(:disabled) { cursor: pointer; }
 .button-secondary { border-color: var(--color-line); color: var(--color-copy); }
 .button-secondary::after { content: ""; position: absolute; inset: auto var(--space-5) -1px; height: 1px; width: calc(100% - var(--space-5) * 2); background: var(--color-brand-cyan); transform: scaleX(0); transform-origin: left; transition: transform var(--motion-base) var(--ease-ui); }
 .button-arrow { display: inline-block; transition: transform var(--motion-fast) var(--ease-ui); }
+/* Unified icon system: every functional icon (button, nav, anchor arrow)
+   inherits colour from currentColor and shares the same gap, baseline and
+   stroke personality. Decorative icons should also use this class for
+   consistent sizing. */
+.ui-icon { width: 1em; height: 1em; flex: 0 0 auto; stroke-width: 1.75; vertical-align: -0.125em; transition: transform var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui); }
+.ui-icon--end { margin-left: .5em; }
+.ui-icon--start { margin-right: .5em; }
+.ui-icon--inline { margin-inline: .15em; }
 .skip-link { position: fixed; top: var(--space-4); left: var(--space-5); z-index: 100; padding: var(--space-4); background: var(--color-brand-cyan); color: var(--color-ink); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
 
@@ -98,11 +111,24 @@ button:not(:disabled) { cursor: pointer; }
 .nav-link.is-active { color: var(--color-copy); }
 .nav-link.is-active::after { transform: scaleX(1); }
 .nav-cta { min-height: 44px; padding: var(--space-3) var(--space-5); }
-.menu-toggle { display: none; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--color-line); background: none; color: var(--color-copy); transition: border-color var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui); }
-.menu-toggle:hover { border-color: var(--color-brand-cyan); color: var(--color-brand-cyan); }
-.menu-toggle svg path { transform-origin: center; transition: transform var(--motion-fast) var(--ease-ui); }
-.menu-toggle[aria-expanded="true"] svg path:first-child { transform: translateY(4px) rotate(45deg); }
-.menu-toggle[aria-expanded="true"] svg path:last-child { transform: translateY(-4px) rotate(-45deg); }
+/* Mobile disclosure trigger. hamburger-react renders an interactive div
+   with role="button". The `.menu-toggle` class is applied to that div via
+   MobileNav (which forwards it from a ref). The frame styling (border,
+   hit area, focus) lives here so the Squash animation stays untouched. */
+.hamburger-react.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-line);
+  background: none;
+  color: var(--color-copy);
+  border-radius: var(--radius-control);
+  transition: border-color var(--motion-fast) var(--ease-ui), color var(--motion-fast) var(--ease-ui);
+}
+.hamburger-react.menu-toggle:hover,
+.hamburger-react.menu-toggle:focus-visible { border-color: var(--color-brand-cyan); color: var(--color-brand-cyan); }
 .mobile-menu { position: absolute; inset: 100% 0 auto; background: var(--color-surface); border-bottom: 1px solid var(--color-line); padding-block: var(--space-5); max-height: calc(100dvh - var(--nav-height)); overflow-y: auto; animation: menu-in var(--motion-fast) var(--ease-ui); }
 .mobile-menu .container-page { display: grid; }
 .mobile-menu .nav-link { min-height: 56px; border-bottom: 1px solid var(--color-line); font-size: 1.125rem; }
@@ -267,73 +293,54 @@ button:not(:disabled) { cursor: pointer; }
 .story-step .section-copy { max-width: 28rem; }
 .story-mobile-diagram { display: none; }
 
-.capabilities { border-top: 1px solid var(--color-line); }
-/* Capabilities horizontal scrub: the section heading stays in the section flow;
-   below it sits the pinned viewport holding the moving track. On desktop the
-   track is a horizontal flex whose translateX is driven by GSAP. On tablet
-   and below, the heading + track fall back to a vertical stack. */
-.cap-pinned { position: relative; }
-.cap-track { display: flex; will-change: transform; }
-.capability { padding-block: var(--space-9); border-top: 1px solid var(--color-line); }
-.capability-web { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
-.capability-copy h3 { margin-top: var(--space-5); font-size: clamp(2rem,3.5vw,3.5rem); letter-spacing: -.04em; font-weight: 500; }
-.capability-copy .section-copy { margin-top: var(--space-5); max-width: 31rem; }
-.capability-name { font: .75rem/1.5 var(--font-mono); color: var(--color-brand-cyan); }
-.capability-meta { margin-top: var(--space-6); color: var(--color-muted); font: .6875rem/1.8 var(--font-mono); }
-.capability-visual svg { display: block; width: 100%; height: auto; }
-.capability-visual { color: var(--color-brand-cyan); }
-.capability-visual text { font: 10px var(--font-mono); fill: var(--color-muted); letter-spacing: .7px; }
-.capability-visual .surface { fill: var(--color-surface); stroke: var(--color-line); }
-.capability-visual .wire { fill: none; stroke: var(--color-line); }
-.capability-visual .signal { fill: none; stroke: currentColor; stroke-dasharray: 1; }
-.capability-visual.is-entering .signal { animation: draw-line var(--motion-slow) var(--ease-ui) both; }
-/* Automate visual specifically: a single pulse travels through the active signal once
-   the section enters the viewport. After the journey, the diagram settles and only
-   reduced motion / hover would re-trigger it. */
-.capability-visual.is-pulsing .signal.is-flow { animation: signal-journey var(--motion-slow) var(--ease-ui) both; }
+.capabilities { border-top: 1px solid var(--color-line); position: relative; }
+/* Vertical editorial composition: each capability occupies its own block
+   with shared structure (copy on the left, scene on the right) so the
+   section reads as one continuous rhythm instead of three cards. The
+   ambient grid lives on the section surface so the blocks can breathe. */
+.capabilities__heading { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: var(--space-8); margin-bottom: var(--space-10); }
+.capabilities__heading-main { display: grid; gap: var(--space-5); }
+.capabilities__heading-main .section-title { margin-top: var(--space-3); }
+.capabilities__intro { max-width: 32rem; justify-self: end; }
+.capability-stack { display: grid; gap: 0; padding: 0; margin: 0; list-style: none; border-top: 1px solid var(--color-line); position: relative; }
+.capability-block {
+  display: grid;
+  grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr);
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  align-items: start;
+  padding-block: clamp(var(--space-9), 7vw, var(--space-12));
+  border-bottom: 1px solid var(--color-line);
+  position: relative;
+}
+.capability-block:last-child { border-bottom: 0; }
+.capability-block__copy { display: grid; gap: var(--space-5); align-content: start; position: sticky; top: calc(var(--nav-height) + var(--space-5)); }
+.capability-block__visual { color: var(--color-brand-cyan); }
+.capability-block[data-capability-block="automate"] .capability-block__visual { color: var(--color-brand-blue); }
+.capability-block[data-capability-block="business"] .capability-block__visual { color: var(--color-brand-violet); }
+.capability-block__index { display: inline-flex; align-items: baseline; gap: var(--space-3); color: var(--color-brand-cyan); font: .6875rem/1.6 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; margin: 0; }
+.capability-block__index > span:first-child { color: var(--color-muted); }
+.capability-block__slash { color: var(--color-line); }
+.capability-block__title { margin: 0; font-size: clamp(2rem, 3.4vw, 3.25rem); letter-spacing: -.04em; line-height: 1.1; font-weight: 500; max-width: 18ch; }
+.capability-block__copy .section-copy { margin: 0; max-width: 30rem; }
+.capability-block__meta { margin: var(--space-3) 0 0; color: var(--color-muted); font: .6875rem/1.8 var(--font-mono); letter-spacing: .04em; }
+.capability-block__visual { min-width: 0; }
+.capability-block__visual svg { display: block; width: 100%; height: auto; }
+.capability-block__visual text { font: 10px var(--font-mono); fill: var(--color-muted); letter-spacing: .7px; }
+.capability-block__visual .surface { fill: var(--color-surface); stroke: var(--color-line); }
+.capability-block__visual .wire { fill: none; stroke: var(--color-line); }
+.capability-block__visual .signal { fill: none; stroke: currentColor; stroke-dasharray: 1; }
+/* Visual ambient activity: draw-on for the entering scene, single journey
+   pulse for Automate once the block enters the viewport. */
+.capability-block__visual.is-entering .signal { animation: draw-line var(--motion-slow) var(--ease-ui) both; }
+.capability-block__visual.is-pulsing .signal.is-flow { animation: signal-journey var(--motion-slow) var(--ease-ui) both; }
 @keyframes draw-line { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes signal-journey { 0% { stroke-dashoffset: 1; opacity: .25; } 60% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-.capability-automate { display: grid; grid-template-columns: .8fr 1.2fr; gap: var(--space-10); align-items: center; }
-.capability-automate .capability-visual { color: var(--color-brand-blue); }
-.capability-business { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
-.capability-business .capability-visual { order: -1; color: var(--color-brand-violet); }
-/* Indicator: a discreet three-segment progress bar, bottom-right of the
-   pinned viewport. GSAP only flips `data-cap-panel` on the parent; CSS
-   lights the active segment. No visible text mutation. */
-.cap-indicator {
-  position: absolute;
-  right: var(--gutter);
-  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
-  margin: 0;
-  font: .625rem/1.5 var(--font-mono);
-  color: var(--color-muted);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: .6em;
-}
-.cap-indicator__label { color: var(--color-muted); }
-.cap-indicator__track { display: inline-flex; gap: 4px; align-items: center; }
-.cap-indicator__track i {
-  display: block;
-  width: 18px;
-  height: 1px;
-  background: var(--color-line);
-  transition: background var(--motion-fast) var(--ease-ui), opacity var(--motion-base) var(--ease-ui);
-  opacity: .4;
-}
-.cap-indicator[data-cap-panel="1"] .cap-indicator__track i:nth-child(-n+1),
-.cap-indicator[data-cap-panel="2"] .cap-indicator__track i:nth-child(-n+2),
-.cap-indicator[data-cap-panel="3"] .cap-indicator__track i {
-  background: var(--color-brand-cyan);
-  opacity: 1;
-}
-.cap-indicator__sep { color: var(--color-line); }
-.cap-indicator__total { color: var(--color-muted); }
 /* Business: modules settle into place from a wider radius when the section enters. */
-.capability-visual.is-entering .surface { animation: module-settle var(--motion-slow) var(--ease-narrative) both; transform-box: fill-box; transform-origin: center; }
+.capability-block__visual.is-entering .surface { animation: module-settle var(--motion-slow) var(--ease-narrative) both; transform-box: fill-box; transform-origin: center; }
 @keyframes module-settle { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+/* Section background: a discreet ambient grid that subtly references the
+   three capabilities without forcing a diagram the eye must follow. */
+.capabilities::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px); background-size: 96px 96px; background-position: top left; opacity: .04; mask-image: linear-gradient(180deg, transparent 0, black 18%, black 80%, transparent 100%); }
 
 .method { border-block: 1px solid var(--color-line); background: var(--color-surface); position: relative; }
 .method-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: var(--space-12); position: relative; }
@@ -455,6 +462,13 @@ button:not(:disabled) { cursor: pointer; }
   .text-link:hover::after { transform: scaleX(1); }
   .text-link:hover > [aria-hidden="true"] { transform: translateX(3px); }
   a:hover .button-arrow { transform: translateX(4px); }
+  /* Functional icons (CTA / nav / anchor) drift slightly on hover so the
+     affordance reads as a clickable action. */
+  a:hover .ui-icon[data-arrow="end"] { transform: translateX(3px); }
+  a:hover .ui-icon[data-arrow="start"] { transform: translateX(-3px); }
+  a:hover .ui-icon[data-arrow="up-right"] { transform: translate(2px, -2px); }
+  a:hover .ui-icon[data-arrow="down"] { transform: translateY(3px); }
+  a:hover .ui-icon[data-arrow="up"] { transform: translateY(-3px); }
   .nav-link:hover { color: var(--color-copy); }
   .nav-link:hover::after { transform: scaleX(1); }
   .footer-links a:hover { color: var(--color-brand-cyan); }
@@ -464,32 +478,23 @@ button:not(:disabled) { cursor: pointer; }
   .hero-composition { min-height: calc(100svh - var(--nav-height)); display: flex; flex-direction: column; justify-content: space-between; }
 }
 @media (min-width: 64rem) {
-  /* Desktop horizontal capabilities: each panel owns its own column inside
-     the pinned track so the GSAP translate can carry them across. The pinned
-     viewport clips overflow; we let it stay visible so ScrollTrigger can
-     measure the natural track width through getBoundingClientRect when
-     setting up. */
-  .cap-pinned { overflow: clip; }
-  .cap-track { gap: 0; width: max-content; padding-inline: var(--gutter); }
-  .capability {
-    flex: 0 0 calc(100vw - var(--gutter) * 2);
-    max-width: calc(80rem - var(--gutter) * 2);
-    margin-inline: auto;
-    border-top-color: transparent;
-  }
+  /* Capabilities desktop: keep the editorial two-column rhythm but let the
+     copy breathe slightly so the section never feels like a card grid. */
+  .capability-block { padding-block: clamp(var(--space-10), 8vw, var(--space-12)); }
 }
 @media (max-width: 79.999rem) {
   .hero-actions { justify-content: flex-start; }
   .story-layout, .method-layout, .engineering-layout, .commercial-bridge .container-page, .qualification .container-page { gap: var(--space-9); }
 }
 @media (max-width: 63.999rem) {
-  :root { --nav-height: 4.5rem; }
-  /* Tablet/mobile capabilities: vertical stack, no horizontal scrub. */
-  .cap-pinned { overflow: visible; }
-  .cap-track { flex-direction: column; }
-  .cap-indicator { display: none; }
+  :root { --nav-height: 4.5rem; --nav-anchor-offset: 4.5rem; }
   .desktop-nav, .desktop-cta { display: none; }
-  .menu-toggle { display: inline-flex; }
+  .hamburger-react.menu-toggle { display: inline-flex; }
+  /* Capabilities: drop the sticky copy once the columns collapse. */
+  .capabilities__heading { grid-template-columns: 1fr; gap: var(--space-5); margin-bottom: var(--space-9); }
+  .capabilities__intro { justify-self: start; }
+  .capability-block { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); padding-block: var(--space-9); }
+  .capability-block__copy { position: static; }
   .hero-title { font-size: clamp(3.5rem, 8.5vw, 6rem); }
   .hero-support { grid-template-columns: 1fr; gap: var(--space-5); }
   .hero-intro { max-width: 38rem; }
@@ -506,7 +511,6 @@ button:not(:disabled) { cursor: pointer; }
   .story-step.is-current { border-top-color: var(--color-brand-cyan); }
   .story-step > .eyebrow, .story-step > h3, .story-step > p { grid-column: 1; }
   .story-mobile-diagram { display: block; grid-column: 2; grid-row: 1 / 4; align-self: center; }
-  .capability-web, .capability-automate, .capability-business { gap: var(--space-8); }
   .method-layout, .engineering-layout { gap: var(--space-8); }
   .method-steps::before, .method-steps::after { left: -16px; }
   .method-step::before { left: -19px; }
@@ -519,9 +523,9 @@ button:not(:disabled) { cursor: pointer; }
   .section-heading { margin-bottom: var(--space-8); }
   .section-heading > .section-copy { justify-self: start; }
   /* Mobile capabilities: stack vertically, drop the horizontal scrub. */
-  .cap-track { flex-direction: column; }
-  .capability { border-top-color: var(--color-line); }
-  .cap-indicator { display: none; }
+  .capability-block { padding-block: var(--space-8); gap: var(--space-7); }
+  .capability-block__title { font-size: 2.5rem; }
+  .capability-block__visual { max-width: 32rem; align-self: center; }
   .hero-meta > span { display: none; }
   .hero-title { font-size: clamp(3rem, 11.8vw, 5.5rem); margin-block: var(--space-7) var(--space-6); letter-spacing: -.055em; }
   .hero-title span { display: inline; }
@@ -547,11 +551,9 @@ button:not(:disabled) { cursor: pointer; }
   .story-step h3 { font-size: 2.25rem; max-width: 18ch; }
   .story-mobile-diagram { margin-top: var(--space-5); max-width: 28rem; }
   .story-mobile-diagram .operation-diagram { max-height: 260px; }
-  .capability-web, .capability-automate, .capability-business { display: flex; flex-direction: column; align-items: stretch; gap: var(--space-7); }
-  .capability-business .capability-visual { order: 0; }
-  .capability { padding-block: var(--space-8); }
-  .capability-visual { max-width: 32rem; align-self: center; }
-  .capability-copy h3 { font-size: 2.5rem; }
+  .capability-block { padding-block: var(--space-8); gap: var(--space-7); }
+  .capability-block__title { font-size: 2.5rem; }
+  .capability-block__visual { max-width: 32rem; align-self: center; }
   .method-step { padding-block: var(--space-5); }
   .contact-title { font-size: clamp(2.75rem, 10.8vw, 4.5rem); }
   .contact-actions { align-items: stretch; flex-direction: column; }
@@ -564,7 +566,7 @@ button:not(:disabled) { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .reveal, .hero-routing, .routing-plane, .story-step, .method-step, .engineering-layer { opacity: 1 !important; transform: none !important; }
-  .hero-routing .ambient-pulse, .capability-visual.is-pulsing .signal { animation: none !important; }
+  .hero-routing .ambient-pulse, .capability-block__visual.is-pulsing .signal { animation: none !important; }
   .friction-signals li, .fragment-index span { opacity: 1 !important; transform: none !important; }
   .story-visual { position: static; --connection: 1 !important; --flow: 1 !important; --system: 1 !important; --dispersion: 0 !important; }
   .method-steps::after, .engineering-layer::before { display: none; }

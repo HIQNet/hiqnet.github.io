@@ -1,12 +1,39 @@
-import { getScrollTrigger } from "./gsap-context";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initStoryMotion, type StoryMotionHandle } from "./story-motion";
-import { initCapabilitiesMotion, type CapabilitiesMotionHandle } from "./capabilities-motion";
+
+/**
+ * Single registration entry point for GSAP + ScrollTrigger.
+ *
+ * The rest of the project must import `gsap` from this module so we never
+ * call `gsap.registerPlugin(ScrollTrigger)` twice (which would log a warning
+ * and double-initialize ScrollTrigger's internal state). Feature modules
+ * (story-motion) register themselves against the same context but own
+ * their own timelines/triggers for clean teardown.
+ */
+let registered = false;
+
+export function getGsap(): typeof gsap {
+  if (!registered) {
+    gsap.registerPlugin(ScrollTrigger);
+    registered = true;
+  }
+  return gsap;
+}
+
+export function getScrollTrigger(): typeof ScrollTrigger {
+  if (!registered) {
+    gsap.registerPlugin(ScrollTrigger);
+    registered = true;
+  }
+  return ScrollTrigger;
+}
 
 /**
  * GSAP feature bootstrap.
  *
- * Owns the Story + Capabilities motion handles. Idempotent: calling init()
- * while a previous run is still alive will tear the old one down first.
+ * Owns the Story motion handle. Idempotent: calling init() while a previous
+ * run is still alive will tear the old one down first.
  *
  * Astro lifecycle:
  *   - `astro:page-load` -> init() once the new page is in the DOM
@@ -23,7 +50,6 @@ import { initCapabilitiesMotion, type CapabilitiesMotionHandle } from "./capabil
 
 interface Handle {
   story: StoryMotionHandle | null;
-  capabilities: CapabilitiesMotionHandle | null;
 }
 
 let handle: Handle | null = null;
@@ -33,7 +59,6 @@ let reducedMotionListener: ((event: MediaQueryListEvent) => void) | null = null;
 function teardown() {
   if (!handle) return;
   handle.story?.destroy();
-  handle.capabilities?.destroy();
   handle = null;
   if (reducedMotionMql && reducedMotionListener) {
     reducedMotionMql.removeEventListener("change", reducedMotionListener);
@@ -45,11 +70,9 @@ function teardown() {
 function init() {
   teardown();
   const storySection = document.querySelector<HTMLElement>("[data-story-section]");
-  const capabilitiesSection = document.querySelector<HTMLElement>("[data-capabilities]");
 
   handle = {
     story: storySection ? initStoryMotion(storySection) : null,
-    capabilities: capabilitiesSection ? initCapabilitiesMotion(capabilitiesSection) : null,
   };
 
   // Re-init on reduced-motion flips so the GSAP setup that respects it

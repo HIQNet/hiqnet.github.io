@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import { site, whatsappUrl } from "../../data/site";
 import { getProjectPresentation } from "../../data/projectPresentation";
+import Icon from "../../components/common/Icon.astro";
 import "../../styles/projects.css";
 
 export async function getStaticPaths() {
@@ -44,7 +45,12 @@ const reference =
     <main id="contenido" class="project-detail">
         <header class="project-detail__hero container-page">
             <a href="/index.html#proyectos" class="text-link project-link">
-                <span aria-hidden="true">←</span>Todos los proyectos
+                <Icon
+                    name="arrow-left"
+                    size={14}
+                    class="ui-icon ui-icon--start"
+                />
+                Todos los proyectos
             </a>
             <div class="project-detail__intro">
                 <p class="eyebrow">
@@ -168,7 +174,11 @@ const reference =
                                         rel="noopener noreferrer"
                                     >
                                         {link.label}
-                                        <span aria-hidden="true">↗</span>
+                                        <Icon
+                                            name="arrow-up-right"
+                                            size={14}
+                                            class="ui-icon"
+                                        />
                                         <span class="project-visually-hidden">
                                             {" "}
                                             (se abre en otra pestaña)
@@ -226,7 +236,11 @@ const reference =
                                         {String(index + 1).padStart(2, "0")}
                                     </span>
                                     <span>{image.caption}</span>
-                                    <span aria-hidden="true">↗</span>
+                                    <Icon
+                                        name="arrow-up-right"
+                                        size={14}
+                                        class="ui-icon"
+                                    />
                                 </figcaption>
                             </figure>
                         ))}
@@ -261,7 +275,8 @@ const reference =
                         class="button-primary"
                         data-event="click_project_cta"
                     >
-                        Conversar por WhatsApp <span aria-hidden="true">↗</span>
+                        Conversar por WhatsApp{" "}
+                        <Icon name="arrow-up-right" size={16} class="ui-icon" />
                     </a>
                     <a
                         href={`mailto:${site.email}`}
@@ -269,7 +284,7 @@ const reference =
                         data-event="click_email"
                     >
                         {site.email}
-                        <span aria-hidden="true">↗</span>
+                        <Icon name="arrow-up-right" size={14} class="ui-icon" />
                     </a>
                 </div>
             </div>
@@ -285,7 +300,14 @@ const reference =
                     href={`/proyectos/${previous.id}.html`}
                     rel="prev"
                 >
-                    <span class="project-kicker">← Proyecto anterior</span>
+                    <span class="project-kicker">
+                        <Icon
+                            name="arrow-left"
+                            size={12}
+                            class="ui-icon ui-icon--inline"
+                        />{" "}
+                        Proyecto anterior
+                    </span>
                     <strong>{getProjectPresentation(previous.id).name}</strong>
                 </a>
             )}
@@ -295,7 +317,14 @@ const reference =
                     href={`/proyectos/${next.id}.html`}
                     rel="next"
                 >
-                    <span class="project-kicker">Proyecto siguiente →</span>
+                    <span class="project-kicker">
+                        Proyecto siguiente{" "}
+                        <Icon
+                            name="arrow-right"
+                            size={12}
+                            class="ui-icon ui-icon--inline"
+                        />
+                    </span>
                     <strong>{getProjectPresentation(next.id).name}</strong>
                 </a>
             )}

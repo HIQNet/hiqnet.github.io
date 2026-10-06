@@ -1,6 +1,7 @@
 ---
 import { whatsappUrl } from "../data/site";
 import WhatsAppIcon from "./common/WhatsAppIcon.astro";
+import Icon from "./common/Icon.astro";
 ---
 
 <a
@@ -15,5 +16,5 @@ import WhatsAppIcon from "./common/WhatsAppIcon.astro";
 >
     <WhatsAppIcon size={20} />
     <span>Hablemos</span>
-    <span aria-hidden="true">↗</span>
+    <Icon name="arrow-up-right" size={14} class="ui-icon" />
 </a>

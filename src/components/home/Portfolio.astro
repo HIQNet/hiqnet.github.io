@@ -4,6 +4,7 @@ import {
     featuredProjectIds,
     getProjectPresentation,
 } from "../../data/projectPresentation";
+import Icon from "../common/Icon.astro";
 import "../../styles/projects.css";
 
 const projects = (await getCollection("projects")).sort(
@@ -112,7 +113,11 @@ const remaining = projects
                                 data-event="view_project"
                             >
                                 Ver caso
-                                <span aria-hidden="true">↗</span>
+                                <Icon
+                                    name="arrow-up-right"
+                                    size={14}
+                                    class="ui-icon"
+                                />
                             </a>
                         </div>
                     </article>
@@ -152,7 +157,11 @@ const remaining = projects
                                     class="project-index__arrow"
                                     aria-hidden="true"
                                 >
-                                    ↗
+                                    <Icon
+                                        name="arrow-up-right"
+                                        size={16}
+                                        class="ui-icon"
+                                    />
                                 </span>
                             </a>
                         </li>

@@ -1,8 +1,6 @@
 import { bindGsapLifecycle } from "./gsap-init";
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
-const phase = (progress: number, start: number, end: number) =>
-  clamp((progress - start) / (end - start));
 const smoothstep = (value: number) => value * value * (3 - 2 * value);
 
 interface Rect { top: number; height: number; }
@@ -14,10 +12,7 @@ function initializeInteractions() {
   const desktop = matchMedia("(min-width: 64rem)");
   const pointer = matchMedia("(hover: hover) and (pointer: fine)");
 
-  const root = document.documentElement;
   const header = document.querySelector<HTMLElement>("[data-site-header]");
-  const button = document.querySelector<HTMLButtonElement>("#menu-toggle");
-  const menu = document.querySelector<HTMLElement>("#mobile-menu");
   const hero = document.querySelector<HTMLElement>("[data-hero]");
   const routing = document.querySelector<HTMLElement>("[data-hero-routing]");
   const bridge = document.querySelector<HTMLElement>(".hero-friction-bridge");
@@ -43,8 +38,11 @@ function initializeInteractions() {
   const architectureLayerItems = Array.from(
     architectureLayers?.querySelectorAll<HTMLElement>("[data-architecture-layer]") ?? [],
   );
+  // Each capability exposes one `.capability-block__visual` wrapper. The
+  // observer below drives the entrance and (for Automate) the one-shot
+  // pulse once the block crosses into the viewport.
   const capabilityVisuals = Array.from(
-    document.querySelectorAll<HTMLElement>(".capability-visual"),
+    document.querySelectorAll<HTMLElement>(".capability-block__visual"),
   );
   const persistent = document.querySelector<HTMLElement>("[data-persistent-cta]");
   const contact = document.querySelector<HTMLElement>("#contacto");
@@ -52,6 +50,9 @@ function initializeInteractions() {
   const nav = Array.from(
     document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"),
   );
+  // Sections are collected from `[data-nav-link]` hrefs (e.g. `#soluciones`).
+  // The vertical Capabilities section now occupies the full `#soluciones`
+  // id, so the active state matches the natural top of the section.
   const sections = [...new Set(nav.map((link) => link.dataset.navLink))]
     .flatMap((id) => {
       const section = id ? document.querySelector<HTMLElement>(id) : null;
@@ -63,79 +64,15 @@ function initializeInteractions() {
   let pointerY = 0;
   let reducedSnapshot = reduced.matches;
 
-  function closeMenu(restoreFocus = false) {
-    if (!button || !menu) return;
-    const wasOpen = !menu.hidden;
-    menu.hidden = true;
-    document.body.classList.remove("menu-open");
-    button.setAttribute("aria-expanded", "false");
-    const label = button.querySelector(".sr-only");
-    if (label) label.textContent = "Abrir menú";
-    if (wasOpen && restoreFocus) button.focus();
-  }
-
-  if (button && menu) {
-    button.hidden = false;
-    button.addEventListener("click", () => {
-      if (!menu.hidden) {
-        closeMenu();
-        return;
-      }
-      menu.hidden = false;
-      document.body.classList.add("menu-open");
-      button.setAttribute("aria-expanded", "true");
-      const label = button.querySelector(".sr-only");
-      if (label) label.textContent = "Cerrar menú";
-    }, { signal });
-    menu.addEventListener("click", (event) => {
-      const link = (event.target as Element).closest<HTMLAnchorElement>("a");
-      if (!link) return;
-      closeMenu();
-      if (link.hash && link.pathname === location.pathname) {
-        const destination = document.getElementById(link.hash.slice(1));
-        destination?.setAttribute("tabindex", "-1");
-        destination?.focus({ preventScroll: true });
-        destination?.addEventListener(
-          "blur",
-          () => destination.removeAttribute("tabindex"),
-          { once: true, signal },
-        );
-      } else if (link.target === "_blank") {
-        button.focus();
-      }
-    }, { signal });
-    document.addEventListener("keydown", (event) => {
-      if (menu.hidden) return;
-      if (event.key === "Escape") {
-        closeMenu(true);
-        return;
-      }
-      if (event.key !== "Tab") return;
-      const links = Array.from(
-        menu.querySelectorAll<HTMLAnchorElement>("a[href]"),
-      );
-      const last = links.at(-1);
-      if (event.shiftKey && document.activeElement === button && last) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        button.focus();
-      }
-    }, { signal });
-    document.addEventListener("click", (event) => {
-      if (menu.hidden || !(event.target instanceof Node)) return;
-      if (!menu.contains(event.target) && !button.contains(event.target)) closeMenu();
-    }, { signal });
-  }
-
   function mid(bounds: Rect) { return bounds.top + bounds.height / 2; }
 
   function update() {
     frame = 0;
     header?.classList.toggle("is-scrolled", window.scrollY > 16);
-    if (desktop.matches) closeMenu();
 
+    // Active section detection. Each section becomes active when its top
+    // crosses past the upper third of the viewport, so the navbar reflects
+    // what the user is actually reading.
     let active = "";
     for (const section of sections) {
       const bounds = section.getBoundingClientRect();
@@ -213,15 +150,12 @@ function initializeInteractions() {
       });
     }
 
-    // Ambient motion: discrete events with varied intervals. Driven by the same
-    // RAF as scroll-driven motion; only fires when its zone is visible, the tab is
-    // foreground, and reduced motion is not requested.
     tickAmbient(performance.now());
   }
 
-  // Ambient motion: discrete events with varied intervals across three zones.
-  // Each zone has its own scheduler; only one fires per tick to keep the page
-  // restrained (max one event clearly perceptible at a time).
+  // Ambient motion: discrete events with varied intervals across zones.
+  // Each zone has its own scheduler; only one fires per tick to keep the
+  // page restrained (max one event clearly perceptible at a time).
   interface AmbientZone {
     element: HTMLElement | null;
     duration: number;
@@ -229,29 +163,16 @@ function initializeInteractions() {
     delayMax: number;
     className: string;
     mobileEnabled: boolean;
-    requiresSystem?: boolean;
   }
   const ambientZones: AmbientZone[] = [
-    // Hero: signal pulse drawn across the system routes (desktop/tablet).
     { element: routing, duration: 1300, delayMin: 4500, delayMax: 8000, className: "is-ambient-pulse", mobileEnabled: false },
-    // Hero: status indicators and ambient dots brighten briefly (all viewports).
     { element: routing, duration: 900, delayMin: 5500, delayMax: 9500, className: "is-ambient-status", mobileEnabled: true },
-    // Hero: cells within Module B light up briefly (desktop/tablet).
     { element: routing, duration: 1500, delayMin: 6500, delayMax: 11000, className: "is-ambient-cells", mobileEnabled: false },
-    // Story final: a row of the assembled app briefly updates. GSAP owns the
-    // scene progress; this just gives the row a quiet pulse while the section
-    // is in view. No requiresSystem gate (the variable is no longer written
-    // by the RAF path).
     { element: document.querySelector<HTMLElement>(".story-software"), duration: 1500, delayMin: 6000, delayMax: 10500, className: "is-ambient", mobileEnabled: false },
-    // Web scene: a card value updates briefly.
     { element: document.querySelector<HTMLElement>("[data-web-frame]"), duration: 1700, delayMin: 5500, delayMax: 9000, className: "is-ambient", mobileEnabled: true },
-    // Automate scene: a result row updates briefly.
     { element: document.querySelector<HTMLElement>("[data-automate-stage]"), duration: 1500, delayMin: 6500, delayMax: 10500, className: "automate-ambient", mobileEnabled: false },
-    // Business scene: a module value updates briefly.
     { element: document.querySelector<HTMLElement>("[data-business-frame]"), duration: 1500, delayMin: 6000, delayMax: 10000, className: "is-ambient", mobileEnabled: true },
-    // Architecture: a layer receives a brief signal.
     { element: document.querySelector<HTMLElement>("[data-architecture-layers]"), duration: 1700, delayMin: 7000, delayMax: 11000, className: "is-ambient", mobileEnabled: false },
-    // Contact: background lines and indicators briefly alive (all viewports).
     { element: contact, duration: 1700, delayMin: 7000, delayMax: 12000, className: "is-ambient", mobileEnabled: true },
   ];
   const nextAmbientFire = ambientZones.map((_, index) => performance.now() + 4500 + index * 1800);
@@ -281,13 +202,6 @@ function initializeInteractions() {
         nextAmbientFire[index] = now + 1500;
         continue;
       }
-      if (zone.requiresSystem) {
-        const systemProgress = Number(zone.element.style.getPropertyValue("--system")) || 0;
-        if (systemProgress < 0.6) {
-          nextAmbientFire[index] = now + 1500;
-          continue;
-        }
-      }
       zone.element.classList.add(zone.className);
       ambientActiveUntil[index] = now + zone.duration;
       nextAmbientFire[index] = now + zone.delayMin + Math.random() * (zone.delayMax - zone.delayMin);
@@ -297,7 +211,6 @@ function initializeInteractions() {
 
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
-    // Reset schedules when returning to the tab so we don't burst-fire events.
     const now = performance.now();
     for (let index = 0; index < ambientZones.length; index += 1) {
       nextAmbientFire[index] = now + 4000 + index * 1500;
@@ -337,8 +250,9 @@ function initializeInteractions() {
     schedule();
   }, { signal });
 
-  // IntersectionObserver gates: friction signals and fragments enter sequentially,
-  // capability visuals draw-on, engineering / method become contextual.
+  // IntersectionObserver gates: friction signals and fragments enter
+  // sequentially, capability visuals draw-on, engineering / method become
+  // contextual, and the discovery visual cycles its fragments.
   const sequential = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
@@ -352,28 +266,33 @@ function initializeInteractions() {
   const capabilityObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
+      const visual = entry.target as HTMLElement;
+      visual.classList.add("is-entering");
+      // Automate: after the structural entrance, fire the one-shot
+      // resolve pulse on the central process once.
+      const block = visual.closest<HTMLElement>("[data-capability-block='automate']");
+      if (block) {
+        window.setTimeout(() => visual.classList.add("is-pulsing"), 220);
+      }
+      capabilityObserver.unobserve(visual);
+    });
+  }, { threshold: 0.28 });
+  capabilityVisuals.forEach((element) => capabilityObserver.observe(element));
+
+  // Discovery visual cycles focus on each fragment once visible.
+  const discoveryVisuals = Array.from(
+    document.querySelectorAll<HTMLElement>(".commercial-bridge__visual"),
+  );
+  const discoveryObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
       const element = entry.target as HTMLElement;
-      element.classList.add("is-entering");
-      if (element.classList.contains("capability-automate") ||
-          element.closest("article")?.id === "hiqnet-automate") {
-        const visual = element.querySelector(".capability-visual") as HTMLElement | null;
-        if (visual) {
-          window.setTimeout(() => visual.classList.add("is-pulsing"), 120);
-        }
-      }
-      // Discovery scene cycles focus on each fragment once visible.
-      if (element.classList.contains("commercial-bridge__visual")) {
-        const surface = element.querySelector("[data-discovery-surface]") as HTMLElement | null;
-        if (surface) surface.classList.add("is-entering");
-      }
-      capabilityObserver.unobserve(element);
+      const surface = element.querySelector("[data-discovery-surface]") as HTMLElement | null;
+      if (surface) surface.classList.add("is-entering");
+      discoveryObserver.unobserve(element);
     });
   }, { threshold: 0.32 });
-  capabilityVisuals.forEach((element) => capabilityObserver.observe(element));
-  // Discovery visual also needs the entering trigger.
-  document.querySelectorAll<HTMLElement>(".commercial-bridge__visual").forEach((element) =>
-    capabilityObserver.observe(element),
-  );
+  discoveryVisuals.forEach((element) => discoveryObserver.observe(element));
 
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -395,9 +314,10 @@ function initializeInteractions() {
     }
   }, { signal });
 
-  // View Transitions API: progressive enhancement only when the browser supports it.
-  // The handler calls the method directly on `document` so the receiver is preserved;
-  // extracting it as a bare function reference triggers `Illegal invocation` in V8.
+  // View Transitions API: progressive enhancement only when the browser
+  // supports it. The handler calls the method directly on `document` so the
+  // receiver is preserved; extracting it as a bare function reference
+  // triggers `Illegal invocation` in V8.
   const viewTransition = (document as Document & {
     startViewTransition?: (callback?: () => void | Promise<void>) => unknown;
   }).startViewTransition;
@@ -420,9 +340,16 @@ function initializeInteractions() {
     revealObserver.disconnect();
     sequential.disconnect();
     capabilityObserver.disconnect();
+    discoveryObserver.disconnect();
     cancelAnimationFrame(frame);
-    closeMenu();
   };
+}
+
+export function startInteractions() {
+  // Astro fires on initial load and after every view transition; we also
+  // boot on `load` for direct document loads.
+  if (document.readyState === "complete") initializeInteractions();
+  else window.addEventListener("load", initializeInteractions, { once: true });
 }
 
 let cleanup = initializeInteractions();
@@ -431,7 +358,7 @@ window.addEventListener("pageshow", (event) => {
   if (event.persisted) cleanup = initializeInteractions();
 });
 
-// GSAP feature ownership — pinned scrub timelines for Story and
-// Capabilities. The lifecycle helper subscribes to Astro's page events so
-// triggers don't leak across navigation.
+// GSAP feature ownership — the Story section's pinned scrub timeline.
+// Mobile menu is now owned by the React island; capabilities is owned by
+// the IntersectionObserver in this file.
 bindGsapLifecycle();

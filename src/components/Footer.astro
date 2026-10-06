@@ -1,5 +1,6 @@
 ---
 import { site } from "../data/site";
+import Icon from "./common/Icon.astro";
 ---
 
 <footer class="site-footer">
@@ -26,21 +27,34 @@ import { site } from "../data/site";
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Instagram ↗
+                    Instagram{" "}
+                    <Icon
+                        name="arrow-up-right"
+                        size={14}
+                        class="ui-icon ui-icon--end"
+                    />
                 </a>
                 <a
                     href={site.socials.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Facebook ↗
+                    Facebook{" "}
+                    <Icon
+                        name="arrow-up-right"
+                        size={14}
+                        class="ui-icon ui-icon--end"
+                    />
                 </a>
             </nav>
         </div>
         <div class="footer-bottom">
             <span>© {new Date().getFullYear()} HiQNet</span>
             <span>Entender. Conectar. Construir.</span>
-            <a href="/#inicio">Volver al inicio ↑</a>
+            <a href="/#inicio">
+                Volver al inicio{" "}
+                <Icon name="arrow-up" size={14} class="ui-icon ui-icon--end" />
+            </a>
         </div>
     </div>
 </footer>

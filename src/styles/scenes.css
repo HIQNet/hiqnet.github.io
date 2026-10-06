@@ -313,22 +313,22 @@
 
 /* Entrance: structure -> regions -> controls -> content -> finished state.
    Triggered when the section enters the viewport (IntersectionObserver adds
-   .is-entering to the .capability-visual wrapper). After entrance, ambient
-   updates a single value briefly. */
+   .is-entering to the .capability-block__visual wrapper). After entrance,
+   ambient updates a single value briefly. */
 .web-frame__sidebar,
 .web-frame__topbar,
 .web-frame__title,
 .web-frame__grid > *,
 .web-frame__cta { opacity: 0; transform: translateY(6px); transition: opacity var(--motion-slow) var(--ease-narrative), transform var(--motion-slow) var(--ease-narrative); }
-.capability-visual.is-entering .web-frame__sidebar { opacity: 1; transform: none; transition-delay: 60ms; }
-.capability-visual.is-entering .web-frame__topbar { opacity: 1; transform: none; transition-delay: 180ms; }
-.capability-visual.is-entering .web-frame__title { opacity: 1; transform: none; transition-delay: 320ms; }
-.capability-visual.is-entering .web-frame__grid > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 460ms; }
-.capability-visual.is-entering .web-frame__grid > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 540ms; }
-.capability-visual.is-entering .web-frame__grid > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 620ms; }
-.capability-visual.is-entering .web-frame__cta { opacity: 1; transform: none; transition-delay: 740ms; }
+.capability-block__visual.is-entering .web-frame__sidebar { opacity: 1; transform: none; transition-delay: 60ms; }
+.capability-block__visual.is-entering .web-frame__topbar { opacity: 1; transform: none; transition-delay: 180ms; }
+.capability-block__visual.is-entering .web-frame__title { opacity: 1; transform: none; transition-delay: 320ms; }
+.capability-block__visual.is-entering .web-frame__grid > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 460ms; }
+.capability-block__visual.is-entering .web-frame__grid > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 540ms; }
+.capability-block__visual.is-entering .web-frame__grid > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 620ms; }
+.capability-block__visual.is-entering .web-frame__cta { opacity: 1; transform: none; transition-delay: 740ms; }
 
-.capability-visual.is-ambient .web-frame__card.is-active i:nth-child(2),
+.capability-block__visual.is-ambient .web-frame__card.is-active i:nth-child(2),
 .web-frame.is-ambient .web-frame__card.is-active i:nth-child(2) {
   animation: web-card-ambient 1700ms var(--ease-ui);
 }
@@ -392,13 +392,13 @@
 
 /* Entrance: three repetitive tasks in the left column, then a one-shot pulse
    traveling through the central process to consolidated results on the right.
-   The .capability-visual wrapper receives .is-entering and .is-pulsing. */
-.capability-visual.is-entering .automate-task[data-step="1"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 80ms; }
-.capability-visual.is-entering .automate-task[data-step="2"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 180ms; }
-.capability-visual.is-entering .automate-task[data-step="3"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 280ms; }
-.capability-visual.is-pulsing .automate-task[data-step="1"].is-result,
-.capability-visual.is-pulsing .automate-task[data-step="2"].is-result,
-.capability-visual.is-pulsing .automate-task[data-step="3"].is-result { animation: automate-resolve var(--motion-slow) var(--ease-narrative) both; }
+   The .capability-block__visual wrapper receives .is-entering and .is-pulsing. */
+.capability-block__visual.is-entering .automate-task[data-step="1"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 80ms; }
+.capability-block__visual.is-entering .automate-task[data-step="2"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 180ms; }
+.capability-block__visual.is-entering .automate-task[data-step="3"] { animation: automate-rise var(--motion-slow) var(--ease-narrative) both; animation-delay: 280ms; }
+.capability-block__visual.is-pulsing .automate-task[data-step="1"].is-result,
+.capability-block__visual.is-pulsing .automate-task[data-step="2"].is-result,
+.capability-block__visual.is-pulsing .automate-task[data-step="3"].is-result { animation: automate-resolve var(--motion-slow) var(--ease-narrative) both; }
 @keyframes automate-rise {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
@@ -448,7 +448,7 @@
   transform: translateY(-100%);
   opacity: 0;
 }
-.capability-visual.is-pulsing .automate-core__pulse::after {
+.capability-block__visual.is-pulsing .automate-core__pulse::after {
   animation: automate-pulse 1300ms var(--ease-ui) both;
 }
 @keyframes automate-pulse {
@@ -540,13 +540,13 @@
 .business-frame__module.is-active i { background: color-mix(in srgb, var(--color-brand-cyan) 60%, var(--color-line)); }
 
 /* Entrance: independent modules rise and integrate into the same app. */
-.capability-visual.is-entering .business-frame__module { opacity: 1; transform: none; }
-.capability-visual.is-entering .business-frame__module:nth-child(1) { transition-delay: 80ms; }
-.capability-visual.is-entering .business-frame__module:nth-child(2) { transition-delay: 200ms; }
-.capability-visual.is-entering .business-frame__module:nth-child(3) { transition-delay: 320ms; }
+.capability-block__visual.is-entering .business-frame__module { opacity: 1; transform: none; }
+.capability-block__visual.is-entering .business-frame__module:nth-child(1) { transition-delay: 80ms; }
+.capability-block__visual.is-entering .business-frame__module:nth-child(2) { transition-delay: 200ms; }
+.capability-block__visual.is-entering .business-frame__module:nth-child(3) { transition-delay: 320ms; }
 
 /* Ambient: one of the modules briefly changes state to read as "alive". */
-.capability-visual.is-ambient .business-frame__module.is-active i:nth-child(2),
+.capability-block__visual.is-ambient .business-frame__module.is-active i:nth-child(2),
 .business-frame.is-ambient .business-frame__module.is-active i:nth-child(2) {
   animation: business-module-ambient 1500ms var(--ease-ui);
 }

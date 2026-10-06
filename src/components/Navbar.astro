@@ -1,5 +1,8 @@
 ---
 import { navLinks, whatsappUrl } from "../data/site";
+import Icon from "./common/Icon.astro";
+import MobileNav from "./MobileNav.tsx";
+
 const isHome =
     Astro.url.pathname === "/" || Astro.url.pathname === "/index.html";
 const homeHref = (href: string) => (isHome ? href : `/${href}`);
@@ -40,60 +43,16 @@ const homeHref = (href: string) => (isHome ? href : `/${href}`);
             rel="noopener noreferrer"
             data-event="click_cta_header"
         >
-            Hablemos{" "}
-            <span class="button-arrow" aria-hidden="true">
-                ↗
-            </span>
+            Hablemos <Icon name="arrow-up-right" size={16} />
         </a>
-        <button
-            id="menu-toggle"
-            class="menu-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="mobile-menu"
-            hidden
-        >
-            <span class="sr-only">Abrir menú</span>
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                aria-hidden="true"
-            >
-                <path d="M4 8h16" />
-                <path d="M4 16h16" />
-            </svg>
-        </button>
-    </nav>
-    <nav
-        id="mobile-menu"
-        class="mobile-menu"
-        hidden
-        aria-label="Navegación móvil"
-    >
-        <div class="container-page">
-            {navLinks.map((link) => (
-                <a
-                    class="nav-link"
-                    href={homeHref(link.href)}
-                    data-nav-link={link.href}
-                >
-                    {link.label}
-                </a>
-            ))}
-            <a
-                class="button-primary"
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="click_cta_mobile"
-            >
-                Hablemos <span aria-hidden="true">↗</span>
-            </a>
-        </div>
+        <MobileNav
+            client:load
+            links={navLinks.map((link) => ({
+                href: homeHref(link.href),
+                label: link.label,
+            }))}
+            whatsappHref={whatsappUrl()}
+        />
     </nav>
     <noscript>
         <nav

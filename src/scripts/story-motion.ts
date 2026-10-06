@@ -1,4 +1,4 @@
-import { getGsap, getScrollTrigger } from "./gsap-context";
+import { getGsap } from "./gsap-context";
 
 /**
  * Story motion — narrative scrub through four states.
@@ -30,7 +30,6 @@ export interface StoryMotionHandle {
 
 export function initStoryMotion(root: HTMLElement): StoryMotionHandle {
   const gsap = getGsap();
-  const ScrollTrigger = getScrollTrigger();
   const visual = root.querySelector<HTMLElement>("[data-story-visual]");
   const stepsContainer = root.querySelector<HTMLElement>("[data-story-steps]");
   const steps = Array.from(
