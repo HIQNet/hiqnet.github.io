@@ -1,0 +1,258 @@
+---
+import { getCollection } from "astro:content";
+import Section from "../core/Section.astro";
+import ResponsiveImage from "../core/ResponsiveImage.astro";
+import Icon from "../ui/Icon.astro";
+import heroCaseImage from "../../assets/cases/la-terraza/admin-02.png";
+import swiCaseImage from "../../assets/cases/swi/servicios.png";
+
+const cases = (await getCollection("cases")).sort((a, b) => a.data.order - b.data.order);
+const featured = cases.filter((entry) => entry.data.featured).slice(0, 2);
+const remaining = cases.filter(
+  (entry) => !featured.some((featuredCase) => featuredCase.id === entry.id),
+);
+---
+
+<Section id="casos" labelledBy="casos-title" class="work">
+  <div class="container">
+    <div class="work__heading">
+      <div>
+        <p class="eyebrow">03 — Proyectos</p>
+        <h2 id="casos-title">Casos reales</h2>
+        <p class="work__intro">Interfaces y sistemas creados para necesidades concretas.</p>
+      </div>
+      {remaining.length > 0 && (
+        <details class="work__all">
+          <summary>
+            Todos los casos <Icon name="arrow-up-right" size={15} />
+          </summary>
+          <nav id="mas-casos" aria-label="Todos los casos">
+            <ul>
+              {remaining.map((entry) => (
+                <li>
+                  <a href={`/casos/${entry.id}/`}>
+                    {entry.data.name} <Icon name="arrow-up-right" size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </details>
+      )}
+    </div>
+
+    <div class="work__grid">
+      {featured.map((entry, index) => (
+        <article class="work__item">
+          <a
+            class="work__image-link"
+            href={`/casos/${entry.id}/`}
+            aria-label={`Ver el caso: ${entry.data.name}`}
+          >
+            <ResponsiveImage
+              src={index === 0 ? heroCaseImage : swiCaseImage}
+              alt={
+                index === 0
+                  ? "Pantalla de edición de productos del sistema La Terraza"
+                  : "Pantalla de servicios del sitio de Servicios Web Icono"
+              }
+              widths={[480, 800, 1200]}
+              sizes={
+                index === 0 ? "(min-width: 80rem) 53rem, 60vw" : "(min-width: 80rem) 25rem, 40vw"
+              }
+            />
+          </a>
+
+          <div class="work__body">
+            <p class="work__kicker">
+              {entry.data.name} / {entry.data.sector}
+            </p>
+            <h3>{entry.data.title}</h3>
+            <p class="work__summary">{entry.data.subtitle}</p>
+            <a class="work__link" href={`/casos/${entry.id}/`}>
+              Ver caso completo <Icon name="arrow-up-right" size={15} />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Section>
+
+<style>
+  :global(.section.work) {
+    padding-block: 3.2rem 3.5rem;
+    border-top: var(--border-width) solid var(--color-line-strong);
+    background: var(--color-bg-deep);
+  }
+
+  .work__heading {
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .work__heading h2 {
+    margin-top: 0.7rem;
+    font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+  }
+
+  .work__intro {
+    margin-top: 0.55rem;
+    color: var(--color-fg-muted);
+    font-size: 0.92rem;
+  }
+
+  .work__all summary,
+  .work__link,
+  .work__all a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  .work__all summary:hover,
+  .work__link:hover,
+  .work__all a:hover {
+    color: var(--color-accent);
+  }
+
+  .work__all summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .work__all summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .work__all nav {
+    position: absolute;
+    z-index: var(--z-raised);
+    top: calc(100% - 0.25rem);
+    right: 0;
+    width: min(19rem, 90vw);
+    border: var(--border-width) solid var(--color-line-strong);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-panel);
+    padding: 0.5rem 1rem;
+  }
+
+  .work__all li + li {
+    border-top: var(--border-width) solid var(--color-line);
+  }
+
+  .work__all a {
+    width: 100%;
+    min-height: 2.8rem;
+    justify-content: space-between;
+  }
+
+  .work__grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .work__item {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .work__image-link {
+    display: block;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .work__image-link :global(img) {
+    display: block;
+    width: 100%;
+    height: 18.75rem;
+    object-fit: cover;
+    object-position: center;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .work__image-link:hover :global(img) {
+    transform: scale(1.015);
+  }
+
+  .work__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding-top: 0.9rem;
+  }
+
+  .work__kicker {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .work__body h3 {
+    max-width: 28ch;
+    margin-top: 0.4rem;
+    font-size: clamp(1.35rem, 1.65vw, 1.65rem);
+    line-height: 1.13;
+    letter-spacing: -0.025em;
+  }
+
+  .work__summary {
+    max-width: 38rem;
+    margin-top: 0.45rem;
+    color: var(--color-fg-muted);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .work__link {
+    margin-top: auto;
+    padding-top: 0.7rem;
+  }
+
+  @media (min-width: 48rem) {
+    .work__grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    }
+
+    .work__item:first-child .work__image-link :global(img) {
+      object-position: center top;
+    }
+
+    .work__item:last-child .work__image-link :global(img) {
+      transform: scale(1.28);
+    }
+
+    .work__item:last-child .work__image-link:hover :global(img) {
+      transform: scale(1.3);
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .work__heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .work__grid {
+      gap: 2.5rem;
+    }
+
+    .work__image-link :global(img) {
+      height: auto;
+      aspect-ratio: 1.55;
+    }
+  }
+</style>

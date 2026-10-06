@@ -1,0 +1,87 @@
+---
+import Section from "../core/Section.astro";
+import Button from "../core/Button.astro";
+import Icon from "../ui/Icon.astro";
+import WhatsAppIcon from "../ui/WhatsAppIcon.astro";
+import { contact, whatsappUrl, mailtoUrl } from "../../config/contact";
+---
+
+<Section id="contacto" labelledBy="contacto-title" class="cta">
+  <div class="container cta__inner">
+    <div class="cta__heading">
+      <p class="eyebrow">04 — Trabajemos juntos</p>
+      <h2 id="contacto-title">¿Hablamos de tu proyecto?</h2>
+    </div>
+    <Button href={whatsappUrl()} external icon="arrow-up-right" class="cta__button">
+      <WhatsAppIcon size={17} />
+      Conversar por WhatsApp
+    </Button>
+    <p class="cta__email">
+      o escríbenos
+      <br />
+      <a href={mailtoUrl()}>
+        {contact.email} <Icon name="arrow-up-right" size={14} />
+      </a>
+    </p>
+  </div>
+</Section>
+
+<style>
+  :global(.section.cta) {
+    padding-block: 2rem;
+    border-top: var(--border-width) solid var(--color-line);
+  }
+
+  .cta__inner {
+    display: grid;
+    align-items: end;
+    gap: 1rem 2rem;
+  }
+
+  .cta__heading h2 {
+    margin-top: 0.85rem;
+    font-size: clamp(2rem, 2.9vw, 3rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+  }
+
+  .cta__button {
+    width: max-content;
+  }
+
+  .cta__email {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+  }
+
+  .cta__email a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .cta__email a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 64rem) {
+    .cta__inner {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .cta__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .cta__email {
+      grid-column: 2;
+    }
+  }
+</style>

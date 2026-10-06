@@ -1,0 +1,267 @@
+---
+import { Image } from "astro:assets";
+import { site } from "../../config/site";
+import { contact, whatsappUrl, mailtoUrl } from "../../config/contact";
+import brandLogoHorizontal from "../../assets/brand/1.png";
+import brandLogoStacked from "../../assets/brand/2.png";
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class:list={["footer", { "footer--compact": compact }]}>
+  {compact ? (
+    <div class="container footer__compact-inner">
+      <div class="footer__compact-brand">
+        <Image
+          src={brandLogoHorizontal}
+          alt="HiQNet"
+          width={480}
+          loading="eager"
+          class="footer__logo"
+        />
+        <p>Entender. Conectar. Construir.</p>
+      </div>
+      <nav class="footer__compact-nav" aria-label="Navegación del pie de página">
+        <a href="#servicios">Qué hacemos</a>
+        <a href="#casos">Casos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <span class="footer__compact-copy">© {year} HiQNet · Software y sistemas para empresas</span>
+    </div>
+  ) : (
+    <>
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <Image
+            src={brandLogoStacked}
+            alt="HiQNet"
+            width={528}
+            loading="eager"
+            class="footer__logo footer__logo--stacked"
+          />
+          <p class="footer__tagline">Entender. Conectar. Construir.</p>
+        </div>
+
+        <dl class="footer__contact">
+          <div>
+            <dt>Correo</dt>
+            <dd>
+              <a href={mailtoUrl()}>{contact.email}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>WhatsApp</dt>
+            <dd>
+              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                Escríbenos
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd>
+              <a href={site.socials.instagram} target="_blank" rel="noopener noreferrer">
+                @hiqnet_solutions
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>Facebook</dt>
+            <dd>
+              <a href={site.socials.facebook} target="_blank" rel="noopener noreferrer">
+                HiQNet
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="container footer__bottom">
+        <span>
+          © {year} {site.name}
+        </span>
+        <span>Software y sistemas para empresas</span>
+      </div>
+    </>
+  )}
+</footer>
+
+<style>
+  .footer {
+    border-top: var(--border-width) solid var(--color-line);
+    background: var(--color-bg-deep);
+    padding-block: var(--space-8) var(--space-5);
+  }
+
+  .footer__inner {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer__logo {
+    display: block;
+    width: 10rem;
+    height: auto;
+    flex: none;
+  }
+
+  .footer__logo--stacked {
+    width: clamp(9.5rem, 14vw, 11rem);
+  }
+
+  .footer__tagline {
+    color: var(--color-fg-muted);
+    font-size: var(--text-small);
+  }
+
+  .footer__contact {
+    display: grid;
+    gap: 0 var(--space-5);
+  }
+
+  .footer__contact > div {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    border-top: var(--border-width) solid var(--color-line-soft);
+  }
+
+  .footer__contact dt {
+    flex: 0 0 6rem;
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+  }
+
+  .footer__contact dd {
+    min-width: 0;
+  }
+
+  .footer__contact a {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    font-size: var(--text-small);
+    color: var(--color-fg-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .footer__contact a:hover {
+    color: var(--color-accent);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+    padding-top: var(--space-4);
+    border-top: var(--border-width) solid var(--color-line-soft);
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+  }
+
+  .footer--compact {
+    padding-block: 1.75rem;
+  }
+
+  .footer__compact-inner,
+  .footer__compact-brand,
+  .footer__compact-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer__compact-inner {
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .footer__compact-brand {
+    gap: 1.5rem;
+  }
+
+  .footer__compact-brand p,
+  .footer__compact-copy,
+  .footer__compact-nav a {
+    color: var(--color-fg-muted);
+    font-size: 0.75rem;
+  }
+
+  .footer__compact-copy {
+    color: var(--color-fg-subtle);
+  }
+
+  .footer__compact-nav {
+    gap: 1.35rem;
+  }
+
+  .footer__compact-nav a:hover {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 48rem) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .footer__contact {
+      gap: 0 var(--space-6);
+    }
+  }
+
+  @media (max-width: 63.99rem) {
+    .footer__compact-inner {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .footer__brand {
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer__bottom {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer__compact-inner {
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .footer__compact-brand {
+      align-items: center;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer__compact-nav {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+</style>

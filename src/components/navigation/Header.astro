@@ -1,0 +1,206 @@
+---
+import { Image } from "astro:assets";
+import { navItems } from "../../config/navigation";
+import { contact, whatsappUrl } from "../../config/contact";
+import Button from "../core/Button.astro";
+import Icon from "../ui/Icon.astro";
+import WhatsAppIcon from "../ui/WhatsAppIcon.astro";
+import brandLogoHorizontal from "../../assets/brand/1.png";
+import "../../components/navigation/mobile-menu.css";
+
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/index.html";
+const anchor = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+const links = navItems.map((item) => ({ href: anchor(item.id), label: item.label }));
+---
+
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a class="header__brand" href={anchor("inicio")} aria-label="HiQNet — inicio">
+      <Image
+        src={brandLogoHorizontal}
+        alt="HiQNet"
+        width={480}
+        loading="eager"
+        class="header__logo"
+      />
+    </a>
+
+    <nav class="header__nav" aria-label="Navegación principal">
+      {links.map((link) => (
+        <a class="header__link" href={link.href}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header__actions">
+      <Button
+        href={whatsappUrl()}
+        external
+        variant="ghost"
+        icon="arrow-up-right"
+        class="header__cta"
+      >
+        Hablemos
+      </Button>
+      <button
+        class="menu-toggle"
+        data-menu-toggle
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu-panel"
+        aria-label="Abrir menú"
+      >
+        <Icon name="menu" size={20} class="menu-toggle__open" />
+        <Icon name="x" size={20} class="menu-toggle__close" />
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="menu-panel"
+    id="menu-panel"
+    data-menu-panel
+    data-open="false"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menú de navegación"
+  >
+    <nav class="menu-panel__inner container" aria-label="Navegación móvil">
+      <ul class="menu-panel__list">
+        {links.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+      <div class="menu-panel__contact">
+        <Button href={whatsappUrl()} external icon="arrow-up-right">
+          <WhatsAppIcon size={17} />
+          Hablemos por WhatsApp
+        </Button>
+        <a class="menu-panel__email" href={`mailto:${contact.email}`}>
+          {contact.email}
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <noscript>
+    <nav class="header__noscript container" aria-label="Navegación principal">
+      {links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+      <a href={whatsappUrl()}>{contact.email}</a>
+    </nav>
+  </noscript>
+</header>
+
+<script>
+  import { initMobileMenu } from "../../lib/ui/mobile-menu";
+  initMobileMenu();
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    background: var(--color-bg);
+    border-bottom: var(--border-width) solid transparent;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .header.is-scrolled {
+    border-bottom-color: var(--color-line);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    min-height: var(--nav-height);
+  }
+
+  .header__brand {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    min-height: 2.75rem;
+  }
+
+  .header__logo {
+    display: block;
+    height: 2.5rem;
+    width: auto;
+  }
+
+  .header__nav {
+    display: none;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .header__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: var(--text-small);
+    color: var(--color-fg-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .header__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.75rem;
+    height: 1px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .header__link:hover,
+  .header__link[aria-current="true"] {
+    color: var(--color-fg);
+  }
+
+  .header__link[aria-current="true"]::after,
+  .header__link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .header__actions :global(.header__cta) {
+    display: none;
+  }
+
+  .header__noscript {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    padding-block: var(--space-3);
+    border-top: var(--border-width) solid var(--color-line);
+    font-size: var(--text-small);
+  }
+
+  @media (min-width: 64rem) {
+    .header__nav {
+      display: flex;
+    }
+
+    .header__actions :global(.header__cta) {
+      display: inline-flex;
+    }
+  }
+</style>

@@ -1,0 +1,737 @@
+{
+  "stage": "editorial-implementation",
+  "generatedAt": "2026-10-06T20:03:23.532Z",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "label": "390",
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "overflow": false,
+      "scrollHeight": 9474,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 897,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "40px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2990,
+          "height": 1369,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 4359,
+          "height": 2597,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 6956,
+          "height": 1321,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 8277,
+          "height": 636,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 1
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "label": "430",
+      "innerWidth": 430,
+      "scrollWidth": 430,
+      "overflow": false,
+      "scrollHeight": 9318,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 869,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "40px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2941,
+          "height": 1342,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 4284,
+          "height": 2598,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 6881,
+          "height": 1299,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 8180,
+          "height": 609,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 1
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "label": "768",
+      "innerWidth": 768,
+      "scrollWidth": 768,
+      "overflow": false,
+      "scrollHeight": 7532,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 927,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "49.92px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2289,
+          "height": 967,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3257,
+          "height": 2481,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 5738,
+          "height": 863,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 6601,
+          "height": 513,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "28px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 2
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "label": "1024",
+      "innerWidth": 1024,
+      "scrollWidth": 1024,
+      "overflow": false,
+      "scrollHeight": 7241,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 696,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "66.56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2315,
+          "height": 870,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "36.864px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3185,
+          "height": 2410,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "36.864px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 5595,
+          "height": 823,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "36.864px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "20px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 6418,
+          "height": 405,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "36.864px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 2
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "label": "1280",
+      "innerWidth": 1280,
+      "scrollWidth": 1280,
+      "overflow": false,
+      "scrollHeight": 7617,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 700,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "80px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2569,
+          "height": 897,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "23.04px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3466,
+          "height": 2401,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "23.04px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 5867,
+          "height": 871,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "23.04px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 6738,
+          "height": 461,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 3
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "label": "1440",
+      "innerWidth": 1440,
+      "scrollWidth": 1440,
+      "overflow": false,
+      "scrollHeight": 7876,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 684,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "80px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2698,
+          "height": 928,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "25.92px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3626,
+          "height": 2452,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "25.92px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 6078,
+          "height": 900,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "25.92px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 6978,
+          "height": 480,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 3
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "label": "1920",
+      "innerWidth": 1920,
+      "scrollWidth": 1920,
+      "overflow": false,
+      "scrollHeight": 7843,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 651,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "80px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 2720,
+          "height": 932,
+          "h2": {
+            "text": "Primero entendemos. Después construimos.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "26px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3653,
+          "height": 2415,
+          "h2": {
+            "text": "Lo que hemos construido.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "26px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 6068,
+          "height": 878,
+          "h2": {
+            "text": "Capacidad para construir software serio.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "26px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 6945,
+          "height": 480,
+          "h2": {
+            "text": "Hablemos de tu empresa.",
+            "size": "46px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 6,
+      "unloadedLazy": 3
+    }
+  ],
+  "home": {
+    "metrics": {
+      "ttfb": 2,
+      "fcp": 64,
+      "lcp": 64,
+      "cls": 0.03143719666615762,
+      "sizes": {
+        "js": 0,
+        "css": 600,
+        "font": 600,
+        "image": 1500
+      },
+      "aboveFoldImages": 2,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Software que hace más claro el trabajo."
+        },
+        {
+          "level": "H2",
+          "text": "Software hecho para tu forma de trabajar."
+        },
+        {
+          "level": "H3",
+          "text": "HiQNet Web"
+        },
+        {
+          "level": "H3",
+          "text": "HiQNet Automate"
+        },
+        {
+          "level": "H3",
+          "text": "HiQNet Business"
+        },
+        {
+          "level": "H2",
+          "text": "Primero entendemos. Después construimos."
+        },
+        {
+          "level": "H3",
+          "text": "Entendemos"
+        },
+        {
+          "level": "H3",
+          "text": "Diseñamos"
+        },
+        {
+          "level": "H3",
+          "text": "Construimos"
+        },
+        {
+          "level": "H3",
+          "text": "Acompañamos"
+        },
+        {
+          "level": "H2",
+          "text": "Lo que hemos construido."
+        },
+        {
+          "level": "H3",
+          "text": "Un catálogo, dos lados de la operación"
+        },
+        {
+          "level": "H3",
+          "text": "Ordenar la información para abrir la conversación"
+        },
+        {
+          "level": "H3",
+          "text": "Otros contextos, otras piezas."
+        },
+        {
+          "level": "H2",
+          "text": "Capacidad para construir software serio."
+        },
+        {
+          "level": "H3",
+          "text": "Interfaz"
+        },
+        {
+          "level": "H3",
+          "text": "Integraciones"
+        },
+        {
+          "level": "H3",
+          "text": "Datos"
+        },
+        {
+          "level": "H3",
+          "text": "Entrega"
+        },
+        {
+          "level": "H2",
+          "text": "Hablemos de tu empresa."
+        }
+      ]
+    },
+    "axe": [],
+    "mobile": {
+      "heroHeight": 897,
+      "h1Bottom": 303,
+      "ctaTop": 477,
+      "ctaVisibleAboveFold": true
+    },
+    "axeMobile": 0
+  },
+  "case": {
+    "axe": []
+  }
+}

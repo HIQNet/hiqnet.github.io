@@ -1,6 +1,11 @@
 node_modules/
 dist/
 .astro/
-.visual-regression/
-docs/superpowers/
 .superpowers/
+docs/superpowers/
+.preserved/
+_preserved/
+.visual-regression/
+test-results/
+playwright-report/
+.DS_Store

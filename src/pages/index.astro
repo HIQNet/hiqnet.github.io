@@ -1,38 +1,23 @@
 ﻿---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
-import PersistentCta from "../components/PersistentCta.astro";
+import Header from "../components/navigation/Header.astro";
+import Footer from "../components/navigation/Footer.astro";
 import Hero from "../components/home/Hero.astro";
-import BusinessSections from "../components/home/BusinessSections.astro";
-import TransformationStory from "../components/home/TransformationStory.astro";
-import Solutions from "../components/home/Solutions.astro";
-import Portfolio from "../components/home/Portfolio.astro";
-import Contact from "../components/home/Contact.astro";
-import { site } from "../data/site";
-import Method from "../components/home/Method.astro";
-import Engineering from "../components/home/Engineering.astro";
-import CommercialBridge from "../components/home/CommercialBridge.astro";
-import Qualification from "../components/home/Qualification.astro";
+import Services from "../components/home/Services.astro";
+import Approach from "../components/home/Approach.astro";
+import Work from "../components/home/Work.astro";
+import ContactCta from "../components/home/ContactCta.astro";
+import { site } from "../config/site";
 ---
 
-<BaseLayout title={site.title} description={site.description}>
-    <div class="site-shell">
-        <Navbar />
-        <main id="contenido">
-            <Hero />
-            <BusinessSections />
-            <TransformationStory />
-            <Solutions />
-            <Method />
-            <CommercialBridge />
-            <Portfolio />
-            <Engineering />
-            <Qualification />
-            <Contact />
-        </main>
-        <Footer />
-        <PersistentCta />
-    </div>
-    <script src="../scripts/index.ts"></script>
+<BaseLayout title={site.title} description={site.description} canonicalPath="/">
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Approach />
+    <Services />
+    <Work />
+    <ContactCta />
+  </main>
+  <Footer compact />
 </BaseLayout>

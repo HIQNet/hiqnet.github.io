@@ -1,0 +1,1012 @@
+{
+  "stage": "before",
+  "generatedAt": "2026-10-06T18:22:03.985Z",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "label": "390",
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "overflow": false,
+      "scrollHeight": 11951,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 978,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "44px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 1051,
+          "height": 939,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1990,
+          "height": 2249,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 4239,
+          "height": 1178,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 5417,
+          "height": 3446,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 8863,
+          "height": 1670,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 10533,
+          "height": 606,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "44px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "label": "430",
+      "innerWidth": 430,
+      "scrollWidth": 430,
+      "overflow": false,
+      "scrollHeight": 11571,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 942,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "44px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 1015,
+          "height": 878,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1893,
+          "height": 2176,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 4070,
+          "height": 1072,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 5141,
+          "height": 3444,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 8585,
+          "height": 1598,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 10183,
+          "height": 606,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "44px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "label": "768",
+      "innerWidth": 768,
+      "scrollWidth": 768,
+      "overflow": false,
+      "scrollHeight": 13769,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 605,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "53.76px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 678,
+          "height": 614,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "35.328px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1291,
+          "height": 3866,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "35.328px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 5157,
+          "height": 883,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "35.328px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 6040,
+          "height": 5345,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "35.328px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "24px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 11385,
+          "height": 1465,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "35.328px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 12850,
+          "height": 493,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "53.76px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 24
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "label": "1024",
+      "innerWidth": 1024,
+      "scrollWidth": 1024,
+      "overflow": false,
+      "scrollHeight": 13810,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 788,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "71.68px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 861,
+          "height": 594,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "47.104px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1455,
+          "height": 3745,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "47.104px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "26.624px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 5200,
+          "height": 919,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "47.104px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 6119,
+          "height": 5437,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "47.104px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "26.624px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 11557,
+          "height": 1204,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "47.104px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "18px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 12761,
+          "height": 623,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "71.68px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "label": "1280",
+      "innerWidth": 1280,
+      "scrollWidth": 1280,
+      "overflow": false,
+      "scrollHeight": 14459,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 957,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "89.6px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 1030,
+          "height": 631,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "20.48px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1661,
+          "height": 3753,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "33.28px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 5414,
+          "height": 995,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "20.48px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 6409,
+          "height": 5671,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "33.28px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 12080,
+          "height": 1231,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "20.48px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 13312,
+          "height": 722,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "89.6px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "label": "1440",
+      "innerWidth": 1440,
+      "scrollWidth": 1440,
+      "overflow": false,
+      "scrollHeight": 14786,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 1016,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "96px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 1089,
+          "height": 665,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1754,
+          "height": 3797,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "34px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 5551,
+          "height": 1037,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 6588,
+          "height": 5732,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "34px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 12320,
+          "height": 1270,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 13590,
+          "height": 769,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "96px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "label": "1920",
+      "innerWidth": 1920,
+      "scrollWidth": 1920,
+      "overflow": false,
+      "scrollHeight": 15270,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 73,
+          "height": 1022,
+          "h2": {
+            "text": "Software a la medida de tu operación.",
+            "size": "96px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "contexto",
+          "top": 1095,
+          "height": 692,
+          "h2": {
+            "text": "Tu operación no empieza en un software.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Decisiones que esperan datos.",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "capacidades",
+          "top": 1788,
+          "height": 4153,
+          "h2": {
+            "text": "Cada operación pide una estructura.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "La interfaz de tu negocio.",
+            "size": "34px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "enfoque",
+          "top": 5941,
+          "height": 1059,
+          "h2": {
+            "text": "Entender antes de construir.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entender",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 7000,
+          "height": 5755,
+          "h2": {
+            "text": "Software aplicado a procesos concretos.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "34px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "ingenieria",
+          "top": 12755,
+          "height": 1298,
+          "h2": {
+            "text": "Lo que se ve. Y lo que lo sostiene.",
+            "size": "56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Interfaz",
+            "size": "22px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 14052,
+          "height": 792,
+          "h2": {
+            "text": "Cuéntanos cómo funciona tu operación.",
+            "size": "96px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 28,
+        "hiddenAtTop": 27
+      },
+      "lazyImages": 4,
+      "unloadedLazy": 4
+    }
+  ],
+  "home": {
+    "metrics": {
+      "ttfb": 4,
+      "fcp": 36,
+      "lcp": 92,
+      "cls": 0.006481974962022569,
+      "sizes": {
+        "js": 300,
+        "css": 600,
+        "font": 900,
+        "image": 300
+      },
+      "aboveFoldImages": 1,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Software a la medida de tu operación."
+        },
+        {
+          "level": "H2",
+          "text": "Tu operación no empieza en un software."
+        },
+        {
+          "level": "H3",
+          "text": "Decisiones que esperan datos."
+        },
+        {
+          "level": "H3",
+          "text": "Seguimiento que depende de personas."
+        },
+        {
+          "level": "H3",
+          "text": "Contexto que se pierde al rotar."
+        },
+        {
+          "level": "H3",
+          "text": "Trabajo que se vuelve a hacer."
+        },
+        {
+          "level": "H2",
+          "text": "Cada operación pide una estructura."
+        },
+        {
+          "level": "H3",
+          "text": "La interfaz de tu negocio."
+        },
+        {
+          "level": "H3",
+          "text": "Menos copiar. Más conectar."
+        },
+        {
+          "level": "H3",
+          "text": "Tu proceso. Tu sistema."
+        },
+        {
+          "level": "H2",
+          "text": "Entender antes de construir."
+        },
+        {
+          "level": "H3",
+          "text": "Entender"
+        },
+        {
+          "level": "H3",
+          "text": "Diseñar"
+        },
+        {
+          "level": "H3",
+          "text": "Construir"
+        },
+        {
+          "level": "H3",
+          "text": "Integrar"
+        },
+        {
+          "level": "H3",
+          "text": "Evolucionar"
+        },
+        {
+          "level": "H2",
+          "text": "Software aplicado a procesos concretos."
+        },
+        {
+          "level": "H3",
+          "text": "Un catálogo, dos lados de la operación"
+        },
+        {
+          "level": "H3",
+          "text": "Ordenar la información para abrir la conversación"
+        },
+        {
+          "level": "H3",
+          "text": "De encontrar una propiedad a iniciar contacto"
+        },
+        {
+          "level": "H3",
+          "text": "Otros contextos, otras piezas."
+        },
+        {
+          "level": "H2",
+          "text": "Lo que se ve. Y lo que lo sostiene."
+        },
+        {
+          "level": "H3",
+          "text": "Interfaz"
+        },
+        {
+          "level": "H3",
+          "text": "Lógica e integraciones"
+        },
+        {
+          "level": "H3",
+          "text": "Datos"
+        },
+        {
+          "level": "H3",
+          "text": "Operación del software"
+        },
+        {
+          "level": "H2",
+          "text": "Cuéntanos cómo funciona tu operación."
+        },
+        {
+          "level": "H2",
+          "text": "Secciones"
+        },
+        {
+          "level": "H2",
+          "text": "Contacto"
+        }
+      ]
+    },
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "nodes": 7,
+        "target": ".hero__audience"
+      }
+    ],
+    "mobile": {
+      "heroHeight": 978,
+      "h1Bottom": 348,
+      "ctaTop": 857,
+      "ctaVisibleAboveFold": false
+    },
+    "axeMobile": 1
+  },
+  "case": {
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "nodes": 13
+      }
+    ]
+  }
+}

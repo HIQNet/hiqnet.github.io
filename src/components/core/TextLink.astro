@@ -1,0 +1,20 @@
+---
+import Icon from "../ui/Icon.astro";
+import type { IconName } from "../../lib/utils/icons";
+
+interface Props {
+  href: string;
+  icon?: IconName;
+  external?: boolean;
+  class?: string;
+}
+
+const { href, icon = "arrow-up-right", external = false, class: className } = Astro.props;
+const target = external ? "_blank" : undefined;
+const rel = external ? "noopener noreferrer" : undefined;
+---
+
+<a class:list={["textlink", className]} href={href} target={target} rel={rel}>
+  <slot />
+  <Icon name={icon} size={14} class="icon--trail" />
+</a>

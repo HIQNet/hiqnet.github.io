@@ -1,0 +1,112 @@
+/* ==========================================================================
+   HiQNet — Typography
+   Space Grotesk carries display, headings, labels and numerals. Inter carries
+   body and UI text. Two voices, one composition.
+   ========================================================================== */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-feature-settings:
+    "ss01" 1,
+    "cv05" 1;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-fg);
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+/* --- Semantic type roles ------------------------------------------------ */
+
+.type-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.type-headline {
+  font-family: var(--font-display);
+  font-size: var(--text-headline);
+  line-height: var(--text-headline--line-height);
+  letter-spacing: var(--text-headline--letter-spacing);
+  font-weight: 500;
+}
+
+.type-title {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  font-weight: 500;
+}
+
+.type-lead {
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+  letter-spacing: var(--text-lead--letter-spacing);
+  color: var(--color-fg-muted);
+}
+
+/* Short, quiet labels for orientation. No decoration, no numbering. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.eyebrow--muted {
+  color: var(--color-fg-subtle);
+}
+
+.numeral {
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  color: var(--color-fg-subtle);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.prose {
+  max-width: 44rem;
+  color: var(--color-fg-muted);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+}
+
+.prose p + p {
+  margin-top: var(--space-4);
+}
+
+.prose strong {
+  color: var(--color-fg);
+}

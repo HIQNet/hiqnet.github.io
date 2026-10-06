@@ -1,0 +1,670 @@
+{
+  "stage": "faithful-implementation",
+  "generatedAt": "2026-10-06T21:25:55.466Z",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "label": "390",
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "overflow": false,
+      "scrollHeight": 4308,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 737,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "42.4px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 806,
+          "height": 657,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 1463,
+          "height": 1485,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "48px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 2948,
+          "height": 921,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "21.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 3868,
+          "height": 294,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "32px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "label": "430",
+      "innerWidth": 430,
+      "scrollWidth": 430,
+      "overflow": false,
+      "scrollHeight": 4411,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 770,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "44.72px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 839,
+          "height": 657,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 1496,
+          "height": 1509,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "48px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 3005,
+          "height": 966,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "21.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 3971,
+          "height": 294,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "32px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "label": "768",
+      "innerWidth": 768,
+      "scrollWidth": 768,
+      "overflow": false,
+      "scrollHeight": 2924,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 889,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "52.8px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 958,
+          "height": 463,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 1421,
+          "height": 524,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "43.2px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 1944,
+          "height": 630,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "21.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 2574,
+          "height": 232,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "32px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "label": "1024",
+      "innerWidth": 1024,
+      "scrollWidth": 1024,
+      "overflow": false,
+      "scrollHeight": 2314,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 529,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "56.32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 598,
+          "height": 310,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "32px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 908,
+          "height": 551,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "45.056px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 1459,
+          "height": 606,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "21.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 2065,
+          "height": 175,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "32px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "label": "1280",
+      "innerWidth": 1280,
+      "scrollWidth": 1280,
+      "overflow": false,
+      "scrollHeight": 2255,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 529,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "70.4px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 598,
+          "height": 268,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "34.56px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 866,
+          "height": 602,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "56.32px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 1469,
+          "height": 567,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "21.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 2036,
+          "height": 146,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "37.12px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "label": "1440",
+      "innerWidth": 1440,
+      "scrollWidth": 1440,
+      "overflow": false,
+      "scrollHeight": 2323,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 557,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "79.2px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 626,
+          "height": 264,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "38.88px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 891,
+          "height": 636,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "63.36px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 1527,
+          "height": 572,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "23.76px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 2099,
+          "height": 151,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "41.76px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "label": "1920",
+      "innerWidth": 1920,
+      "scrollWidth": 1920,
+      "overflow": false,
+      "scrollHeight": 2373,
+      "sections": [
+        {
+          "id": "inicio",
+          "top": 69,
+          "height": 575,
+          "h2": {
+            "text": "Software que hace más claro el trabajo.",
+            "size": "84px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        },
+        {
+          "id": "enfoque",
+          "top": 644,
+          "height": 284,
+          "h2": {
+            "text": "Tecnología que se adapta a tu empresa.",
+            "size": "44.8px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Entendemos",
+            "size": "18.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "servicios",
+          "top": 928,
+          "height": 636,
+          "h2": null,
+          "h3": {
+            "text": "Web",
+            "size": "65.6px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "casos",
+          "top": 1564,
+          "height": 578,
+          "h2": {
+            "text": "03 — Casos reales",
+            "size": "12px",
+            "weight": "500",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": {
+            "text": "Un catálogo, dos lados de la operación",
+            "size": "26.4px",
+            "weight": "500"
+          }
+        },
+        {
+          "id": "contacto",
+          "top": 2142,
+          "height": 158,
+          "h2": {
+            "text": "¿Hablamos de tu proyecto?",
+            "size": "48px",
+            "weight": "400",
+            "family": "\"Space Grotesk Variable\""
+          },
+          "h3": null
+        }
+      ],
+      "reveals": {
+        "total": 0,
+        "hiddenAtTop": 0
+      },
+      "lazyImages": 5,
+      "unloadedLazy": 0
+    }
+  ],
+  "home": {
+    "metrics": {
+      "ttfb": 2,
+      "fcp": 116,
+      "lcp": 116,
+      "cls": 0.0018589259018132714,
+      "sizes": {
+        "js": 0,
+        "css": 600,
+        "font": 600,
+        "image": 2400
+      },
+      "aboveFoldImages": 2,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Software que hace más claro el trabajo."
+        },
+        {
+          "level": "H2",
+          "text": "Tecnología que se adapta a tu empresa."
+        },
+        {
+          "level": "H3",
+          "text": "Entendemos"
+        },
+        {
+          "level": "H3",
+          "text": "Diseñamos"
+        },
+        {
+          "level": "H3",
+          "text": "Construimos"
+        },
+        {
+          "level": "H3",
+          "text": "Web"
+        },
+        {
+          "level": "H3",
+          "text": "Automate"
+        },
+        {
+          "level": "H3",
+          "text": "Business"
+        },
+        {
+          "level": "H2",
+          "text": "03 — Casos reales"
+        },
+        {
+          "level": "H3",
+          "text": "Un catálogo, dos lados de la operación"
+        },
+        {
+          "level": "H3",
+          "text": "Ordenar la información para abrir la conversación"
+        },
+        {
+          "level": "H2",
+          "text": "¿Hablamos de tu proyecto?"
+        }
+      ]
+    },
+    "axe": [],
+    "mobile": {
+      "heroHeight": 737,
+      "h1Bottom": 283,
+      "ctaTop": 426,
+      "ctaVisibleAboveFold": true
+    },
+    "axeMobile": 0
+  },
+  "case": {
+    "axe": []
+  }
+}

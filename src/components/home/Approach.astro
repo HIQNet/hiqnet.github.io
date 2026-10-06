@@ -1,0 +1,106 @@
+---
+import Section from "../core/Section.astro";
+import { approach } from "../../data/home";
+---
+
+<Section id="enfoque" labelledBy="enfoque-title" class="approach">
+  <div class="container approach__inner">
+    <div class="approach__lead">
+      <p class="eyebrow">01 — Nuestra visión</p>
+      <h2 id="enfoque-title" class="approach__title">
+        Tecnología que se adapta a tu empresa.
+      </h2>
+    </div>
+
+    <ol class="approach__steps">
+      {approach.map((step, index) => (
+        <li class="approach__step">
+          <span class="approach__number">{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <h3>{step.title}</h3>
+            <p>{step.copy}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>
+
+<style>
+  :global(.section.approach) {
+    padding-block: 2.8rem 3.2rem;
+    background: var(--color-bg);
+  }
+
+  .approach__inner {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .approach__title {
+    max-width: 12ch;
+    margin-top: 1rem;
+    font-size: clamp(2rem, 2.7vw, 2.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .approach__steps {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .approach__step {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.85rem;
+    border-left: var(--border-width) solid var(--color-line);
+    padding-left: 1rem;
+  }
+
+  .approach__number {
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .approach__step h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+  }
+
+  .approach__step p {
+    max-width: 16rem;
+    margin-top: 0.7rem;
+    color: var(--color-fg-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 64rem) {
+    .approach__inner {
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 6.8fr);
+      gap: 2.75rem;
+      align-items: end;
+    }
+
+    .approach__steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      padding-bottom: 0.3rem;
+    }
+
+    .approach__step {
+      min-height: 6rem;
+      padding-inline: 1.15rem 0.9rem;
+    }
+  }
+
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .approach__steps {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+</style>

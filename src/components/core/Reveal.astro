@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** Element tag to render. Keep it semantic (`li`, `figure`, `div`…). */
+  as?: string;
+  /** Stagger delay in ms, applied through the `--reveal-delay` custom property. */
+  delay?: number;
+  class?: string;
+}
+
+const { as = "div", delay = 0, class: className } = Astro.props as Props;
+const Tag = as as "div";
+---
+
+<Tag class:list={[className]} data-reveal style={delay ? `--reveal-delay:${delay}ms` : undefined}>
+  <slot />
+</Tag>

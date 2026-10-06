@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/navigation/Header.astro";
+import Footer from "../components/navigation/Footer.astro";
+import Eyebrow from "../components/core/Eyebrow.astro";
+import Button from "../components/core/Button.astro";
+import TextLink from "../components/core/TextLink.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada | HiQNet"
+  description="La página que buscas no existe o cambió de dirección."
+  noIndex
+>
+  <Header />
+  <main id="contenido" class="nf">
+    <div class="container nf__inner">
+      <Eyebrow>Error 404</Eyebrow>
+      <h1 class="type-display nf__title">Esa página no existe.</h1>
+      <p class="type-lead nf__copy">
+        Puede que el enlace haya cambiado. Volvamos a un punto conocido.
+      </p>
+      <div class="nf__actions">
+        <Button href="/" icon="arrow-right">
+          Ir al inicio
+        </Button>
+        <TextLink href="/#casos">Ver casos</TextLink>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .nf {
+    padding-block: clamp(6rem, 16vw, 12rem);
+  }
+
+  .nf__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 40rem;
+  }
+
+  .nf__title {
+    margin-top: var(--space-6);
+  }
+
+  .nf__copy {
+    margin-top: var(--space-5);
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+</style>

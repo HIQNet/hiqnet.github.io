@@ -1,70 +1,99 @@
 ---
 import "../styles/global.css";
-import { site } from "../data/site";
+import { site } from "../config/site";
+import { contact } from "../config/contact";
 
 interface Props {
-    title?: string;
-    description?: string;
-    canonicalPath?: string;
-    image?: string;
-    noIndex?: boolean;
+  title?: string;
+  description?: string;
+  /** Path used for the canonical URL and og:url. Defaults to the current route. */
+  canonicalPath?: string;
+  /** Absolute-or-root path to the social image. */
+  image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  noIndex?: boolean;
+  ogType?: "website" | "article";
+  /** Extra JSON-LD block, merged into the page as a second script tag. */
+  structuredData?: Record<string, unknown>;
 }
 
 const {
-    title = site.title,
-    description = site.description,
-    canonicalPath = "/",
-    image = "/img/FullLogo.webp",
-    noIndex = false,
+  title = site.title,
+  description = site.description,
+  canonicalPath = Astro.url.pathname,
+  image = "/og.png",
+  imageWidth = 1200,
+  imageHeight = 630,
+  noIndex = false,
+  ogType = "website",
+  structuredData,
 } = Astro.props;
+
 const canonical = new URL(canonicalPath, site.url).toString();
 const imageUrl = new URL(image, site.url).toString();
+
 const organization = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: site.name,
-    url: site.url,
-    email: site.email,
-    foundingDate: String(site.foundedYear),
-    sameAs: [site.socials.facebook, site.socials.instagram],
-    description: site.description,
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.name,
+  url: site.url,
+  email: contact.email,
+  foundingDate: String(site.foundedYear),
+  description: site.description,
+  sameAs: [site.socials.facebook, site.socials.instagram],
 };
 ---
 
 <!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#101314" />
-                <meta name="view-transition" content="same-origin" />
-        <meta name="description" content={description} />
-        {noIndex && <meta name="robots" content="noindex, nofollow" />}
-        <link rel="canonical" href={canonical} />
-        <link rel="icon" href="/img/Logo.png" type="image/png" />
-        <meta property="og:locale" content="es_MX" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={site.name} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:image" content={imageUrl} />
-        <meta property="og:image:alt" content={title} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={imageUrl} />
-        <script
-            is:inline
-            type="application/ld+json"
-            set:html={JSON.stringify(organization)}
-        ></script>
-        <title>{title}</title>
-    </head>
-    <body>
-        <a class="skip-link" href="#contenido">
-            Saltar al contenido
-        </a>
-        <slot />
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="view-transition" content="same-origin" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta property="og:image:alt" content={title} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <script is:inline>
+      // Progressive enhancement flag: entrance animations only run when JS is on.
+      document.documentElement.classList.add("js");
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organization)} />
+    {structuredData && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">
+      Saltar al contenido
+    </a>
+    <slot />
+    <script>
+      import "../lib/motion";
+    </script>
+  </body>
 </html>

@@ -1,0 +1,41 @@
+---
+import Icon from "../ui/Icon.astro";
+import type { IconName } from "../../lib/utils/icons";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "ghost" | "quiet";
+  /** Trailing icon. Leading icons (e.g. WhatsApp) go in the slot. */
+  icon?: IconName;
+  external?: boolean;
+  type?: "button" | "submit";
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  icon,
+  external = false,
+  type = "button",
+  ariaLabel,
+  class: className,
+} = Astro.props;
+
+const classes = ["btn", `btn--${variant}`, className].filter(Boolean).join(" ");
+const target = external ? "_blank" : undefined;
+const rel = external ? "noopener noreferrer" : undefined;
+---
+
+{href ? (
+  <a class={classes} href={href} target={target} rel={rel} aria-label={ariaLabel}>
+    <slot />
+    {icon && <Icon name={icon} size={15} class="icon--trail" />}
+  </a>
+) : (
+  <button class={classes} type={type} aria-label={ariaLabel}>
+    <slot />
+    {icon && <Icon name={icon} size={15} class="icon--trail" />}
+  </button>
+)}

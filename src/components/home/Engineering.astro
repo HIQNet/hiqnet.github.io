@@ -1,46 +1,131 @@
 ---
-import { engineering } from "../../data/narrative";
-import ArchitectureLayers from "../scenes/ArchitectureLayers.astro";
+import Section from "../core/Section.astro";
+import Eyebrow from "../core/Eyebrow.astro";
+import Icon from "../ui/Icon.astro";
+import { engineeringLayers, engineeringNote } from "../../data/home";
 ---
 
-<section class="engineering section-space" aria-labelledby="ingenieria-title">
-    <div class="container-page engineering-layout">
-        <div class="engineering-intro reveal">
-            <p class="eyebrow">
-                <span>05 /</span> Ingeniería detrás del proceso
-            </p>
-            <h2 id="ingenieria-title" class="section-title">
-                Lo que se ve.
-                <br />Y lo que lo sostiene.
-            </h2>
-            <p class="section-copy">
-                Una interfaz es solo una parte. La lógica, los datos y las
-                conexiones tienen que responder al mismo proceso. Elegimos las
-                herramientas según lo que el sistema necesita resolver.
-            </p>
-            <ol class="engineering-stack" data-engineering-stack>
-                {engineering.map((layer, index) => (
-                    <li
-                        class="engineering-layer"
-                        data-engineering-layer={index + 1}
-                    >
-                        <span aria-hidden="true">0{index + 1}</span>
-                        <div>
-                            <h3>{layer.title}</h3>
-                            <p>{layer.copy}</p>
-                            <small>{layer.evidence}</small>
-                        </div>
-                    </li>
-                ))}
-            </ol>
-            <p class="engineering-note">
-                Las tecnologías citadas aparecen en nuestros proyectos. Las
-                medidas de operación se definen para el alcance de cada
-                solución.
-            </p>
-        </div>
-        <div class="engineering-visual reveal" aria-hidden="true">
-            <ArchitectureLayers />
-        </div>
+<Section id="ingenieria" labelledBy="ingenieria-title" class="eng">
+  <div class="container">
+    <div class="eng__header">
+      <div>
+        <Eyebrow>Cómo lo construimos</Eyebrow>
+        <h2 id="ingenieria-title" class="type-headline eng__title">
+          Capacidad para construir software serio.
+        </h2>
+      </div>
+      <p class="type-lead eng__intro">
+        Detrás de cada pantalla hay decisiones de interfaz, lógica, datos y despliegue. Elegimos las
+        herramientas según lo que el proyecto necesita resolver.
+      </p>
     </div>
-</section>
+
+    <ul class="eng__grid">
+      {engineeringLayers.map((layer) => (
+        <li class="eng__item">
+          <span class="eng__icon" aria-hidden="true">
+            <Icon name={layer.icon} size={18} />
+          </span>
+          <div class="eng__body">
+            <h3 class="eng__layer">{layer.title}</h3>
+            <p class="eng__copy">{layer.copy}</p>
+            <p class="eng__evidence">{layer.evidence}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <p class="eng__note">{engineeringNote}</p>
+  </div>
+</Section>
+
+<style>
+  .eng {
+    border-top: var(--border-width) solid var(--color-line);
+  }
+
+  .eng__header {
+    display: grid;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .eng__title {
+    max-width: 18ch;
+    margin-top: var(--space-5);
+  }
+
+  .eng__intro {
+    max-width: 40rem;
+  }
+
+  .eng__grid {
+    display: grid;
+    border-top: var(--border-width) solid var(--color-line);
+  }
+
+  .eng__item {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--space-4);
+    padding: var(--space-6) 0;
+    border-bottom: var(--border-width) solid var(--color-line);
+  }
+
+  .eng__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--color-accent);
+  }
+
+  .eng__layer {
+    font-size: var(--text-title);
+    margin-bottom: var(--space-2);
+  }
+
+  .eng__copy {
+    color: var(--color-fg-muted);
+    font-size: var(--text-small);
+    line-height: 1.6;
+  }
+
+  .eng__evidence {
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    letter-spacing: 0.06em;
+    color: var(--color-accent-dim);
+  }
+
+  .eng__note {
+    margin-top: var(--space-6);
+    max-width: 40rem;
+    font-size: var(--text-small);
+    color: var(--color-fg-subtle);
+  }
+
+  @media (min-width: 48rem) {
+    .eng__header {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: var(--space-8);
+    }
+
+    .eng__grid {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: var(--space-7);
+    }
+
+    .eng__item:nth-child(odd) {
+      padding-right: var(--space-7);
+    }
+
+    .eng__item:nth-child(even) {
+      padding-left: var(--space-7);
+      border-left: var(--border-width) solid var(--color-line);
+    }
+  }
+</style>

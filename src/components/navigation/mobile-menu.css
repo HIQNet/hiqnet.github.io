@@ -1,0 +1,114 @@
+/* Vanilla mobile menu disclosure (see Header.astro + src/lib/ui/mobile-menu.ts). */
+
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-fg);
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.menu-toggle:hover {
+  border-color: var(--color-line-strong);
+}
+
+.menu-toggle__close {
+  display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__open {
+  display: none;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__close {
+  display: block;
+}
+
+@media (min-width: 64rem) {
+  .menu-toggle {
+    display: none;
+  }
+}
+
+.menu-panel {
+  position: fixed;
+  inset: var(--nav-height) 0 0;
+  z-index: var(--z-overlay);
+  background: var(--color-bg);
+  border-top: var(--border-width) solid var(--color-line);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    visibility 0s linear var(--dur-fast);
+}
+
+.menu-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.menu-panel__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  padding-block: var(--space-6) calc(var(--space-8) + env(safe-area-inset-bottom));
+}
+
+.menu-panel__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-panel__list a {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  letter-spacing: -0.02em;
+  color: var(--color-fg);
+  border-bottom: var(--border-width) solid var(--color-line-soft);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.menu-panel__list a:hover {
+  color: var(--color-accent);
+}
+
+.menu-panel__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.menu-panel__email {
+  font-size: var(--text-small);
+  color: var(--color-fg-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+/* Without JavaScript the panel cannot be opened; fall back to the noscript nav. */
+html:not(.js) .menu-panel {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel {
+    transition: none;
+  }
+}

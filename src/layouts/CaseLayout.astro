@@ -1,0 +1,754 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import { getImage } from "astro:assets";
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/navigation/Header.astro";
+import Footer from "../components/navigation/Footer.astro";
+import Eyebrow from "../components/core/Eyebrow.astro";
+import Button from "../components/core/Button.astro";
+import TextLink from "../components/core/TextLink.astro";
+import ResponsiveImage from "../components/core/ResponsiveImage.astro";
+import WhatsAppIcon from "../components/ui/WhatsAppIcon.astro";
+import { site } from "../config/site";
+import { contact, whatsappUrl, mailtoUrl } from "../config/contact";
+
+interface Props {
+  entry: CollectionEntry<"cases">;
+  prev: CollectionEntry<"cases"> | null;
+  next: CollectionEntry<"cases"> | null;
+}
+
+const { entry, prev, next } = Astro.props;
+const data = entry.data;
+const { Content } = await render(entry);
+
+const canonicalPath = `/casos/${entry.id}/`;
+const og = await getImage({ src: data.cover, width: 1200, format: "webp" });
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: data.title,
+  headline: data.title,
+  about: data.sector,
+  description: data.summary,
+  url: new URL(canonicalPath, site.url).toString(),
+  creator: { "@type": "Organization", name: site.name, url: site.url },
+};
+
+const facts = [
+  { label: "Sector", value: data.sector },
+  { label: "Cliente", value: data.client },
+  { label: "Duración declarada", value: data.duration },
+  { label: "Estado declarado", value: data.status },
+];
+
+const chapters = [
+  { kicker: "Contexto", title: "El punto de partida.", body: data.context, flow: false },
+  { kicker: "Problema", title: "Qué estaba pasando.", body: data.problem, flow: false },
+  { kicker: "Intervención", title: "Qué se hizo.", body: data.intervention, flow: false },
+  { kicker: "Resultado", title: "Cómo quedó el sistema.", body: data.outcome, flow: true },
+];
+
+const whatsappMessage = `Hola, vi el caso de ${data.name} y quiero conversar sobre un proceso de mi empresa.`;
+---
+
+<BaseLayout
+  title={`${data.name} | HiQNet`}
+  description={data.summary}
+  canonicalPath={canonicalPath}
+  image={og.src}
+  imageWidth={og.attributes.width}
+  imageHeight={og.attributes.height}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <Header />
+  <main id="contenido" class="case">
+    <header class="container case__hero">
+      <TextLink href="/#casos" icon="arrow-left">
+        Todos los casos
+      </TextLink>
+      <div class="case__intro">
+        <Eyebrow>
+          {data.sector} / {data.name}
+        </Eyebrow>
+        <h1 class="type-headline case__title">{data.title}</h1>
+        <p class="type-lead case__subtitle">{data.subtitle}</p>
+      </div>
+      <figure class="case__cover">
+        <ResponsiveImage
+          src={data.cover}
+          alt={data.coverAlt}
+          priority
+          widths={[600, 900, 1400]}
+          sizes="(min-width: 78rem) 78rem, 100vw"
+        />
+      </figure>
+    </header>
+
+    <div class="container case__layout">
+      <div class="case__narrative">
+        {chapters.map((chapter) => (
+          <section class="case__chapter">
+            <p class="case__chapter-kicker">{chapter.kicker}</p>
+            <h2 class="case__chapter-title">{chapter.title}</h2>
+            <p class="case__chapter-body">{chapter.body}</p>
+            {chapter.flow && data.flow.length > 0 && (
+              <ol class="case__flow" aria-label="Secuencia del sistema descrito">
+                {data.flow.map((step, index) => (
+                  <li>
+                    <span class="numeral">{String(index + 1).padStart(2, "0")}</span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </section>
+        ))}
+
+        {data.contextImage && (
+          <figure class="case__context">
+            <ResponsiveImage
+              src={data.contextImage}
+              alt={data.contextImageAlt ?? ""}
+              widths={[480, 800]}
+              sizes="(min-width: 64rem) 42rem, 100vw"
+            />
+            {data.contextImageCaption && <figcaption>{data.contextImageCaption}</figcaption>}
+          </figure>
+        )}
+
+        <section class="case__chapter case__chapter--prose">
+          <p class="case__chapter-kicker">Solución</p>
+          <h2 class="case__chapter-title">Cómo se construyó.</h2>
+          <div class="prose">
+            <Content />
+          </div>
+        </section>
+      </div>
+
+      <aside class="case__facts" aria-labelledby="ficha-title">
+        <h2 id="ficha-title" class="case__facts-title">
+          Ficha del caso
+        </h2>
+        <dl>
+          {facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+          <div>
+            <dt>Tecnologías</dt>
+            <dd>{data.stack.join(" / ")}</dd>
+          </div>
+        </dl>
+        <div class="case__scope">
+          <h3>Alcance del caso</h3>
+          <p>{data.scope}</p>
+        </div>
+        {data.links.length > 0 && (
+          <div class="case__resources">
+            <h3>Recursos</h3>
+            <ul>
+              {data.links.map((link) => (
+                <li>
+                  <TextLink href={link.href} external>
+                    {link.label}
+                  </TextLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+
+    {data.gallery.length > 0 && (
+      <section class="case__gallery" data-presentation="editorial" aria-labelledby="galeria-title">
+        <div class="container">
+          <div class="case__gallery-head">
+            <div>
+              <p class="eyebrow eyebrow--muted">Archivo visual</p>
+              <h2 id="galeria-title" class="type-headline">
+                El proyecto en pantalla.
+              </h2>
+            </div>
+            <p class="type-lead">
+              Un recorrido por las interfaces y las tareas que resuelve cada pantalla.
+            </p>
+          </div>
+
+          <div class="case__gallery-grid">
+            {data.gallery.map((item, index) => (
+              <figure class="case__gallery-item">
+                <a
+                  href={item.image.src}
+                  data-gallery-trigger
+                  data-caption={item.caption}
+                  aria-label={`Ampliar imagen: ${item.alt}`}
+                >
+                  <ResponsiveImage
+                    src={item.image}
+                    alt={item.alt}
+                    widths={index === 0 ? [480, 800, 1200] : [480, 800]}
+                    sizes={
+                      index === 0
+                        ? "(min-width: 86rem) 57rem, (min-width: 64rem) 66vw, (min-width: 48rem) 50vw, 100vw"
+                        : index === 1
+                          ? "(min-width: 86rem) 22rem, (min-width: 64rem) 27vw, (min-width: 48rem) 50vw, 100vw"
+                          : "(min-width: 86rem) 42rem, (min-width: 64rem) 50vw, (min-width: 48rem) 50vw, 100vw"
+                    }
+                  />
+                </a>
+                <figcaption>
+                  <span class="numeral">{String(index + 1).padStart(2, "0")}</span>
+                  {item.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <dialog class="case__viewer" aria-label="Galería del proyecto">
+          <div class="case__viewer-header">
+            <span>
+              Archivo visual <span class="case__viewer-count" aria-live="polite"></span>
+            </span>
+            <button type="button" class="case__viewer-close" aria-label="Cerrar galería">
+              Cerrar <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="case__viewer-figure">
+            <img class="case__viewer-image" alt="" />
+            <p class="case__viewer-caption"></p>
+          </div>
+          <div class="case__viewer-controls">
+            <button type="button" class="case__viewer-previous" aria-label="Imagen anterior">
+              ← Anterior
+            </button>
+            <button type="button" class="case__viewer-next" aria-label="Siguiente imagen">
+              Siguiente →
+            </button>
+          </div>
+        </dialog>
+      </section>
+    )}
+
+    <section class="case__cta" aria-labelledby="case-cta-title">
+      <div class="container case__cta-layout">
+        <div>
+          <Eyebrow>Hablemos de tu operación</Eyebrow>
+          <h2 id="case-cta-title" class="type-headline">
+            ¿Qué proceso necesitas ordenar?
+          </h2>
+          <p class="type-lead">
+            Cuéntanos cómo trabaja tu equipo, qué información necesita y dónde se detiene el
+            proceso.
+          </p>
+        </div>
+        <div class="case__cta-actions">
+          <Button href={whatsappUrl(whatsappMessage)} external icon="arrow-up-right">
+            <WhatsAppIcon size={17} />
+            Conversar por WhatsApp
+          </Button>
+          <TextLink href={mailtoUrl()}>{contact.email}</TextLink>
+        </div>
+      </div>
+    </section>
+
+    <nav class="container case__pagination" aria-label="Navegación entre casos">
+      {prev && (
+        <a class="case__pagination-link" href={`/casos/${prev.id}/`} rel="prev">
+          <span class="case__pagination-label">Anterior</span>
+          <strong>{prev.data.name}</strong>
+        </a>
+      )}
+      {next && (
+        <a
+          class="case__pagination-link case__pagination-link--next"
+          href={`/casos/${next.id}/`}
+          rel="next"
+        >
+          <span class="case__pagination-label">Siguiente</span>
+          <strong>{next.data.name}</strong>
+        </a>
+      )}
+    </nav>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case__hero {
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .case__intro {
+    margin-top: var(--space-7);
+    max-width: 52rem;
+  }
+
+  .case__title {
+    margin-top: var(--space-5);
+    max-width: 24ch;
+  }
+
+  .case__subtitle {
+    margin-top: var(--space-5);
+  }
+
+  .case__cover {
+    margin-top: var(--space-7);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .case__cover img {
+    width: 100%;
+  }
+
+  .case__layout {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding-block: var(--section-space);
+  }
+
+  .case__narrative {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 7vw, 6rem);
+  }
+
+  .case__chapter-kicker {
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .case__chapter-title {
+    margin-block: var(--space-3) var(--space-4);
+    font-size: var(--text-title);
+  }
+
+  .case__chapter-body {
+    max-width: 44rem;
+    color: var(--color-fg-muted);
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+  }
+
+  .case__flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .case__flow li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-small);
+    color: var(--color-fg-muted);
+  }
+
+  .case__flow .numeral {
+    color: var(--color-accent);
+  }
+
+  .case__context {
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .case__context figcaption,
+  .case__gallery-item figcaption {
+    padding: var(--space-3) var(--space-4);
+    border-top: var(--border-width) solid var(--color-line-soft);
+    font-size: var(--text-small);
+    color: var(--color-fg-subtle);
+  }
+
+  .case__viewer {
+    width: min(90rem, calc(100vw - 2rem));
+    max-width: none;
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-deep);
+    color: var(--color-fg);
+  }
+
+  .case__viewer::backdrop {
+    background: rgb(0 0 0 / 0.84);
+  }
+
+  .case__viewer-header,
+  .case__viewer-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+
+  .case__viewer-header {
+    border-bottom: var(--border-width) solid var(--color-line-soft);
+  }
+
+  .case__viewer-controls {
+    border-top: var(--border-width) solid var(--color-line-soft);
+  }
+
+  .case__viewer-header button,
+  .case__viewer-controls button {
+    min-height: 2.75rem;
+    padding-inline: var(--space-2);
+    color: var(--color-fg);
+  }
+
+  .case__viewer-header button:hover,
+  .case__viewer-controls button:hover {
+    color: var(--color-accent);
+  }
+
+  .case__viewer-controls button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .case__viewer-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--color-surface-inset);
+  }
+
+  .case__viewer-image {
+    display: block;
+    width: 100%;
+    max-height: calc(100dvh - 12rem);
+    object-fit: contain;
+  }
+
+  .case__viewer-caption {
+    align-self: stretch;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-small);
+    color: var(--color-fg-muted);
+    background: var(--color-bg-deep);
+  }
+
+  .case__facts {
+    align-self: start;
+  }
+
+  .case__facts-title {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 400;
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+    padding-bottom: var(--space-4);
+    border-bottom: var(--border-width) solid var(--color-line);
+  }
+
+  .case__facts dl {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case__facts dl > div {
+    padding-block: var(--space-4);
+    border-bottom: var(--border-width) solid var(--color-line-soft);
+  }
+
+  .case__facts dt {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+    margin-bottom: var(--space-1);
+  }
+
+  .case__facts dd {
+    color: var(--color-fg-muted);
+    font-size: var(--text-small);
+  }
+
+  .case__scope,
+  .case__resources {
+    margin-top: var(--space-6);
+  }
+
+  .case__scope h3,
+  .case__resources h3 {
+    font-size: var(--text-small);
+    font-weight: 500;
+    margin-bottom: var(--space-3);
+  }
+
+  .case__scope p {
+    font-size: var(--text-small);
+    line-height: 1.65;
+    color: var(--color-fg-subtle);
+  }
+
+  .case__gallery {
+    border-block: var(--border-width) solid var(--color-line);
+    padding-block: var(--section-space);
+    background: var(--color-bg-deep);
+  }
+
+  .case__gallery-head {
+    display: grid;
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+
+  .case__gallery-head .type-headline {
+    margin-top: var(--space-5);
+  }
+
+  .case__gallery-grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .case__gallery-item {
+    display: flex;
+    flex-direction: column;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .case__gallery-item a {
+    display: grid;
+    aspect-ratio: 16 / 10;
+    place-items: center;
+    overflow: hidden;
+    background: var(--color-surface-inset);
+  }
+
+  .case__gallery-item :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .case__gallery-item figcaption {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    min-height: 3.5rem;
+  }
+
+  .case__cta {
+    border-bottom: var(--border-width) solid var(--color-line);
+    padding-block: var(--section-space);
+  }
+
+  .case__cta-layout {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .case__cta-layout .type-headline {
+    margin-block: var(--space-5) var(--space-4);
+    max-width: 20ch;
+  }
+
+  .case__cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .case__pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding-block: var(--space-8);
+  }
+
+  .case__pagination-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    padding: var(--space-4) var(--space-5);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-sm);
+    min-width: 14rem;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+
+  .case__pagination-link--next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .case__pagination-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+  }
+
+  .case__pagination-link strong {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+
+  @media (hover: hover) {
+    .case__pagination-link:hover {
+      border-color: var(--color-accent);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .case__gallery-head {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: end;
+      gap: var(--space-8);
+    }
+
+    .case__gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .case__cta-layout {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: var(--space-8);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .case__layout {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--grid-gap);
+      align-items: start;
+    }
+
+    .case__narrative {
+      grid-column: 1 / span 8;
+    }
+
+    .case__facts {
+      grid-column: 10 / span 3;
+      position: sticky;
+      top: calc(var(--nav-height) + var(--space-6));
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .case__pagination {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .case__pagination-link {
+      width: min(100%, 14rem);
+    }
+
+    .case__pagination-link--next {
+      align-self: flex-end;
+    }
+
+    .case__viewer {
+      width: calc(100vw - 1rem);
+      max-height: calc(100dvh - 1rem);
+    }
+  }
+</style>
+
+<script>
+  const gallery = document.querySelector<HTMLElement>(".case__gallery");
+  const viewer = gallery?.querySelector<HTMLDialogElement>(".case__viewer");
+
+  if (gallery && viewer && typeof viewer.showModal === "function") {
+    const triggers = Array.from(
+      gallery.querySelectorAll<HTMLAnchorElement>("[data-gallery-trigger]"),
+    );
+    const image = viewer.querySelector<HTMLImageElement>(".case__viewer-image");
+    const caption = viewer.querySelector<HTMLElement>(".case__viewer-caption");
+    const count = viewer.querySelector<HTMLElement>(".case__viewer-count");
+    const previous = viewer.querySelector<HTMLButtonElement>(".case__viewer-previous");
+    const next = viewer.querySelector<HTMLButtonElement>(".case__viewer-next");
+    const close = viewer.querySelector<HTMLButtonElement>(".case__viewer-close");
+
+    if (image && caption && count && previous && next && close) {
+      let activeIndex = 0;
+      let opener: HTMLAnchorElement | null = null;
+
+      const showImage = (index: number) => {
+        const trigger = triggers[index];
+        if (!trigger) return;
+        activeIndex = index;
+        image.src = trigger.getAttribute("href") ?? "";
+        image.alt = trigger.querySelector("img")?.alt ?? "";
+        caption.textContent = trigger.dataset.caption ?? "";
+        count.textContent = `${index + 1} / ${triggers.length}`;
+        previous.disabled = index === 0;
+        next.disabled = index === triggers.length - 1;
+      };
+
+      triggers.forEach((trigger, index) => {
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          opener = trigger;
+          showImage(index);
+          viewer.showModal();
+          close.focus();
+        });
+      });
+
+      previous.addEventListener("click", () => showImage(activeIndex - 1));
+      next.addEventListener("click", () => showImage(activeIndex + 1));
+      close.addEventListener("click", () => viewer.close());
+      viewer.addEventListener("click", (event) => {
+        if (event.target === viewer) viewer.close();
+      });
+      viewer.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") showImage(activeIndex - 1);
+        if (event.key === "ArrowRight") showImage(activeIndex + 1);
+      });
+      viewer.addEventListener("close", () => {
+        image.removeAttribute("src");
+        opener?.focus();
+      });
+    }
+  }
+</script>

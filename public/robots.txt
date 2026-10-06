@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://hiqnet.github.io/sitemap.xml
+
+Sitemap: https://hiqnet.github.io/sitemap-index.xml

@@ -1,0 +1,126 @@
+/* ==========================================================================
+   HiQNet — Design tokens (post-audit)
+   Single source of truth for color, type, spacing, radius, motion and depth.
+   One accent. Two typefaces. Everything else stays quiet.
+   ========================================================================== */
+
+@theme {
+  /* --- Color ------------------------------------------------------------ */
+  --color-bg: #0a0c0f;
+  --color-bg-deep: #07090b;
+
+  --color-surface: #0f1217;
+  --color-surface-raised: #151922;
+  --color-surface-inset: #0c0f13;
+
+  --color-fg: #eceef2;
+  --color-fg-muted: #a5afbd;
+  --color-fg-subtle: #7d8594;
+
+  --color-line: #232b35;
+  --color-line-soft: #191f27;
+  --color-line-strong: #3a4550;
+
+  /* The single interactive signal of the interface. */
+  --color-accent: #2ad1f2;
+  --color-accent-strong: #8ceaff;
+  --color-accent-dim: #2094b0;
+
+  --color-focus: #58dcf5;
+  --color-danger: #f2685c;
+
+  /* --- Type families ---------------------------------------------------- */
+  --font-display: "Space Grotesk Variable", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* --- Fluid type scale ------------------------------------------------- */
+  --text-display: clamp(2.5rem, 6.5vw, 5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+
+  --text-headline: clamp(1.75rem, 3.6vw, 2.875rem);
+  --text-headline--line-height: 1.06;
+  --text-headline--letter-spacing: -0.022em;
+
+  --text-title: clamp(1.25rem, 1.8vw, 1.625rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.014em;
+
+  --text-lead: clamp(1.0625rem, 1.1vw, 1.1875rem);
+  --text-lead--line-height: 1.62;
+  --text-lead--letter-spacing: -0.005em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.14em;
+
+  /* --- Radius ----------------------------------------------------------- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+
+  /* --- Breakpoints ------------------------------------------------------ */
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 90rem;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* --- Spacing ---------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 5rem;
+  --space-10: 6.5rem;
+  --space-11: 8rem;
+
+  /* --- Layout ----------------------------------------------------------- */
+  --container: 80rem;
+  --container-narrow: 62rem;
+  --gutter: clamp(1.25rem, 5.8vw, 5rem);
+  --grid-gap: clamp(1rem, 2vw, 1.75rem);
+  --section-space: clamp(4rem, 8vw, 7rem);
+  --nav-height: 4.25rem;
+
+  /* --- Borders ---------------------------------------------------------- */
+  --border-width: 1px;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --dur-micro: 140ms;
+  --dur-fast: 200ms;
+  --dur-section: 480ms;
+  --dur-slow: 700ms;
+
+  /* --- Depth ------------------------------------------------------------ */
+  --shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.03) inset, 0 24px 60px -32px rgb(0 0 0 / 0.8);
+
+  /* --- Z-index ---------------------------------------------------------- */
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 40;
+  --z-nav: 60;
+  --z-overlay: 80;
+  --z-top: 100;
+}

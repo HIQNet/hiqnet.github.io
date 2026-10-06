@@ -1,112 +1,153 @@
 ---
-import { whatsappUrl } from "../../data/site";
+import Button from "../core/Button.astro";
+import TextLink from "../core/TextLink.astro";
+import ResponsiveImage from "../core/ResponsiveImage.astro";
+import WhatsAppIcon from "../ui/WhatsAppIcon.astro";
+import { whatsappUrl } from "../../config/contact";
+import proofImage from "../../assets/cases/la-terraza/admin-04.png";
 ---
-<section id="inicio" class="hero-section" aria-labelledby="hero-title" data-hero>
-  <div class="hero-composition container-page">
-    <div class="hero-meta">
-      <p class="eyebrow">HiQNet <span aria-hidden="true">/</span> Ingeniería de software</p>
-      <span>Para empresas y PyMEs</span>
-    </div>
-    <h1 id="hero-title" class="hero-title">
-      <span>Software alrededor</span>
-      <span>de tu <em>operación.</em></span>
-    </h1>
-    <div class="hero-support">
-      <p class="hero-intro">
-        Convertimos procesos manuales, información dispersa y
-        herramientas desconectadas en sistemas construidos para tu
-        empresa.
+
+<section id="inicio" class="hero" aria-labelledby="hero-title">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <p class="hero__label">Software y sistemas para empresas</p>
+
+      <h1 id="hero-title" class="type-display hero__title">
+        Software que hace más claro el trabajo.
+      </h1>
+
+      <p class="type-lead hero__copy">
+        Plataformas web, sistemas internos e integraciones, hechos a la medida de tu empresa.
+        Herramientas que se entienden desde el primer día.
       </p>
-      <div class="hero-actions">
-        <a
-          class="button-primary"
-          href={whatsappUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-event="click_cta_hero"
-        >
-          Hablemos de tu operación
-          <span class="button-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="text-link" href="#nosotros">
-          Conocer cómo trabajamos
-          <span aria-hidden="true">↓</span>
-        </a>
+
+      <div class="hero__actions">
+        <Button href={whatsappUrl()} external icon="arrow-up-right">
+          <WhatsAppIcon size={17} />
+          Hablemos por WhatsApp
+        </Button>
+        <TextLink href="#casos">Ver casos reales</TextLink>
       </div>
     </div>
-    <div class="hero-routing" aria-hidden="true" data-hero-routing>
-      <svg viewBox="0 0 1200 180" fill="none" preserveAspectRatio="xMidYMid meet">
-        <g class="routing-plane">
-          <!-- Background structural grid: very subtle reference -->
-          <g class="hero-grid">
-            <path d="M0 45 H1200 M0 90 H1200 M0 135 H1200" />
-            <path d="M240 0 V180 M320 0 V180 M880 0 V180 M960 0 V180" />
-          </g>
 
-          <!-- Module A: left panel (input surface) -->
-          <g class="hero-module module-a">
-            <rect x="60" y="30" width="180" height="120" rx="2" />
-            <path d="M76 50 H160" class="module-header" />
-            <path d="M76 70 H224 M76 88 H200 M76 106 H224 M76 124 H180 M76 142 H224" class="module-row" />
-            <circle cx="222" cy="40" r="2" class="module-status" />
-          </g>
-
-          <!-- Connection A → B -->
-          <path class="hero-connection" d="M240 90 H320" />
-
-          <!-- Module B: main panel (primary) -->
-          <g class="hero-module module-main">
-            <rect x="320" y="20" width="560" height="140" rx="2" />
-            <path d="M340 36 H500" class="module-header" />
-            <circle cx="848" cy="36" r="2" class="module-status" />
-            <circle cx="858" cy="36" r="2" class="module-status" />
-            <circle cx="868" cy="36" r="2" class="module-status" />
-            <path d="M460 60 V160 M600 60 V160 M740 60 V160" class="module-divider" />
-            <path d="M340 70 H860 M340 95 H860 M340 120 H860 M340 145 H860" class="module-row" />
-            <rect x="475" y="100" width="100" height="14" rx="1" class="module-cell" />
-            <rect x="615" y="100" width="100" height="14" rx="1" class="module-cell" />
-            <rect x="755" y="100" width="85" height="14" rx="1" class="module-cell" />
-            <rect x="475" y="125" width="75" height="14" rx="1" class="module-cell" />
-            <rect x="615" y="125" width="100" height="14" rx="1" class="module-cell" />
-          </g>
-
-          <!-- Connection B → C -->
-          <path class="hero-connection" d="M880 90 H960" />
-
-          <!-- Module C: right panel (output surface) -->
-          <g class="hero-module module-c">
-            <rect x="960" y="30" width="180" height="120" rx="2" />
-            <path d="M976 50 H1100" class="module-header" />
-            <path d="M976 70 H1124 M976 88 H1124 M976 106 H1124 M976 124 H1124 M976 142 H1124" class="module-row" />
-            <circle cx="985" cy="40" r="2" class="module-status" />
-            <circle cx="1000" cy="40" r="2" class="module-status" />
-            <circle cx="1115" cy="40" r="2" class="module-status" />
-          </g>
-
-          <!-- Ambient pulse: signal traveling through the system (drawn effect) -->
-          <path class="ambient-pulse" pathLength="1" d="M240 90 H960" />
-
-          <!-- Ambient dots: scattered indicators -->
-          <circle class="hero-ambient-dot" cx="305" cy="80" r="2" />
-          <circle class="hero-ambient-dot" cx="305" cy="100" r="2" />
-          <circle class="hero-ambient-dot" cx="890" cy="50" r="2" />
-          <circle class="hero-ambient-dot" cx="950" cy="130" r="2" />
-        </g>
-      </svg>
-    </div>
-    <div class="hero-bottom">
-      <span class="hero-bottom__signature">h-qn · engineering</span>
-      <a href="#friccion">El punto de partida <span aria-hidden="true">↓</span></a>
-    </div>
-  </div>
-  <div class="hero-friction-bridge" aria-hidden="true">
-    <svg viewBox="0 0 1200 60" fill="none" preserveAspectRatio="none">
-      <path class="bridge-active" d="M0 30 H1200" pathLength="1" />
-      <path d="M40 30 H160 M320 30 H440 M600 30 H720 M880 30 H1040 M1160 30 H1200" />
-      <circle cx="160" cy="30" r="3" />
-      <circle cx="440" cy="30" r="3" />
-      <circle cx="720" cy="30" r="3" />
-      <circle cx="1040" cy="30" r="3" />
-    </svg>
+    <figure class="hero__proof">
+      <ResponsiveImage
+        src={proofImage}
+        alt="Pantalla administrativa de productos de La Terraza, desarrollada por HiQNet"
+        priority
+        widths={[720, 1100, 1600]}
+        sizes="(min-width: 64rem) 60vw, 100vw"
+      />
+    </figure>
   </div>
 </section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: clip;
+    border-bottom: var(--border-width) solid var(--color-line);
+  }
+
+  .hero__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(2rem, 3vw, 3rem);
+    min-height: 33rem;
+    align-items: center;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 35rem);
+    padding-block: 3rem;
+  }
+
+  .hero__label {
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .hero__title {
+    max-width: 14ch;
+    margin-top: 1.3rem;
+    font-size: clamp(3.3rem, 4.6vw, 4.8rem);
+    line-height: 1.01;
+    letter-spacing: -0.05em;
+  }
+
+  .hero__copy {
+    max-width: 32rem;
+    margin-top: 1.6rem;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.55;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero__proof {
+    min-width: 0;
+    overflow: hidden;
+    border: var(--border-width) solid var(--color-line-strong);
+    background: var(--color-surface);
+    aspect-ratio: 1.55;
+  }
+
+  .hero__proof :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+
+  @media (max-width: 63.99rem) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: 0;
+      min-height: 0;
+    }
+
+    .hero__content {
+      padding-block: 3.5rem 2rem;
+    }
+
+    .hero__proof {
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero__content {
+      padding-block: 2.8rem 1.6rem;
+    }
+
+    .hero__title {
+      font-size: clamp(2.65rem, 10.4vw, 4.2rem);
+    }
+
+    .hero__copy {
+      margin-top: 1.25rem;
+    }
+
+    .hero__actions {
+      gap: 0.75rem 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero__proof {
+      aspect-ratio: 1.45;
+    }
+  }
+</style>

@@ -1,0 +1,215 @@
+---
+import Section from "../core/Section.astro";
+import Icon from "../ui/Icon.astro";
+import { capabilities } from "../../data/home";
+
+const presentations = [
+  {
+    icon: "layers",
+    visualLabel: "Presencia digital",
+    line: "Sitios y plataformas que comunican y convierten.",
+    href: "/casos/swi/",
+    linkLabel: "Ver caso de Servicios Web Icono",
+  },
+  {
+    icon: "plug",
+    visualLabel: "Sistemas conectados",
+    line: "Conectamos tus herramientas para que todo fluya.",
+    href: "#contacto",
+    linkLabel: "Hablar de automatización",
+  },
+  {
+    icon: "database",
+    visualLabel: "Operación en orden",
+    line: "Sistemas internos para gestionar y crecer.",
+    href: "/casos/la-terraza/",
+    linkLabel: "Ver caso de La Terraza",
+  },
+] as const;
+---
+
+<Section id="servicios" labelledBy="servicios-title" class="services">
+  <div class="container">
+    <div class="services__heading">
+      <h2 id="servicios-title" class="eyebrow">
+        02 — Qué hacemos
+      </h2>
+      <p>Plataformas / Automatización / Sistemas de gestión</p>
+    </div>
+
+    <ol class="services__grid">
+      {capabilities.map((capability, index) => (
+        <li id={capability.id} class="services__item">
+          <div class="services__content">
+            <h3>{capability.name.replace("HiQNet ", "")}</h3>
+            <p class="services__line">{presentations[index]!.line}</p>
+            <p class="services__copy">{capability.copy}</p>
+            <a
+              class="services__link"
+              href={presentations[index]!.href}
+              aria-label={presentations[index]!.linkLabel}
+            >
+              Ver más <Icon name="arrow-up-right" size={15} />
+            </a>
+          </div>
+          <div class="services__media" aria-hidden="true">
+            <span class="services__media-number">{String(index + 1).padStart(2, "0")}</span>
+            <Icon name={presentations[index]!.icon} size={72} strokeWidth={1.15} />
+            <span class="services__media-label">{presentations[index]!.visualLabel}</span>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>
+
+<style>
+  :global(.section.services) {
+    padding-block: 0 1.1rem;
+  }
+
+  .services__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.4rem;
+    border-top: var(--border-width) solid var(--color-line);
+  }
+
+  .services__heading > p:last-child {
+    color: var(--color-fg-subtle);
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .services__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .services__item {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .services__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    border-left: var(--border-width) solid var(--color-line);
+    padding: 0 1rem 1rem;
+  }
+
+  .services__content h3 {
+    font-size: clamp(2.7rem, 4.4vw, 4.1rem);
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .services__line {
+    max-width: 18rem;
+    margin-top: 0.6rem;
+    color: var(--color-fg);
+    font-size: clamp(1rem, 1.25vw, 1.2rem);
+    line-height: 1.3;
+  }
+
+  .services__copy {
+    max-width: 19rem;
+    margin-top: 0.75rem;
+    color: var(--color-fg-muted);
+    font-size: 0.875rem;
+    line-height: 1.42;
+  }
+
+  .services__link {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding-top: 0.7rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .services__link:hover {
+    color: var(--color-accent);
+  }
+
+  .services__media {
+    display: flex;
+    min-height: 12rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+    border-top: var(--border-width) solid var(--color-line-strong);
+    padding: 1rem;
+    background: var(--color-surface-inset);
+  }
+
+  .services__media-number,
+  .services__media-label {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-fg-subtle);
+  }
+
+  .services__media :global(svg) {
+    align-self: flex-end;
+    width: 4.5rem;
+    height: 4.5rem;
+    color: var(--color-accent);
+    stroke-width: 1.15;
+  }
+
+  @media (min-width: 48rem) {
+    .services__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.1rem;
+    }
+
+    .services__content {
+      min-height: 17rem;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .services__heading > p:last-child {
+      display: none;
+    }
+
+    .services__grid {
+      gap: 1.75rem;
+    }
+
+    .services__content {
+      min-height: 0;
+      padding-bottom: 0.75rem;
+    }
+
+    .services__content h3 {
+      font-size: 3rem;
+    }
+
+    .services__copy {
+      max-width: 32rem;
+    }
+
+    .services__link {
+      margin-top: 0.25rem;
+    }
+
+    .services__media {
+      min-height: 9.5rem;
+    }
+  }
+</style>
